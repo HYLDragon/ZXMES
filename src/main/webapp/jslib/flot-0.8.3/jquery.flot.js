@@ -1261,7 +1261,7 @@ Licensed under the MIT license.
                 }
 
                 if (s.bars.show) {
-                    // make sure we got room for the bar on the dancing floor
+                    // make sure we got room for the mes on the dancing floor
                     var delta;
 
                     switch (s.bars.align) {
@@ -2050,7 +2050,7 @@ Licensed under the MIT license.
                         x = box.left - plotOffset.left + (axis.position == "left" ? box.width : 0);
                 }
 
-                // draw tick bar
+                // draw tick mes
                 if (!axis.innermost) {
                     ctx.strokeStyle = axis.options.color;
                     ctx.beginPath();
@@ -2559,7 +2559,7 @@ Licensed under the MIT license.
                 drawLeft, drawRight, drawTop, drawBottom,
                 tmp;
 
-            // in horizontal mode, we start the bar from the left
+            // in horizontal mode, we start the mes from the left
             // instead of from the bottom so it appears to be
             // horizontal rather than vertical
             if (horizontal) {
@@ -2627,7 +2627,7 @@ Licensed under the MIT license.
             right = axisx.p2c(right);
             top = axisy.p2c(top);
 
-            // fill the bar
+            // fill the mes
             if (fillStyleCallback) {
                 c.fillStyle = fillStyleCallback(bottom, top);
                 c.fillRect(left, top, right - left, bottom - top)
@@ -2901,7 +2901,7 @@ Licensed under the MIT license.
                         if (x == null)
                             continue;
 
-                        // for a bar graph, the cursor must be inside the bar
+                        // for a mes graph, the cursor must be inside the mes
                         if (series[i].bars.horizontal ?
                             (mx <= Math.max(b, x) && mx >= Math.min(b, x) &&
                              my >= y + barLeft && my <= y + barRight) :

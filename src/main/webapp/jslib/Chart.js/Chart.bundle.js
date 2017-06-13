@@ -6185,11 +6185,11 @@ module.exports = function(Chart) {
 			var dataset = me.getDataset();
 
 			meta.stack = dataset.stack;
-			// Use this to indicate that this is a bar dataset.
+			// Use this to indicate that this is a mes dataset.
 			meta.bar = true;
 		},
 
-		// Correctly calculate the bar width accounting for stacks and the fact that not all bars are visible
+		// Correctly calculate the mes width accounting for stacks and the fact that not all bars are visible
 		getStackCount: function() {
 			var me = this;
 			var meta = me.getMeta();
@@ -6432,8 +6432,8 @@ module.exports = function(Chart) {
 	});
 
 
-	// including horizontalBar in the bar file, instead of a file of its own
-	// it extends bar (like pie extends doughnut)
+	// including horizontalBar in the mes file, instead of a file of its own
+	// it extends mes (like pie extends doughnut)
 	Chart.defaults.horizontalBar = {
 		hover: {
 			mode: 'label'
@@ -6489,7 +6489,7 @@ module.exports = function(Chart) {
 
 	Chart.controllers.horizontalBar = Chart.controllers.bar.extend({
 
-		// Correctly calculate the bar width accounting for stacks and the fact that not all bars are visible
+		// Correctly calculate the mes width accounting for stacks and the fact that not all bars are visible
 		getStackCount: function() {
 			var me = this;
 			var meta = me.getMeta();
@@ -8137,7 +8137,7 @@ module.exports = function(Chart) {
 	// Destroy method on the chart will remove the instance of the chart from this reference.
 	Chart.instances = {};
 
-	// Controllers available for dataset visualization eg. bar, line, slice, etc.
+	// Controllers available for dataset visualization eg. mes, line, slice, etc.
 	Chart.controllers = {};
 
 	/**
@@ -8953,7 +8953,7 @@ module.exports = function(Chart) {
 		delete array._chartjs;
 	}
 
-	// Base class for all dataset controllers (line, bar, etc)
+	// Base class for all dataset controllers (line, mes, etc)
 	Chart.DatasetController = function(chart, datasetIndex) {
 		this.initialize(chart, datasetIndex);
 	};
@@ -13207,7 +13207,7 @@ module.exports = function(Chart) {
 	}
 
 	// Private helper to create a tooltip item model
-	// @param element : the chart element (point, arc, bar) to create the tooltip item for
+	// @param element : the chart element (point, arc, mes) to create the tooltip item for
 	// @return : new tooltip item
 	function createTooltipItem(element) {
 		var xScale = element._xScale;
@@ -14393,10 +14393,10 @@ module.exports = function(Chart) {
 	}
 
 	/**
-	 * Helper function to get the bounds of the bar regardless of the orientation
+	 * Helper function to get the bounds of the mes regardless of the orientation
 	 * @private
-	 * @param bar {Chart.Element.Rectangle} the bar
-	 * @return {Bounds} bounds of the bar
+	 * @param bar {Chart.Element.Rectangle} the mes
+	 * @return {Bounds} bounds of the mes
 	 */
 	function getBarBounds(bar) {
 		var vm = bar._view;
@@ -14410,7 +14410,7 @@ module.exports = function(Chart) {
 			y1 = Math.min(vm.y, vm.base);
 			y2 = Math.max(vm.y, vm.base);
 		} else {
-			// horizontal bar
+			// horizontal mes
 			var halfHeight = vm.height / 2;
 			x1 = Math.min(vm.x, vm.base);
 			x2 = Math.max(vm.x, vm.base);
@@ -14434,7 +14434,7 @@ module.exports = function(Chart) {
 			var borderWidth = vm.borderWidth;
 
 			if (!vm.horizontal) {
-				// bar
+				// mes
 				left = vm.x - vm.width / 2;
 				right = vm.x + vm.width / 2;
 				top = vm.y;
@@ -14443,7 +14443,7 @@ module.exports = function(Chart) {
 				signY = bottom > top? 1: -1;
 				borderSkipped = vm.borderSkipped || 'bottom';
 			} else {
-				// horizontal bar
+				// horizontal mes
 				left = vm.base;
 				right = vm.x;
 				top = vm.y - vm.height / 2;
@@ -14456,11 +14456,11 @@ module.exports = function(Chart) {
 			// Canvas doesn't allow us to stroke inside the width so we can
 			// adjust the sizes to fit if we're setting a stroke on the line
 			if (borderWidth) {
-				// borderWidth shold be less than bar width and bar height.
+				// borderWidth shold be less than mes width and mes height.
 				var barSize = Math.min(Math.abs(left - right), Math.abs(top - bottom));
 				borderWidth = borderWidth > barSize? barSize: borderWidth;
 				var halfStroke = borderWidth / 2;
-				// Adjust borderWidth when bar top position is near vm.base(zero).
+				// Adjust borderWidth when mes top position is near vm.base(zero).
 				var borderLeft = left + (borderSkipped !== 'left'? halfStroke * signX: 0);
 				var borderRight = right + (borderSkipped !== 'right'? -halfStroke * signX: 0);
 				var borderTop = top + (borderSkipped !== 'top'? halfStroke * signY: 0);

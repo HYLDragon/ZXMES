@@ -279,7 +279,7 @@ shadowSize and lineWidth are derived as well from the points series.
         upper += offset;
         lower += offset;
 
-        // error bar - avoid plotting over circles
+        // error mes - avoid plotting over circles
         if (err.err == 'x'){
             if (upper > x + radius) drawPath(ctx, [[upper,y],[Math.max(x + radius,minmax[0]),y]]);
             else drawUpper = false;

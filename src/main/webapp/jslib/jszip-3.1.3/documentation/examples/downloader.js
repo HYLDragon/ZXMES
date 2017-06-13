@@ -35,12 +35,12 @@ jQuery(function ($) {
         .text(text);
     }
     /**
-     * Update the progress bar.
+     * Update the progress mes.
      * @param {Integer} percent the current percent
      */
     function updatePercent(percent) {
         $("#progress_bar").removeClass("hide")
-        .find(".progress-bar")
+        .find(".progress-mes")
         .attr("aria-valuenow", percent)
         .css({
             width : percent + "%"

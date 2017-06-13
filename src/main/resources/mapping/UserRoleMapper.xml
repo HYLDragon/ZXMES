@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.admin.UserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.admin.UserRoleKey">
+    <id column="TROLE_ID" jdbcType="VARCHAR" property="troleId" />
+    <id column="TUSER_ID" jdbcType="VARCHAR" property="tuserId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.zx.mes.model.admin.UserRoleKey">
+    delete from tuser_trole
+    where TROLE_ID = #{troleId,jdbcType=VARCHAR}
+      and TUSER_ID = #{tuserId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.mes.model.admin.UserRoleKey">
+    insert into tuser_trole (TROLE_ID, TUSER_ID)
+    values (#{troleId,jdbcType=VARCHAR}, #{tuserId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.admin.UserRoleKey">
+    insert into tuser_trole
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="troleId != null">
+        TROLE_ID,
+      </if>
+      <if test="tuserId != null">
+        TUSER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="troleId != null">
+        #{troleId,jdbcType=VARCHAR},
+      </if>
+      <if test="tuserId != null">
+        #{tuserId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--新写的sql-->
+  <select id="selectByPrimaryKey" parameterType="com.zx.mes.model.admin.UserRoleKey" resultType="int">
+    select count(*)  from tuser_trole
+    where TROLE_ID = #{troleId,jdbcType=VARCHAR}
+    and TUSER_ID = #{tuserId,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimarySelect" parameterType="com.zx.mes.model.admin.UserRoleKey">
+    delete from tuser_trole
+    where  1=1
+    <if test="troleId !=null and troleId !=''">
+      TROLE_ID = #{troleId,jdbcType=VARCHAR}
+    </if>
+    <if test="troleId !=null and troleId !=''">
+      TUSER_ID = #{tuserId,jdbcType=VARCHAR}
+    </if>
+
+  </delete>
+</mapper>

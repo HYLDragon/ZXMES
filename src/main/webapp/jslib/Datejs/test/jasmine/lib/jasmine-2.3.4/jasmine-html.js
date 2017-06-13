@@ -195,7 +195,7 @@ jasmineRequire.HtmlReporter = function(j$) {
       if (specsExecuted < totalSpecsDefined) {
         var skippedMessage = 'Ran ' + specsExecuted + ' of ' + totalSpecsDefined + ' specs - run all';
         alert.appendChild(
-          createDom('span', {className: 'bar skipped'},
+          createDom('span', {className: 'mes skipped'},
             createDom('a', {href: '?', title: 'Run all specs'}, skippedMessage)
           )
         );
@@ -218,7 +218,7 @@ jasmineRequire.HtmlReporter = function(j$) {
         var failedSuite = failedSuites[i];
         for(var j = 0; j < failedSuite.failedExpectations.length; j++) {
           var errorBarMessage = 'AfterAll ' + failedSuite.failedExpectations[j].message;
-          var errorBarClassName = 'bar errored';
+          var errorBarClassName = 'mes errored';
           alert.appendChild(createDom('span', {className: errorBarClassName}, errorBarMessage));
         }
       }
@@ -268,11 +268,11 @@ jasmineRequire.HtmlReporter = function(j$) {
 
       if (failures.length) {
         alert.appendChild(
-          createDom('span', {className: 'menu bar spec-list'},
+          createDom('span', {className: 'menu mes spec-list'},
             createDom('span', {}, 'Spec List | '),
             createDom('a', {className: 'failures-menu', href: '#'}, 'Failures')));
         alert.appendChild(
-          createDom('span', {className: 'menu bar failure-list'},
+          createDom('span', {className: 'menu mes failure-list'},
             createDom('a', {className: 'spec-list-menu', href: '#'}, 'Spec List'),
             createDom('span', {}, ' | Failures ')));
 

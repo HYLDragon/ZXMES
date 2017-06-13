@@ -9,240 +9,225 @@ import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
-import com.zx.mes.dao.admin.RoleDaoI;
-import com.zx.mes.dao.admin.UserDaoI;
-import com.zx.mes.model.admin.Tresource;
-import com.zx.mes.model.admin.Trole;
+
+import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
+import com.zx.mes.dao.admin.RoleMapper;
+import com.zx.mes.dao.admin.UserMapper;
+import com.zx.mes.dao.admin.UserRoleMapper;
+import com.zx.mes.model.admin.Role;
+import com.zx.mes.model.admin.User;
+import com.zx.mes.model.admin.UserRoleKey;
+import com.zx.mes.pageModel.Puser;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.zx.mes.model.admin.Tuser;
 import com.zx.mes.pageModel.DataGrid;
 import com.zx.mes.pageModel.PageHelper;
 import com.zx.mes.pageModel.SessionInfo;
-import com.zx.mes.pageModel.User;
 import com.zx.mes.service.admin.UserServiceI;
 import com.zx.mes.util.MD5Util;
+
+import javax.jws.soap.SOAPBinding;
 
 @Service
 public class UserServiceImpl implements UserServiceI {
 
 	@Autowired
-	private UserDaoI userDao;
+	private UserMapper userDao;
 
 	@Autowired
-	private RoleDaoI roleDao;
+	private RoleMapper roleMapper;
+
+	@Autowired
+	private UserRoleMapper userRoleMapper;
 
 	@Override
-	public User login(User user) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("name", user.getName());
-		params.put("pwd", MD5Util.md5(user.getPwd()));
-		Tuser t = userDao.get("from Tuser t where t.name = :name and t.pwd = :pwd", params);
-		if (t != null) {
-			BeanUtils.copyProperties(t, user);
+	public Puser login(Puser user) {
+		User user2=new User();
+		user2.setName(user.getName());
+		user2.setPwd(user.getPwd());
+
+		User u=userDao.login(user2);
+		if (u != null) {
+			BeanUtils.copyProperties(u, user);
 			return user;
 		}
+
 		return null;
 	}
 
 	@Override
-	synchronized public void reg(User user) throws Exception {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("name", user.getName());
-		if (userDao.count("select count(*) from Tuser t where t.name = :name", params) > 0) {
-			throw new Exception("登录名已存在！");
-		} else {
-			Tuser u = new Tuser();
+	synchronized public void reg(Puser user) throws Exception {
+		if (userDao.getUser(user.getName())>0){
+			throw new Exception("登录名已存在!");
+		}else{
+			User u=new User();
 			u.setId(UUID.randomUUID().toString());
 			u.setName(user.getName());
 			u.setPwd(MD5Util.md5(user.getPwd()));
 			u.setCreatedatetime(new Date());
-			userDao.save(u);
+			userDao.insertSelective(u);
 		}
+
 	}
 
 	@Override
-	public DataGrid dataGrid(User user, PageHelper ph) {
+	public DataGrid dataGrid(Puser user, PageHelper ph) {
 		DataGrid dg = new DataGrid();
-		List<User> ul = new ArrayList<User>();
-		Map<String, Object> params = new HashMap<String, Object>();
-		String hql = " from Tuser t ";
-		List<Tuser> l = userDao.find(hql + whereHql(user, params) + orderHql(ph), params, ph.getPage(), ph.getRows());
-		if (l != null && l.size() > 0) {
-			for (Tuser t : l) {
-				User u = new User();
-				BeanUtils.copyProperties(t, u);
-				Set<Trole> roles = t.getTroles();
-				if (roles != null && !roles.isEmpty()) {
-					String roleIds = "";
-					String roleNames = "";
-					boolean b = false;
-					for (Trole tr : roles) {
-						if (b) {
-							roleIds += ",";
-							roleNames += ",";
-						} else {
-							b = true;
+		List<Puser> ul = new ArrayList<Puser>();
+		User u=new User();
+		com.github.pagehelper.PageHelper.startPage(ph.getPage(),ph.getRows());
+
+		List<User> userList=userDao.getAll(u);
+
+		List<User> userlist2=userDao.getAllWithRole(u);
+
+		if(userList !=null && userList.size()>0){
+			for(int i=0;i<userList.size();i++){
+				Puser puser=new Puser();
+				User user2=userlist2.get(i);
+				BeanUtils.copyProperties(user2,puser);
+				if(userlist2 !=null && userlist2.size()>0){
+					for(int n=0;n<userlist2.size();n++){
+						StringBuilder roleIds=new StringBuilder("");
+						StringBuilder roleNames=new StringBuilder("");
+						boolean b=false;
+						if (user2.getId().equals(userlist2.get(n).getId())){
+							List<UserRoleKey> roles=userlist2.get(n).getUserRoleKeys();
+							for(int m=0;m<roles.size();m++){
+								if (b) {
+									roleIds.append( ",");
+									roleNames.append( ",");
+								} else {
+									b = true;
+								}
+								roleIds.append( roles.get(m).getRole().getId());
+								roleNames.append(roles.get(m).getRole().getName());
+
+							}
+
 						}
-						roleIds += tr.getId();
-						roleNames += tr.getName();
+						puser.setRoleIds(roleIds.toString());
+						puser.setRoleNames(roleNames.toString());
 					}
-					u.setRoleIds(roleIds);
-					u.setRoleNames(roleNames);
 				}
-				ul.add(u);
+				ul.add(puser);
 			}
 		}
+
 		dg.setRows(ul);
-		dg.setTotal(userDao.count("select count(*) " + hql + whereHql(user, params), params));
+		com.github.pagehelper.PageHelper.startPage(ph.getPage(),ph.getRows());
+		dg.setTotal(userDao.getCount(u));
 		return dg;
 	}
 
-	private String whereHql(User user, Map<String, Object> params) {
-		String hql = "";
-		if (user != null) {
-			hql += " where 1=1 ";
-			if (user.getName() != null) {
-				hql += " and t.name like :name";
-				params.put("name", "%%" + user.getName() + "%%");
-			}
-			if (user.getCreatedatetimeStart() != null) {
-				hql += " and t.createdatetime >= :createdatetimeStart";
-				params.put("createdatetimeStart", user.getCreatedatetimeStart());
-			}
-			if (user.getCreatedatetimeEnd() != null) {
-				hql += " and t.createdatetime <= :createdatetimeEnd";
-				params.put("createdatetimeEnd", user.getCreatedatetimeEnd());
-			}
-			if (user.getModifydatetimeStart() != null) {
-				hql += " and t.modifydatetime >= :modifydatetimeStart";
-				params.put("modifydatetimeStart", user.getModifydatetimeStart());
-			}
-			if (user.getModifydatetimeEnd() != null) {
-				hql += " and t.modifydatetime <= :modifydatetimeEnd";
-				params.put("modifydatetimeEnd", user.getModifydatetimeEnd());
-			}
-		}
-		return hql;
-	}
-
-	private String orderHql(PageHelper ph) {
-		String orderString = "";
-		if (ph.getSort() != null && ph.getOrder() != null) {
-			orderString = " order by t." + ph.getSort() + " " + ph.getOrder();
-		}
-		return orderString;
-	}
-
 	@Override
-	synchronized public void add(User user) throws Exception {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("name", user.getName());
-		if (userDao.count("select count(*) from Tuser t where t.name = :name", params) > 0) {
+	synchronized public void add(Puser user) throws Exception {
+
+		if(userDao.getUser(user.getName())>0){
 			throw new Exception("登录名已存在！");
-		} else {
-			Tuser u = new Tuser();
+		}else{
+			User u = new User();
 			BeanUtils.copyProperties(user, u);
 			u.setCreatedatetime(new Date());
 			u.setPwd(MD5Util.md5(user.getPwd()));
-			userDao.save(u);
+			userDao.insertSelective(u);
 		}
+
+
 	}
 
 	@Override
-	public User get(String id) {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", id);
-		Tuser t = userDao.get("select distinct t from Tuser t left join fetch t.troles role where t.id = :id", params);
-		User u = new User();
-		BeanUtils.copyProperties(t, u);
-		if (t.getTroles() != null && !t.getTroles().isEmpty()) {
-			String roleIds = "";
-			String roleNames = "";
-			boolean b = false;
-			for (Trole role : t.getTroles()) {
-				if (b) {
-					roleIds += ",";
-					roleNames += ",";
-				} else {
-					b = true;
-				}
-				roleIds += role.getId();
-				roleNames += role.getName();
+	public Puser get(String id) {
+		Puser puser=new Puser();
+
+		User user=new User();
+		user.setId(id);
+		user=userDao.getAllWithRole(user).get(0);
+
+		BeanUtils.copyProperties(user,puser);
+
+		List<UserRoleKey> roles=user.getUserRoleKeys();
+		StringBuilder roleIds=new StringBuilder();
+		StringBuilder roleNames=new StringBuilder();
+		boolean b=false;
+		for(int i=0;i<roles.size();i++){
+			if (b) {
+				roleIds.append( ",");
+				roleNames.append( ",");
+			} else {
+				b = true;
 			}
-			u.setRoleIds(roleIds);
-			u.setRoleNames(roleNames);
+			roleIds.append( roles.get(i).getRole().getId());
+			roleNames.append(roles.get(i).getRole().getName());
 		}
-		return u;
+		puser.setRoleIds(roleIds.toString());
+		puser.setRoleNames(roleNames.toString());
+
+		return puser;
 	}
 
 	@Override
-	synchronized public void edit(User user) throws Exception {
+	synchronized public void edit(Puser user) throws Exception {
 		Map<String, Object> params = new HashMap<String, Object>();
 		params.put("id", user.getId());
 		params.put("name", user.getName());
-		if (userDao.count("select count(*) from Tuser t where t.name = :name and t.id != :id", params) > 0) {
+		if (userDao.getUser(user.getName()) > 1) {
 			throw new Exception("登录名已存在！");
 		} else {
-			Tuser u = userDao.get(Tuser.class, user.getId());
+			User u = userDao.selectByPrimaryKey(user.getId());
 			BeanUtils.copyProperties(user, u, new String[] { "pwd", "createdatetime" });
 			u.setModifydatetime(new Date());
+			userDao.updateByPrimaryKeySelective(u);
 		}
 	}
 
 	@Override
 	public void delete(String id) {
-		userDao.delete(userDao.get(Tuser.class, id));
+		userDao.deleteByPrimaryKey(id);
 	}
 
+	//ids 选中的用户id ，user是将角色id拼接起来
 	@Override
-	public void grant(String ids, User user) {
+	public void grant(String ids, Puser user) {
 		if (ids != null && ids.length() > 0) {
-			List<Trole> roles = new ArrayList<Trole>();
+			List<Role> roles = new ArrayList<Role>();
+			//用户本来有的权限
 			if (user.getRoleIds() != null) {
+				UserRoleKey userRoleKey=new UserRoleKey();
 				for (String roleId : user.getRoleIds().split(",")) {
-					roles.add(roleDao.get(Trole.class, roleId));
-				}
-			}
-			for (String id : ids.split(",")) {
-				if (id != null && !id.equalsIgnoreCase("")) {
-					Tuser t = userDao.get(Tuser.class, id);
-					t.setTroles(new HashSet<Trole>(roles));
-				}
-			}
-		}
-	}
+					//roles.add(roleMapper.selectByPrimaryKey(roleId));
+					//获得roleId
+					userRoleKey.setTroleId(roleId);
+					String[] idArr=ids.split(",");
+					for(int i=0;i< idArr.length;i++){
+						if(idArr[i] !=null && ! idArr[i].equals("")){
+							userRoleKey.setTuserId(idArr[i]);
+							if (userRoleMapper.selectByPrimaryKey(userRoleKey)>0){
 
-	@Override
-	public List<String> resourceList(String id) {
-		List<String> resourceList = new ArrayList<String>();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", id);
-		Tuser t = userDao.get("from Tuser t join fetch t.troles role join fetch role.tresources resource where t.id = :id", params);
-		if (t != null) {
-			Set<Trole> roles = t.getTroles();
-			if (roles != null && !roles.isEmpty()) {
-				for (Trole role : roles) {
-					Set<Tresource> resources = role.getTresources();
-					if (resources != null && !resources.isEmpty()) {
-						for (Tresource resource : resources) {
-							if (resource != null && resource.getUrl() != null) {
-								resourceList.add(resource.getUrl());
+							}else{
+								userRoleMapper.insert(userRoleKey);
 							}
 						}
 					}
 				}
 			}
+
+
 		}
-		return resourceList;
 	}
 
 	@Override
-	public void editPwd(User user) {
+	public List<String> resourceList(String id) {
+
+		return null;
+	}
+
+	@Override
+	public void editPwd(Puser user) {
 		if (user != null && user.getPwd() != null && !user.getPwd().trim().equalsIgnoreCase("")) {
-			Tuser u = userDao.get(Tuser.class, user.getId());
+			User u = userDao.selectByPrimaryKey(user.getId());
 			u.setPwd(MD5Util.md5(user.getPwd()));
 			u.setModifydatetime(new Date());
 		}
@@ -250,7 +235,7 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public boolean editCurrentUserPwd(SessionInfo sessionInfo, String oldPwd, String pwd) {
-		Tuser u = userDao.get(Tuser.class, sessionInfo.getId());
+		User u = userDao.selectByPrimaryKey(sessionInfo.getId());
 		if (u.getPwd().equalsIgnoreCase(MD5Util.md5(oldPwd))) {// 说明原密码输入正确
 			u.setPwd(MD5Util.md5(pwd));
 			u.setModifydatetime(new Date());
@@ -260,17 +245,18 @@ public class UserServiceImpl implements UserServiceI {
 	}
 
 	@Override
-	public List<User> loginCombobox(String q) {
+	public List<Puser> loginCombobox(String q) {
 		if (q == null) {
 			q = "";
 		}
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("name", "%%" + q.trim() + "%%");
-		List<Tuser> tl = userDao.find("from Tuser t where t.name like :name order by name", params, 1, 10);
-		List<User> ul = new ArrayList<User>();
+		User user=new User();
+		user.setName("%" + q.trim() + "%");
+		com.github.pagehelper.PageHelper.startPage(1,10);
+		List<User> tl = userDao.getAll(user);
+		List<Puser> ul = new ArrayList<Puser>();
 		if (tl != null && tl.size() > 0) {
-			for (Tuser t : tl) {
-				User u = new User();
+			for (User t : tl) {
+				Puser u = new Puser();
 				u.setName(t.getName());
 				ul.add(u);
 			}
@@ -284,13 +270,14 @@ public class UserServiceImpl implements UserServiceI {
 			q = "";
 		}
 		DataGrid dg = new DataGrid();
-		List<User> ul = new ArrayList<User>();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("name", "%%" + q.trim() + "%%");
-		List<Tuser> tl = userDao.find("from Tuser t where t.name like :name order by " + ph.getSort() + " " + ph.getOrder(), params, ph.getPage(), ph.getRows());
+		List<Puser> ul = new ArrayList<Puser>();
+		User user=new User();
+		user.setName("%" + q.trim()+"%");
+		com.github.pagehelper.PageHelper.startPage(1,10);
+		List<User> tl = userDao.getAll(user);
 		if (tl != null && tl.size() > 0) {
-			for (Tuser t : tl) {
-				User u = new User();
+			for (User t : tl) {
+				Puser u = new Puser();
 				u.setName(t.getName());
 				u.setCreatedatetime(t.getCreatedatetime());
 				u.setModifydatetime(t.getModifydatetime());
@@ -298,7 +285,7 @@ public class UserServiceImpl implements UserServiceI {
 			}
 		}
 		dg.setRows(ul);
-		dg.setTotal(userDao.count("select count(*) from Tuser t where t.name like :name", params));
+		dg.setTotal(userDao.getCount(user));
 		return dg;
 	}
 
@@ -306,12 +293,13 @@ public class UserServiceImpl implements UserServiceI {
 	public List<Long> userCreateDatetimeChart() {
 		List<Long> l = new ArrayList<Long>();
 		int k = 0;
+		User user=new User();
 		for (int i = 0; i < 12; i++) {
-			Map<String, Object> params = new HashMap<String, Object>();
-			params.put("s", k);
-			params.put("e", k + 2);
 			k = k + 2;
-			l.add(userDao.count("select count(*) from Tuser t where HOUR(t.createdatetime)>=:s and HOUR(t.createdatetime)<:e", params));
+			user.setValue(k);
+			user.setValue2(k+2);
+
+			l.add(userDao.getCount(user));
 		}
 		return l;
 	}

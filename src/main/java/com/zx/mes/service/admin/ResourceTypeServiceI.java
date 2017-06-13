@@ -2,7 +2,7 @@ package com.zx.mes.service.admin;
 
 import java.util.List;
 
-import com.zx.mes.pageModel.ResourceType;
+import com.zx.mes.pageModel.PresourceType;
 
 /**
  * 资源类型服务
@@ -17,6 +17,6 @@ public interface ResourceTypeServiceI {
 	 * 
 	 * @return
 	 */
-	public List<ResourceType> getResourceTypeList();
+	public List<PresourceType> getResourceTypeList();
 
 }

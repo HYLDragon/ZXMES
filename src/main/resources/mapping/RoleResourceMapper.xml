@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.admin.RoleResourceMapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.admin.RoleResourceKey">
+    <id column="TRESOURCE_ID" jdbcType="VARCHAR" property="tresourceId" />
+    <id column="TROLE_ID" jdbcType="VARCHAR" property="troleId" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="com.zx.mes.model.admin.RoleResourceKey">
+    delete from trole_tresource
+    where TRESOURCE_ID = #{tresourceId,jdbcType=VARCHAR}
+      and TROLE_ID = #{troleId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.mes.model.admin.RoleResourceKey">
+    insert into trole_tresource (TRESOURCE_ID, TROLE_ID)
+    values (#{tresourceId,jdbcType=VARCHAR}, #{troleId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.admin.RoleResourceKey">
+    insert into trole_tresource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="tresourceId != null">
+        TRESOURCE_ID,
+      </if>
+      <if test="troleId != null">
+        TROLE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="tresourceId != null">
+        #{tresourceId,jdbcType=VARCHAR},
+      </if>
+      <if test="troleId != null">
+        #{troleId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!---->
+  <delete id="deleteByPrimaryRoleResourceKey" parameterType="com.zx.mes.model.admin.RoleResourceKey">
+    delete from trole_tresource
+    where 1=1
+     <if test="tresourceId !=null and tresourceId !=''">
+       and TRESOURCE_ID = #{tresourceId,jdbcType=VARCHAR}
+     </if>
+    <if test="troleId !=null and troleId !=''">
+      and TROLE_ID = #{troleId,jdbcType=VARCHAR}
+    </if>
+
+  </delete>
+</mapper>

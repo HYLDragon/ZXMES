@@ -4176,16 +4176,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * _.mixin({ 'foo': _.constant('foo') });
 	   *
 	   * var lodash = _.runInContext();
-	   * lodash.mixin({ 'bar': lodash.constant('bar') });
+	   * lodash.mixin({ 'mes': lodash.constant('mes') });
 	   *
 	   * _.isFunction(_.foo);
 	   * // => true
-	   * _.isFunction(_.bar);
+	   * _.isFunction(_.mes);
 	   * // => false
 	   *
 	   * lodash.isFunction(lodash.foo);
 	   * // => false
-	   * lodash.isFunction(lodash.bar);
+	   * lodash.isFunction(lodash.mes);
 	   * // => true
 	   *
 	   * // Create a suped-up `defer` in Node.js.
@@ -16875,7 +16875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _.camelCase('Foo Bar');
 	     * // => 'fooBar'
 	     *
-	     * _.camelCase('--foo-bar--');
+	     * _.camelCase('--foo-mes--');
 	     * // => 'fooBar'
 	     *
 	     * _.camelCase('__FOO_BAR__');
@@ -17035,13 +17035,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @example
 	     *
 	     * _.kebabCase('Foo Bar');
-	     * // => 'foo-bar'
+	     * // => 'foo-mes'
 	     *
 	     * _.kebabCase('fooBar');
-	     * // => 'foo-bar'
+	     * // => 'foo-mes'
 	     *
 	     * _.kebabCase('__FOO_BAR__');
-	     * // => 'foo-bar'
+	     * // => 'foo-mes'
 	     */
 	    var kebabCase = createCompounder(function(result, word, index) {
 	      return result + (index ? '-' : '') + word.toLowerCase();
@@ -17059,13 +17059,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @example
 	     *
 	     * _.lowerCase('--Foo-Bar--');
-	     * // => 'foo bar'
+	     * // => 'foo mes'
 	     *
 	     * _.lowerCase('fooBar');
-	     * // => 'foo bar'
+	     * // => 'foo mes'
 	     *
 	     * _.lowerCase('__FOO_BAR__');
-	     * // => 'foo bar'
+	     * // => 'foo mes'
 	     */
 	    var lowerCase = createCompounder(function(result, word, index) {
 	      return result + (index ? ' ' : '') + word.toLowerCase();
@@ -17362,7 +17362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {string} Returns the start cased string.
 	     * @example
 	     *
-	     * _.startCase('--foo-bar--');
+	     * _.startCase('--foo-mes--');
 	     * // => 'Foo Bar'
 	     *
 	     * _.startCase('fooBar');
@@ -17633,7 +17633,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @example
 	     *
 	     * _.toLower('--Foo-Bar--');
-	     * // => '--foo-bar--'
+	     * // => '--foo-mes--'
 	     *
 	     * _.toLower('fooBar');
 	     * // => 'foobar'
@@ -17657,7 +17657,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {string} Returns the upper cased string.
 	     * @example
 	     *
-	     * _.toUpper('--foo-bar--');
+	     * _.toUpper('--foo-mes--');
 	     * // => '--FOO-BAR--'
 	     *
 	     * _.toUpper('fooBar');
@@ -17689,8 +17689,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * _.trim('-_-abc-_-', '_-');
 	     * // => 'abc'
 	     *
-	     * _.map(['  foo  ', '  bar  '], _.trim);
-	     * // => ['foo', 'bar']
+	     * _.map(['  foo  ', '  mes  '], _.trim);
+	     * // => ['foo', 'mes']
 	     */
 	    function trim(string, chars, guard) {
 	      string = toString(string);
@@ -17904,7 +17904,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {string} Returns the upper cased string.
 	     * @example
 	     *
-	     * _.upperCase('--foo-bar');
+	     * _.upperCase('--foo-mes');
 	     * // => 'FOO BAR'
 	     *
 	     * _.upperCase('fooBar');
@@ -70006,7 +70006,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return advances;
 	    };
 
-	    characters = '.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n\nspace         exclam         quotedbl       numbersign\ndollar        percent        ampersand      quotesingle\nparenleft     parenright     asterisk       plus\ncomma         hyphen         period         slash\nzero          one            two            three\nfour          five           six            seven\neight         nine           colon          semicolon\nless          equal          greater        question\n\nat            A              B              C\nD             E              F              G\nH             I              J              K\nL             M              N              O\nP             Q              R              S\nT             U              V              W\nX             Y              Z              bracketleft\nbackslash     bracketright   asciicircum    underscore\n\ngrave         a              b              c\nd             e              f              g\nh             i              j              k\nl             m              n              o\np             q              r              s\nt             u              v              w\nx             y              z              braceleft\nbar           braceright     asciitilde     .notdef\n\nEuro          .notdef        quotesinglbase florin\nquotedblbase  ellipsis       dagger         daggerdbl\ncircumflex    perthousand    Scaron         guilsinglleft\nOE            .notdef        Zcaron         .notdef\n.notdef       quoteleft      quoteright     quotedblleft\nquotedblright bullet         endash         emdash\ntilde         trademark      scaron         guilsinglright\noe            .notdef        zcaron         ydieresis\n\nspace         exclamdown     cent           sterling\ncurrency      yen            brokenbar      section\ndieresis      copyright      ordfeminine    guillemotleft\nlogicalnot    hyphen         registered     macron\ndegree        plusminus      twosuperior    threesuperior\nacute         mu             paragraph      periodcentered\ncedilla       onesuperior    ordmasculine   guillemotright\nonequarter    onehalf        threequarters  questiondown\n\nAgrave        Aacute         Acircumflex    Atilde\nAdieresis     Aring          AE             Ccedilla\nEgrave        Eacute         Ecircumflex    Edieresis\nIgrave        Iacute         Icircumflex    Idieresis\nEth           Ntilde         Ograve         Oacute\nOcircumflex   Otilde         Odieresis      multiply\nOslash        Ugrave         Uacute         Ucircumflex\nUdieresis     Yacute         Thorn          germandbls\n\nagrave        aacute         acircumflex    atilde\nadieresis     aring          ae             ccedilla\negrave        eacute         ecircumflex    edieresis\nigrave        iacute         icircumflex    idieresis\neth           ntilde         ograve         oacute\nocircumflex   otilde         odieresis      divide\noslash        ugrave         uacute         ucircumflex\nudieresis     yacute         thorn          ydieresis'.split(/\s+/);
+	    characters = '.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n.notdef       .notdef        .notdef        .notdef\n\nspace         exclam         quotedbl       numbersign\ndollar        percent        ampersand      quotesingle\nparenleft     parenright     asterisk       plus\ncomma         hyphen         period         slash\nzero          one            two            three\nfour          five           six            seven\neight         nine           colon          semicolon\nless          equal          greater        question\n\nat            A              B              C\nD             E              F              G\nH             I              J              K\nL             M              N              O\nP             Q              R              S\nT             U              V              W\nX             Y              Z              bracketleft\nbackslash     bracketright   asciicircum    underscore\n\ngrave         a              b              c\nd             e              f              g\nh             i              j              k\nl             m              n              o\np             q              r              s\nt             u              v              w\nx             y              z              braceleft\nmes           braceright     asciitilde     .notdef\n\nEuro          .notdef        quotesinglbase florin\nquotedblbase  ellipsis       dagger         daggerdbl\ncircumflex    perthousand    Scaron         guilsinglleft\nOE            .notdef        Zcaron         .notdef\n.notdef       quoteleft      quoteright     quotedblleft\nquotedblright bullet         endash         emdash\ntilde         trademark      scaron         guilsinglright\noe            .notdef        zcaron         ydieresis\n\nspace         exclamdown     cent           sterling\ncurrency      yen            brokenbar      section\ndieresis      copyright      ordfeminine    guillemotleft\nlogicalnot    hyphen         registered     macron\ndegree        plusminus      twosuperior    threesuperior\nacute         mu             paragraph      periodcentered\ncedilla       onesuperior    ordmasculine   guillemotright\nonequarter    onehalf        threequarters  questiondown\n\nAgrave        Aacute         Acircumflex    Atilde\nAdieresis     Aring          AE             Ccedilla\nEgrave        Eacute         Ecircumflex    Edieresis\nIgrave        Iacute         Icircumflex    Idieresis\nEth           Ntilde         Ograve         Oacute\nOcircumflex   Otilde         Odieresis      multiply\nOslash        Ugrave         Uacute         Ucircumflex\nUdieresis     Yacute         Thorn          germandbls\n\nagrave        aacute         acircumflex    atilde\nadieresis     aring          ae             ccedilla\negrave        eacute         ecircumflex    edieresis\nigrave        iacute         icircumflex    idieresis\neth           ntilde         ograve         oacute\nocircumflex   otilde         odieresis      divide\noslash        ugrave         uacute         ucircumflex\nudieresis     yacute         thorn          ydieresis'.split(/\s+/);
 
 	    return AFMFont;
 

@@ -44,7 +44,7 @@
 				pagination : true,
 				pageSize : 10,
 				pageList : [ 10, 20, 30, 40, 50 ],
-				sortName : 'name',
+				sortName : 'palletNo',
 				sortOrder : 'asc',
 				frozenColumns:[[{
 					field:'id',
@@ -68,13 +68,18 @@
 					width:120,
 					align:'center'
 				},{
-					field:'modifyDateTime',
-					title:'修改时间',
+					field:'lastBindTime',
+					title:'绑定时间',
 					width:120,
 					align:'center'
 				},{
-					field:'remark',
-					title:'备注',
+                    field:'palletType',
+                    title:'栈板类型',
+                    width:140,
+                    align:'center'
+                },{
+					field:'bar',
+					title:'条码',
 					width:140,
 					align:'center'
 				}]],
@@ -214,7 +219,7 @@
 	<div id="toolbar">
 			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" onclick="searchFun();">过滤条件</a>
 			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" onclick="cleanFun();">清空条件</a>
-			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick',plain:true" onclick="viewDetail();">详细情况</a>
+			<%--<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick',plain:true" onclick="viewDetail();">详细情况</a>--%>
 	</div>
   </body>
 </html>

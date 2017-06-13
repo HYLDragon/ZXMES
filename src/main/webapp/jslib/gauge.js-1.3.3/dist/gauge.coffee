@@ -259,7 +259,7 @@ class Bar
 		valPercent = (@value / @maxValue) * 100
 		avgPercent = (@avgValue / @maxValue) * 100
 
-		$(".bar-value", @elem).css({"width": valPercent + "%"})
+		$(".mes-value", @elem).css({"width": valPercent + "%"})
 		$(".typical-value", @elem).css({"width": avgPercent + "%"})
 
 class Gauge extends BaseGauge

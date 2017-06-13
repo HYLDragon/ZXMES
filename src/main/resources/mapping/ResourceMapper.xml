@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.admin.ResourceMapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.admin.Resource">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="SEQ" jdbcType="INTEGER" property="seq" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="PID" jdbcType="VARCHAR" property="pid" />
+    <result column="TRESOURCETYPE_ID" jdbcType="VARCHAR" property="tresourcetypeId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, ICON, NAME, REMARK, SEQ, URL, PID, TRESOURCETYPE_ID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tresource
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tresource
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.mes.model.admin.Resource">
+    insert into tresource (ID, ICON, NAME, 
+      REMARK, SEQ, URL, PID, 
+      TRESOURCETYPE_ID)
+    values (#{id,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{seq,jdbcType=INTEGER}, #{url,jdbcType=VARCHAR}, #{pid,jdbcType=VARCHAR}, 
+      #{tresourcetypeId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.admin.Resource">
+    insert into tresource
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="seq != null">
+        SEQ,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="pid != null">
+        PID,
+      </if>
+      <if test="tresourcetypeId != null">
+        TRESOURCETYPE_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="tresourcetypeId != null">
+        #{tresourcetypeId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zx.mes.model.admin.Resource">
+    update tresource
+    <set>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+      <if test="tresourcetypeId != null">
+        TRESOURCETYPE_ID = #{tresourcetypeId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zx.mes.model.admin.Resource">
+    update tresource
+    set ICON = #{icon,jdbcType=VARCHAR},
+      NAME = #{name,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=INTEGER},
+      URL = #{url,jdbcType=VARCHAR},
+      PID = #{pid,jdbcType=VARCHAR},
+      TRESOURCETYPE_ID = #{tresourcetypeId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <select id="getAll" parameterType="com.zx.mes.model.admin.Resource" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tresource
+    where 1=1
+    <if test="name !=null and name !=''">
+      and name like #{name,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="getAllWithIds"  resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tresource
+    where ID in
+    <foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+  <resultMap id="resourceResultMap" type="com.zx.mes.model.admin.Resource" extends="BaseResultMap">
+    <association property="resourcetype" javaType="com.zx.mes.model.admin.ResourceType">
+      <id column="resourcetype_id" property="id"/>
+      <result column="resourcetype_name" property="name"/>
+    </association>
+  </resultMap>
+  <select id="getResourceWithType" parameterType="com.zx.mes.model.admin.Resource" resultMap="resourceResultMap">
+    SELECT DISTINCT tresource.ID,
+    tresource.ICON,
+    tresource.NAME,
+    tresource.REMARK,
+    tresource.URL,
+    tresource.SEQ,
+    tresource.PID,
+    tresource.TRESOURCETYPE_ID resourcetype_id,
+    tresourcetype.ID resourcetype_id,
+    tresourcetype.NAME resourcetype_name
+    FROM tresource  JOIN tresourcetype ON tresource.TRESOURCETYPE_ID = tresourcetype.ID
+    where 1=1
+    <if test="tresourcetypeId !=null and tresourcetypeId !=''">
+      and tresourcetype.ID =#{tresourcetypeId,jdbcType=VARCHAR}
+    </if>
+    order by tresource.SEQ
+  </select>
+
+  <select id="getResourceWithTypeUser" parameterType="com.zx.mes.model.admin.Resource" resultMap="resourceResultMap">
+    SELECT tresource.ID,
+    tresource.ICON,
+    tresource.NAME,
+    tresource.REMARK,
+    tresource.SEQ,
+    tresource.URL,
+    tresource.PID,
+    tresource.TRESOURCETYPE_ID,
+    trole.ID role_id,
+    trole.NAME role_name,
+    trole.REMARK role_remark,
+    trole.SEQ role_seq,
+    trole.PID role_pid,
+    tresourcetype.ID resourcetype_id,
+    tresourcetype.NAME resourcetype_name,
+    tuser.ID user_id,
+    tuser.NAME user_name
+    FROM tresource  JOIN trole_tresource ON tresource.ID = trole_tresource.TRESOURCE_ID
+    JOIN tresourcetype ON tresource.TRESOURCETYPE_ID = tresourcetype.ID
+    JOIN trole ON trole_tresource.TROLE_ID = trole.ID
+    JOIN tuser_trole ON trole.ID = tuser_trole.TROLE_ID
+    JOIN tuser ON tuser_trole.TUSER_ID = tuser.ID
+    where 1=1
+    <if test="tresourcetypeId !=null and tresourcetypeId !=''">
+      and tresourcetype.ID =#{tresourcetypeId,VARCHAR}
+    </if>
+    <if test="userId !=null and userId !=''">
+    and tuser.ID =#{userId,jdbcType=VARCHAR}
+    </if>
+    order by tresource.SEQ
+  </select>
+
+</mapper>

@@ -389,7 +389,7 @@
       }
       valPercent = (this.value / this.maxValue) * 100;
       avgPercent = (this.avgValue / this.maxValue) * 100;
-      $(".bar-value", this.elem).css({
+      $(".mes-value", this.elem).css({
         "width": valPercent + "%"
       });
       return $(".typical-value", this.elem).css({

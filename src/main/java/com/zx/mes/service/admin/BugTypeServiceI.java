@@ -2,7 +2,8 @@ package com.zx.mes.service.admin;
 
 import java.util.List;
 
-import com.zx.mes.model.admin.Tbugtype;
+import com.zx.mes.model.admin.BugType;
+
 
 /**
  * 
@@ -16,6 +17,6 @@ public interface BugTypeServiceI {
 	 * 
 	 * @return
 	 */
-	public List<Tbugtype> getBugTypeList();
+	public List<BugType> getBugTypeList();
 
 }

@@ -660,7 +660,7 @@
                 }
 
                 if (s.bars.show) {
-                    // make sure we got room for the bar on the dancing floor
+                    // make sure we got room for the mes on the dancing floor
                     var delta = s.bars.align == "left" ? 0 : -s.bars.barWidth/2;
                     if (s.bars.horizontal) {
                         ymin += delta;
@@ -1585,7 +1585,7 @@
                         x = box.left - plotOffset.left + (axis.position == "left" ? box.width : 0);
                 }
 
-                // draw tick bar
+                // draw tick mes
                 if (!axis.innermost) {
                     ctx.beginPath();
                     xoff = yoff = 0;
@@ -2034,7 +2034,7 @@
                 drawLeft, drawRight, drawTop, drawBottom,
                 tmp;
 
-            // in horizontal mode, we start the bar from the left
+            // in horizontal mode, we start the mes from the left
             // instead of from the bottom so it appears to be
             // horizontal rather than vertical
             if (horizontal) {
@@ -2102,7 +2102,7 @@
             right = axisx.p2c(right);
             top = axisy.p2c(top);
 
-            // fill the bar
+            // fill the mes
             if (fillStyleCallback) {
                 c.beginPath();
                 c.moveTo(left, bottom);
@@ -2343,7 +2343,7 @@
                         if (x == null)
                             continue;
 
-                        // for a bar graph, the cursor must be inside the bar
+                        // for a mes graph, the cursor must be inside the mes
                         if (series[i].bars.horizontal ?
                             (mx <= Math.max(b, x) && mx >= Math.min(b, x) &&
                                 my >= y + barLeft && my <= y + barRight) :

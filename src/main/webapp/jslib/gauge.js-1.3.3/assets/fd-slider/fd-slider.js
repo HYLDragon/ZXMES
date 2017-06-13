@@ -1070,7 +1070,7 @@ var fdSlider = (function() {
                         wrapper.className         = "fd-slider-inner";
 
                         bar                       = document.createElement('span');
-                        bar.className             = "fd-slider-bar";
+                        bar.className             = "fd-slider-mes";
                         
                         if(!noRangeBar) {
                                 rangeBar                  = document.createElement('span');
@@ -1101,7 +1101,7 @@ var fdSlider = (function() {
                         /*@if(@_win32)
                         handle.unselectable       = "on";
                         if(!noRangeBar) rangeBar.unselectable     = "on";
-                        bar.unselectable          = "on";
+                        mes.unselectable          = "on";
                         wrapper.unselectable      = "on";
                         outerWrapper.unselectable = "on";                             
                         /*@end@*/                             

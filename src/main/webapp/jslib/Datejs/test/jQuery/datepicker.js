@@ -75,7 +75,7 @@ function Datepicker() {
 		shortYearCutoff: '+10', // Short year values < this are in the current century,
 			// > this are in the previous century, 
 			// string value starting with '+' for current year + value
-		showStatus: false, // True to show status bar at bottom, false to not show it
+		showStatus: false, // True to show status mes at bottom, false to not show it
 		statusForDate: this.dateStatus, // Function to provide status text for a date -
 			// takes date and instance as parameters, returns display text
 		minDate: null, // The earliest selectable date, or null for no limit

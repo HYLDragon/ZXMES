@@ -170,7 +170,7 @@ K.extend(KSWFUpload, {
 		var statusDiv = K('<div class="ke-status"></div>').appendTo(photoDiv);
 		// progressbar
 		K(['<div class="ke-progressbar">',
-			'<div class="ke-progressbar-bar"><div class="ke-progressbar-bar-inner"></div></div>',
+			'<div class="ke-progressbar-mes"><div class="ke-progressbar-mes-inner"></div></div>',
 			'<div class="ke-progressbar-percent">0%</div></div>'].join('')).hide().appendTo(statusDiv);
 		// message
 		K('<div class="ke-message">' + self.options.pendingMessage + '</div>').appendTo(statusDiv);
@@ -178,7 +178,7 @@ K.extend(KSWFUpload, {
 		itemDiv.append('<div class="ke-name">' + file.name + '</div>');
 
 		self.progressbars[file.id] = {
-			bar : K('.ke-progressbar-bar-inner', photoDiv),
+			bar : K('.ke-progressbar-mes-inner', photoDiv),
 			percent : K('.ke-progressbar-percent', photoDiv)
 		};
 	},

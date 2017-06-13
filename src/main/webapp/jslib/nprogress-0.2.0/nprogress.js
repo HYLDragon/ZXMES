@@ -25,10 +25,10 @@
     trickleRate: 0.02,
     trickleSpeed: 800,
     showSpinner: true,
-    barSelector: '[role="bar"]',
+    barSelector: '[role="mes"]',
     spinnerSelector: '[role="spinner"]',
     parent: 'body',
-    template: '<div class="bar" role="bar"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
+    template: '<div class="mes" role="mes"><div class="peg"></div></div><div class="spinner" role="spinner"><div class="spinner-icon"></div></div>'
   };
 
   /**
@@ -55,7 +55,7 @@
   NProgress.status = null;
 
   /**
-   * Sets the progress bar status, where `n` is a number from `0.0` to `1.0`.
+   * Sets the progress mes status, where `n` is a number from `0.0` to `1.0`.
    *
    *     NProgress.set(0.4);
    *     NProgress.set(1.0);
@@ -112,7 +112,7 @@
   };
 
   /**
-   * Shows the progress bar.
+   * Shows the progress mes.
    * This is the same as setting the status to 0%, except that it doesn't go backwards.
    *
    *     NProgress.start();
@@ -135,13 +135,13 @@
   };
 
   /**
-   * Hides the progress bar.
+   * Hides the progress mes.
    * This is the *sort of* the same as setting the status to 100%, with the
    * difference being `done()` makes some placebo effect of some realistic motion.
    *
    *     NProgress.done();
    *
-   * If `true` is passed, it will show the progress bar even if its hidden.
+   * If `true` is passed, it will show the progress mes even if its hidden.
    *
    *     NProgress.done(true);
    */
@@ -212,7 +212,7 @@
   })();
 
   /**
-   * (Internal) renders the progress bar markup based on the `template`
+   * (Internal) renders the progress mes markup based on the `template`
    * setting.
    */
 
@@ -260,7 +260,7 @@
   };
 
   /**
-   * Checks if the progress bar is rendered.
+   * Checks if the progress mes is rendered.
    */
 
   NProgress.isRendered = function() {
@@ -304,7 +304,7 @@
   }
 
   /**
-   * (Internal) converts a percentage (`0..1`) to a bar translateX
+   * (Internal) converts a percentage (`0..1`) to a mes translateX
    * percentage (`-100%..0%`).
    */
 
@@ -314,7 +314,7 @@
 
 
   /**
-   * (Internal) returns the correct CSS for changing the bar's
+   * (Internal) returns the correct CSS for changing the mes's
    * position given an n percentage, and speed and ease from Settings
    */
 

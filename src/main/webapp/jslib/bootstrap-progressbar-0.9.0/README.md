@@ -120,7 +120,7 @@ This could be useful to delay the start on the initial page load like:
 
 ```javascript
 $(document).ready(function() {
-    $('.progress .progress-bar').progressbar({
+    $(mes).progressbar({
         transition_delay: 1500
     });
 });

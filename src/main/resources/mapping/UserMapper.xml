@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.admin.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.admin.User">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="CREATEDATETIME" jdbcType="TIMESTAMP" property="createdatetime" />
+    <result column="MODIFYDATETIME" jdbcType="TIMESTAMP" property="modifydatetime" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="PWD" jdbcType="VARCHAR" property="pwd" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, CREATEDATETIME, MODIFYDATETIME, NAME, PWD
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tuser
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from tuser
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.mes.model.admin.User">
+    insert into tuser (ID, CREATEDATETIME, MODIFYDATETIME, 
+      NAME, PWD)
+    values (#{id,jdbcType=VARCHAR}, #{createdatetime,jdbcType=TIMESTAMP}, #{modifydatetime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{pwd,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.admin.User">
+    insert into tuser
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createdatetime != null">
+        CREATEDATETIME,
+      </if>
+      <if test="modifydatetime != null">
+        MODIFYDATETIME,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="pwd != null">
+        PWD,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="createdatetime != null">
+        #{createdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydatetime != null">
+        #{modifydatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        #{pwd,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zx.mes.model.admin.User">
+    update tuser
+    <set>
+      <if test="createdatetime != null">
+        CREATEDATETIME = #{createdatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifydatetime != null">
+        MODIFYDATETIME = #{modifydatetime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pwd != null">
+        PWD = #{pwd,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zx.mes.model.admin.User">
+    update tuser
+    set CREATEDATETIME = #{createdatetime,jdbcType=TIMESTAMP},
+      MODIFYDATETIME = #{modifydatetime,jdbcType=TIMESTAMP},
+      NAME = #{name,jdbcType=VARCHAR},
+      PWD = #{pwd,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+
+
+  <select id="getCount" parameterType="com.zx.mes.model.admin.User" resultType="long">
+    select count(*) from tuser
+    where 1=1
+    <if test="name !=null and name !=''">
+      and name = #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="createdatetime !=null">
+      and HOUR(CREATEDATETIME)>=#{value,jdbcType=int}
+    </if>
+    <if test="createdatetime2 !=null">
+      and HOUR(CREATEDATETIME)&lt;  #{value2,jdbcType=int}
+    </if>
+  </select>
+
+  <select id="getUser" parameterType="java.lang.String" resultType="int">
+    select
+    <include refid="Base_Column_List" />
+    from tuser
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
+
+  <select id="login" parameterType="com.zx.mes.model.admin.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tuser
+    where 1=1
+    <if test="name !=null and name !=''">
+      and name =#{name,jdbcType=VARCHAR}
+    </if>
+    <if test="pwd !=null and pwd !=''">
+      and pwd =#{pwd,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+  <select id="getAll" parameterType="com.zx.mes.model.admin.User" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from tuser
+    where 1=1
+    <if test="createdatetime != null">
+      and CREATEDATETIME > #{createdatetime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydatetime != null">
+      and MODIFYDATETIME &lt;  #{modifydatetime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="name != null">
+      and NAME like #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="pwd != null">
+      and PWD = #{pwd,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <resultMap id="userResultMap" type="com.zx.mes.model.admin.User" extends="BaseResultMap">
+    <collection property="userRoleKeys" javaType="list" ofType="com.zx.mes.model.admin.UserRoleKey">
+      <result column="role_id" property="troleId"/>
+      <result column="user_id" property="tuserId"/>
+      <association property="role" javaType="com.zx.mes.model.admin.Role">
+        <id column="role_id" property="id"/>
+        <result column="role_name" property="name"/>
+        <result column="role_remark" property="remark"/>
+        <result column="role_seq" property="seq"/>
+        <result column="role_pid" property="pid"/>
+      </association>
+    </collection>
+  </resultMap>
+  <select id="getAllWithRole" parameterType="com.zx.mes.model.admin.User" resultMap="userResultMap">
+    SELECT
+    tuser.ID,
+    tuser.CREATEDATETIME,
+    tuser.MODIFYDATETIME,
+    tuser. NAME,
+    tuser.PWD,
+    tuser_trole.TUSER_ID user_id,
+    tuser_trole.TROLE_ID role_id,
+    trole.ID role_id,
+    trole. NAME role_name,
+    trole.remark role_remark,
+    trole.SEQ role_seq,
+    trole.PID role_pid
+    FROM
+    tuser
+    JOIN tuser_trole ON tuser.ID = tuser_trole.TUSER_ID
+    JOIN trole ON tuser_trole.TROLE_ID = trole.ID
+	where 1=1
+    <if test="createdatetime != null">
+      and tuser.CREATEDATETIME > #{createdatetime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="modifydatetime != null">
+      and tuser.MODIFYDATETIME &lt;  #{modifydatetime,jdbcType=TIMESTAMP}
+    </if>
+    <if test="name != null">
+      and tuser.NAME like #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="pwd != null">
+      and tuser.PWD = #{pwd,jdbcType=VARCHAR}
+    </if>
+  </select>
+</mapper>

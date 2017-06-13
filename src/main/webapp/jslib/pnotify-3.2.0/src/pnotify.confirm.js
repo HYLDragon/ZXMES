@@ -49,7 +49,7 @@
   PNotify.prototype.modules.confirm = {
     init: function(notice, options){
       // The div that contains the buttons.
-      this.container = $('<div class="ui-pnotify-action-bar" style="margin-top:5px;clear:both;" />').css('text-align', options.align).appendTo(notice.container);
+      this.container = $('<div class="ui-pnotify-action-mes" style="margin-top:5px;clear:both;" />').css('text-align', options.align).appendTo(notice.container);
 
       if (options.confirm || options.prompt)
         this.makeDialog(notice, options);

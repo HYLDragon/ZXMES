@@ -143,7 +143,7 @@ dlg.find(".messager-input").focus();
 return dlg;
 },progress:function(_19){
 var _1a={bar:function(){
-return $("body>div.messager-window").find("div.messager-p-bar");
+return $("body>div.messager-window").find("div.messager-p-mes");
 },close:function(){
 var dlg=$("body>div.messager-window>div.messager-body:has(div.messager-progress)");
 if(dlg.length){
@@ -156,7 +156,7 @@ return _1b();
 }
 _19=_19||{};
 var _1c=$.extend({},{title:"",minHeight:0,content:undefined,msg:"",text:undefined,interval:300},_19);
-var dlg=_d($.extend({},$.messager.defaults,{content:"<div class=\"messager-progress\"><div class=\"messager-p-msg\">"+_1c.msg+"</div><div class=\"messager-p-bar\"></div></div>",closable:false,doSize:false},_1c,{onClose:function(){
+var dlg=_d($.extend({},$.messager.defaults,{content:"<div class=\"messager-progress\"><div class=\"messager-p-msg\">"+_1c.msg+"</div><div class=\"messager-p-mes\"></div></div>",closable:false,doSize:false},_1c,{onClose:function(){
 if(this.timer){
 clearInterval(this.timer);
 }
@@ -166,7 +166,7 @@ _19.onClose.call(this);
 $.messager.defaults.onClose.call(this);
 }
 }}));
-var bar=dlg.find("div.messager-p-bar");
+var bar=dlg.find("div.messager-p-mes");
 bar.progressbar({text:_1c.text});
 dlg.dialog("resize");
 if(_1c.interval){

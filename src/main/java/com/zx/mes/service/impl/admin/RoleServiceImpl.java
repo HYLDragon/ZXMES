@@ -1,236 +1,200 @@
 package com.zx.mes.service.impl.admin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import com.zx.mes.dao.admin.RoleDaoI;
-import com.zx.mes.dao.admin.UserDaoI;
-import com.zx.mes.model.admin.Tresource;
-import com.zx.mes.model.admin.Trole;
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
-import com.zx.mes.dao.admin.ResourceDaoI;
-import com.zx.mes.model.admin.Tuser;
-import com.zx.mes.pageModel.Role;
+import com.zx.mes.dao.admin.*;
+import com.zx.mes.model.admin.Resource;
+import com.zx.mes.model.admin.Role;
+import com.zx.mes.model.admin.RoleResourceKey;
+import com.zx.mes.model.admin.UserRoleKey;
+import com.zx.mes.pageModel.Prole;
 import com.zx.mes.pageModel.SessionInfo;
 import com.zx.mes.pageModel.Tree;
 import com.zx.mes.service.admin.RoleServiceI;
+import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Service
+import java.util.ArrayList;
+import java.util.List;
+
+/**
+ * Created by Administrator on 2017/6/13.
+ */
 public class RoleServiceImpl implements RoleServiceI {
 
-	@Autowired
-	private RoleDaoI roleDao;
+    @Autowired
+    private RoleMapper roleDao;
 
-	@Autowired
-	private UserDaoI userDao;
+    @Autowired
+    private UserMapper userDao;
 
-	@Autowired
-	private ResourceDaoI resourceDao;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
-	@Override
-	public void add(Role role, SessionInfo sessionInfo) {
-		Trole t = new Trole();
-		BeanUtils.copyProperties(role, t);
-		if (role.getPid() != null && !role.getPid().equalsIgnoreCase("")) {
-			t.setTrole(roleDao.get(Trole.class, role.getPid()));
-		}
-		roleDao.save(t);
+    @Autowired
+    private ResourceMapper resourceDao;
 
-		// 刚刚添加的角色，赋予给当前的用户
-		Tuser user = userDao.get(Tuser.class, sessionInfo.getId());
-		user.getTroles().add(t);
-	}
+    @Autowired
+    private RoleResourceMapper roleResourceMapper;
 
-	@Override
-	public Role get(String id) {
-		Role r = new Role();
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", id);
-		Trole t = roleDao.get("select distinct t from Trole t left join fetch t.tresources resource where t.id = :id", params);
-		if (t != null) {
-			BeanUtils.copyProperties(t, r);
-			if (t.getTrole() != null) {
-				r.setPid(t.getTrole().getId());
-				r.setPname(t.getTrole().getName());
-			}
-			Set<Tresource> s = t.getTresources();
-			if (s != null && !s.isEmpty()) {
-				boolean b = false;
-				String ids = "";
-				String names = "";
-				for (Tresource tr : s) {
-					if (b) {
-						ids += ",";
-						names += ",";
-					} else {
-						b = true;
-					}
-					ids += tr.getId();
-					names += tr.getName();
-				}
-				r.setResourceIds(ids);
-				r.setResourceNames(names);
-			}
-		}
-		return r;
-	}
 
-	@Override
-	public void edit(Role role) {
-		Trole t = roleDao.get(Trole.class, role.getId());
-		if (t != null) {
-			BeanUtils.copyProperties(role, t);
-			if (role.getPid() != null && !role.getPid().equalsIgnoreCase("")) {
-				t.setTrole(roleDao.get(Trole.class, role.getPid()));
-			}
-			if (role.getPid() != null && !role.getPid().equalsIgnoreCase("")) {// 说明前台选中了上级资源
-				Trole pt = roleDao.get(Trole.class, role.getPid());
-				isChildren(t, pt);// 说明要将当前资源修改到当前资源的子/孙子资源下
-				t.setTrole(pt);
-			} else {
-				t.setTrole(null);// 前台没有选中上级资源，所以就置空
-			}
-		}
-	}
+    @Override
+    public void add(Prole role, SessionInfo sessionInfo) {
+        Role t = new Role();
+        UserRoleKey userRoleKey=new UserRoleKey();
+        BeanUtils.copyProperties(role, t);
+        if (role.getPid() != null && !role.getPid().equalsIgnoreCase("")) {
+            t.setPid(role.getPid());
+        }
+        roleDao.insert(t);
 
-	/**
-	 * 判断是否是将当前节点修改到当前节点的子节点
-	 * 
-	 * @param t
-	 *            当前节点
-	 * @param pt
-	 *            要修改到的节点
-	 * @return
-	 */
-	private boolean isChildren(Trole t, Trole pt) {
-		if (pt != null && pt.getTrole() != null) {
-			if (pt.getTrole().getId().equalsIgnoreCase(t.getId())) {
-				pt.setTrole(null);
-				return true;
-			} else {
-				return isChildren(t, pt.getTrole());
-			}
-		}
-		return false;
-	}
+        // 刚刚添加的角色，赋予给当前的用户
+        userRoleKey.setTroleId(role.getId());
+        userRoleKey.setTuserId(sessionInfo.getId());
+        userRoleMapper.insert(userRoleKey);
+    }
 
-	@Override
-	public List<Role> treeGrid(SessionInfo sessionInfo) {
-		List<Role> rl = new ArrayList<Role>();
-		List<Trole> tl = null;
-		Map<String, Object> params = new HashMap<String, Object>();
-		if (sessionInfo != null) {
-			params.put("userId", sessionInfo.getId());// 查自己有权限的角色
-			tl = roleDao.find("select distinct t from Trole t left join fetch t.tresources resource join fetch t.tusers user where user.id = :userId order by t.seq", params);
-		} else {
-			tl = roleDao.find("select distinct t from Trole t left join fetch t.tresources resource order by t.seq");
-		}
-		if (tl != null && tl.size() > 0) {
-			for (Trole t : tl) {
-				Role r = new Role();
-				BeanUtils.copyProperties(t, r);
-				r.setIconCls("status_online");
-				if (t.getTrole() != null) {
-					r.setPid(t.getTrole().getId());
-					r.setPname(t.getTrole().getName());
-				}
-				Set<Tresource> s = t.getTresources();
-				if (s != null && !s.isEmpty()) {
-					boolean b = false;
-					String ids = "";
-					String names = "";
-					for (Tresource tr : s) {
-						if (b) {
-							ids += ",";
-							names += ",";
-						} else {
-							b = true;
-						}
-						ids += tr.getId();
-						names += tr.getName();
-					}
-					r.setResourceIds(ids);
-					r.setResourceNames(names);
-				}
-				rl.add(r);
-			}
-		}
-		return rl;
-	}
+    @Override
+    public Prole get(String id) {
+        Prole r = new Prole();
+        Role role=new Role();
+        role.setId(id);
+        List<Role> list = roleDao.getAllWithRource(role);
+        if (list != null && list.size()>0){
+            StringBuilder ids=new StringBuilder();
+            StringBuilder names=new StringBuilder();
+            boolean b = false;
+            Role role1=list.get(0);
+            for(int i=0;i<role1.getResources().size();i++){
+                Resource resource=role1.getResources().get(i);
 
-	@Override
-	public void delete(String id) {
-		Trole t = roleDao.get(Trole.class, id);
-		del(t);
-	}
+                if(b){
+                    ids.append(",");
+                    names.append(",");
+                }else{
+                    b=true;
+                }
+                ids.append(resource.getId());
+                names.append(resource.getName());
+            }
+            r.setResourceIds(ids.toString());
+            r.setResourceNames(names.toString());
+        }
+        return r;
+    }
 
-	private void del(Trole t) {
-		if (t.getTroles() != null && t.getTroles().size() > 0) {
-			for (Trole r : t.getTroles()) {
-				del(r);
-			}
-		}
-		roleDao.delete(t);
-	}
+    @Override
+    public void edit(Prole role) {
+        Role t = roleDao.selectByPrimaryKey(role.getId());
+        if (t != null) {
+            BeanUtils.copyProperties(role, t);
+            if (role.getPid() != null && !role.getPid().equalsIgnoreCase("")) {
+                roleDao.updateByPrimaryKeySelective(t);
+            }
 
-	@Override
-	public List<Tree> tree(SessionInfo sessionInfo) {
-		List<Trole> l = null;
-		List<Tree> lt = new ArrayList<Tree>();
+        }
+    }
 
-		Map<String, Object> params = new HashMap<String, Object>();
-		if (sessionInfo != null) {
-			params.put("userId", sessionInfo.getId());// 查自己有权限的角色
-			l = roleDao.find("select distinct t from Trole t join fetch t.tusers user where user.id = :userId order by t.seq", params);
-		} else {
-			l = roleDao.find("from Trole t order by t.seq");
-		}
+    @Override
+    public List<Prole> treeGrid(SessionInfo sessionInfo) {
+        List<Prole> rl = new ArrayList<Prole>();
+        List<Role> tl = null;
+        Role role1=new Role();
+        if (sessionInfo != null) {
+            //params.put("userId", sessionInfo.getId());// 查自己有权限的角色
+            role1.setId(sessionInfo.getId());
+            tl = roleDao.getAllWithRource(role1);
+        } else {
+            tl = roleDao.getAllWithRource(role1);
+        }
 
-		if (l != null && l.size() > 0) {
-			for (Trole t : l) {
-				Tree tree = new Tree();
-				BeanUtils.copyProperties(t, tree);
-				tree.setText(t.getName());
-				tree.setIconCls("status_online");
-				if (t.getTrole() != null) {
-					tree.setPid(t.getTrole().getId());
-				}
-				lt.add(tree);
-			}
-		}
-		return lt;
-	}
+        for(int i=0;i<tl.size();i++){
+            Role role2=tl.get(i);
+            Prole prole=new Prole();
 
-	@Override
-	public List<Tree> allTree() {
-		return this.tree(null);
-	}
+            BeanUtils.copyProperties(role2,prole);
+            prole.setIconCls("status_online");
 
-	@Override
-	public void grant(Role role) {
-		Trole t = roleDao.get(Trole.class, role.getId());
-		if (role.getResourceIds() != null && !role.getResourceIds().equalsIgnoreCase("")) {
-			String ids = "";
-			boolean b = false;
-			for (String id : role.getResourceIds().split(",")) {
-				if (b) {
-					ids += ",";
-				} else {
-					b = true;
-				}
-				ids += "'" + id + "'";
-			}
-			t.setTresources(new HashSet<Tresource>(resourceDao.find("select distinct t from Tresource t where t.id in (" + ids + ")")));
-		} else {
-			t.setTresources(null);
-		}
-	}
+            List<Resource> resourceList=role2.getResources();
+            StringBuilder ids=new StringBuilder();
+            StringBuilder names=new StringBuilder();
+            boolean b = false;
+            for (int m=0;m<resourceList.size();m++){
+                Resource resource=resourceList.get(m);
+                if(b){
+                    ids.append(",");
+                    names.append(",");
+                }else{
+                    b=true;
+                }
+                ids.append(resource.getId());
+                names.append(resource.getName());
+            }
+            prole.setResourceIds(ids.toString());
+            prole.setResourceNames(names.toString());
 
+            rl.add(prole);
+
+        }
+        return rl;
+    }
+
+    @Override
+    public void delete(String id) {
+        //删除中间表
+        UserRoleKey userRoleKey=new UserRoleKey();
+        userRoleKey.setTroleId(id);
+        userRoleMapper.deleteByPrimaryRoleId(userRoleKey);
+
+        RoleResourceKey roleResourceKey=new RoleResourceKey();
+        roleResourceKey.setTroleId(id);
+        roleResourceMapper.deleteByPrimaryRoleResourceKey(roleResourceKey);
+        //再删除role
+        roleDao.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public List<Tree> tree(SessionInfo sessionInfo) {
+        List<Role> l = null;
+        List<Tree> lt = new ArrayList<Tree>();
+
+        Role role1=new Role();
+        if (sessionInfo != null) {
+
+            role1.setId(sessionInfo.getId());
+            l = roleDao.getAllWithUserId(role1);// 查自己有权限的角色
+        } else {
+            l = roleDao.getAllWithUserId(role1);
+        }
+
+
+        if (l != null && l.size() > 0) {
+            for (Role t : l) {
+                Tree tree = new Tree();
+                BeanUtils.copyProperties(t, tree);
+                tree.setText(t.getName());
+                tree.setIconCls("status_online");
+                lt.add(tree);
+            }
+        }
+        return lt;
+    }
+
+    @Override
+    public List<Tree> allTree() {
+        return this.tree(null);
+    }
+
+    @Override
+    public void grant(Prole role) {
+        Role r=roleDao.selectByPrimaryKey(role.getId());
+        List<String> ids=new ArrayList<>();
+        if (role.getResourceIds() != null && !role.getResourceIds().equalsIgnoreCase("")) {
+            for (String id : role.getResourceIds().split(",")) {
+               ids.add(id);
+
+            }
+            resourceDao.getAllWithIds(ids);
+        }else {
+
+        }
+    }
 }

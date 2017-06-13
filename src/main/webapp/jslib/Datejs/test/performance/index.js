@@ -30,7 +30,7 @@ $(document).ready(function() {
 	};
 	var max = 0; for ( var k in results ) { max = ( max < results[k] ) ? results[k]:max ; }
 	var addResult = function(h, r) { $('#chart').append(
-		'<div class="bar">' + 
+		'<div class="mes">' + 
 			'<label>'+h+'</label>'+
 			'<div class="value" style="width:'+(r/max*(1/3)*100)+'%"></div>' +
 			'<div class="display">'+r+' microseconds</div>');

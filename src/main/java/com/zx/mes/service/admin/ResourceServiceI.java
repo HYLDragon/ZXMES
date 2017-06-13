@@ -2,7 +2,7 @@ package com.zx.mes.service.admin;
 
 import java.util.List;
 
-import com.zx.mes.pageModel.Resource;
+import com.zx.mes.pageModel.Presource;
 import com.zx.mes.pageModel.SessionInfo;
 import com.zx.mes.pageModel.Tree;
 
@@ -41,7 +41,7 @@ public interface ResourceServiceI {
 	 * 
 	 * @return
 	 */
-	public List<Resource> treeGrid(SessionInfo sessionInfo);
+	public List<Presource> treeGrid(SessionInfo sessionInfo);
 
 	/**
 	 * 添加资源
@@ -49,7 +49,7 @@ public interface ResourceServiceI {
 	 * @param resource
 	 * @param sessionInfo
 	 */
-	public void add(Resource resource, SessionInfo sessionInfo);
+	public void add(Presource resource, SessionInfo sessionInfo);
 
 	/**
 	 * 删除资源
@@ -63,7 +63,7 @@ public interface ResourceServiceI {
 	 * 
 	 * @param resource
 	 */
-	public void edit(Resource resource);
+	public void edit(Presource resource);
 
 	/**
 	 * 获得一个资源
@@ -71,6 +71,6 @@ public interface ResourceServiceI {
 	 * @param id
 	 * @return
 	 */
-	public Resource get(String id);
+	public Presource get(String id);
 
 }

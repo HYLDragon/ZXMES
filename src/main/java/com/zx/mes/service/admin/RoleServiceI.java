@@ -2,7 +2,7 @@ package com.zx.mes.service.admin;
 
 import java.util.List;
 
-import com.zx.mes.pageModel.Role;
+import com.zx.mes.pageModel.Prole;
 import com.zx.mes.pageModel.SessionInfo;
 import com.zx.mes.pageModel.Tree;
 
@@ -19,7 +19,7 @@ public interface RoleServiceI {
 	 * 
 	 * @param role
 	 */
-	public void add(Role role, SessionInfo sessionInfo);
+	public void add(Prole role, SessionInfo sessionInfo);
 
 	/**
 	 * 获得角色
@@ -27,21 +27,21 @@ public interface RoleServiceI {
 	 * @param id
 	 * @return
 	 */
-	public Role get(String id);
+	public Prole get(String id);
 
 	/**
 	 * 编辑角色
 	 * 
 	 * @param role
 	 */
-	public void edit(Role role);
+	public void edit(Prole role);
 
 	/**
 	 * 获得角色treeGrid
 	 * 
 	 * @return
 	 */
-	public List<Role> treeGrid(SessionInfo sessionInfo);
+	public List<Prole> treeGrid(SessionInfo sessionInfo);
 
 	/**
 	 * 删除角色
@@ -69,6 +69,6 @@ public interface RoleServiceI {
 	 * 
 	 * @param role
 	 */
-	public void grant(Role role);
+	public void grant(Prole role);
 
 }

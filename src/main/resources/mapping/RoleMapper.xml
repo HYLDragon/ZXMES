@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.admin.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.admin.Role">
+    <id column="ID" jdbcType="VARCHAR" property="id" />
+    <result column="NAME" jdbcType="VARCHAR" property="name" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="SEQ" jdbcType="INTEGER" property="seq" />
+    <result column="PID" jdbcType="VARCHAR" property="pid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, NAME, REMARK, SEQ, PID
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from trole
+    where ID = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from trole
+    where ID = #{id,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.zx.mes.model.admin.Role">
+    insert into trole (ID, NAME, REMARK, 
+      SEQ, PID)
+    values (#{id,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{seq,jdbcType=INTEGER}, #{pid,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.admin.Role">
+    insert into trole
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="name != null">
+        NAME,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="seq != null">
+        SEQ,
+      </if>
+      <if test="pid != null">
+        PID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        #{pid,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zx.mes.model.admin.Role">
+    update trole
+    <set>
+      <if test="name != null">
+        NAME = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="seq != null">
+        SEQ = #{seq,jdbcType=INTEGER},
+      </if>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zx.mes.model.admin.Role">
+    update trole
+    set NAME = #{name,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      SEQ = #{seq,jdbcType=INTEGER},
+      PID = #{pid,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=VARCHAR}
+  </update>
+
+  <!--新添加的sql-->
+  <select id="getCount" parameterType="com.zx.mes.model.admin.Role" resultType="long">
+    select count(*) from trole
+    where 1=1
+    <if test="name !=null and name !='">
+      and  name like #{name,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+ <select id="getAll" parameterType="com.zx.mes.model.admin.Role" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from trole
+    where 1=1
+    <if test="name !=null and name !=''">
+      and name like #{name,jdbcType=VARCHAR}
+    </if>
+ </select>
+
+  <resultMap id="roleResultMap" type="com.zx.mes.model.admin.Role" extends="BaseResultMap">
+    <collection property="resources" javaType="list" ofType="com.zx.mes.model.admin.Resource">
+      <id column="resource_id"  property="id" />
+      <result column="resource_icon"  property="icon" />
+      <result column="resource_name"  property="name" />
+      <result column="resource_remark"  property="remark" />
+      <result column="resource_seq"  property="seq" />
+      <result column="resource_url"  property="url" />
+      <result column="resource_pid"  property="pid" />
+      <result column="resourcetype_id"  property="tresourcetypeId" />
+    </collection>
+  </resultMap>
+  <select id="getAllWithRource" parameterType="com.zx.mes.model.admin.Role" resultMap="roleResultMap">
+    SELECT trole.ID,
+    trole.NAME,
+    trole.REMARK,
+    trole.SEQ,
+    trole.PID,
+    tresource.ID resource_id,
+    tresource.ICON resource_icon,
+    tresource.NAME resource_name,
+    tresource.REMARK resource_remark,
+    tresource.SEQ resource_seq,
+    tresource.URL resource_url,
+    tresource.PID resource_pid,
+    tresource.TRESOURCETYPE_ID resourcetype_id
+    FROM trole  JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
+    JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
+	where 1=1
+	<if test="name !=null and name !=''">
+      and trole.name like #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="id !=null and id !=''">
+      and trole.id =#{id,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+
+  <select id="getAllWithUserId" parameterType="com.zx.mes.model.admin.Role" resultMap="BaseResultMap">
+    SELECT DISTINCT
+	trole.ID,
+	trole. NAME,
+	trole.REMARK,
+	trole.SEQ,
+	trole.PID
+    FROM
+        trole
+    JOIN tuser_trole ON trole.id = tuser_trole.trole_id
+    JOIN tuser ON tuser_trole.tuser_id = tuser.id
+    where 1=1
+    <if test="userId !=null and userId !=''">
+      and tuser.id =#{userId,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+</mapper>

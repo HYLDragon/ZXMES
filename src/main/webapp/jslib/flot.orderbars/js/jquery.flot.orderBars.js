@@ -22,7 +22,7 @@
  */
 
 // INFO: decalage/decallage is French for gap. It's used to denote the spacing applied to each
-// bar.
+// mes.
 (function($){
     function init(plot){
         var orderedBarSeries;

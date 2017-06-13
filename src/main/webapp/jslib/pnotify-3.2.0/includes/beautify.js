@@ -53,7 +53,7 @@ function js_beautify(js_source_text, options) {
     var preindent_string = '';
 
 
-    // Some interpreters have unexpected results with foo = baz || bar;
+    // Some interpreters have unexpected results with foo = baz || mes;
     options = options ? options : {};
 
     var opt_brace_style;
@@ -1056,7 +1056,7 @@ function js_beautify(js_source_text, options) {
 
                 if (flags.mode === 'BLOCK' && (last_text === '{' || last_text === ';')) {
                     // { foo; --i }
-                    // foo(); --bar;
+                    // foo(); --mes;
                     print_newline();
                 }
             } else if (token_text === '.') {

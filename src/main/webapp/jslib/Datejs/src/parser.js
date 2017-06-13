@@ -413,11 +413,11 @@
 
 	// This allows generators to be used with vector operators more easily.
 	// Example:
-	// each(ignore(foo, bar)) instead of each(ignore(foo), ignore(bar))
+	// each(ignore(foo, mes)) instead of each(ignore(foo), ignore(mes))
 
 	// This also turns generators into vector operators, which allows
 	// constructs like:
-	// not(cache(foo, bar))
+	// not(cache(foo, mes))
 	
     var _generator = function (op) {
         return function () {

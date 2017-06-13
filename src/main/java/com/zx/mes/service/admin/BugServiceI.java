@@ -1,6 +1,6 @@
 package com.zx.mes.service.admin;
 
-import com.zx.mes.pageModel.Bug;
+import com.zx.mes.pageModel.Pbug;
 import com.zx.mes.pageModel.DataGrid;
 import com.zx.mes.pageModel.PageHelper;
 
@@ -20,14 +20,14 @@ public interface BugServiceI {
 	 *            分页帮助类
 	 * @return
 	 */
-	public DataGrid dataGrid(Bug bug, PageHelper ph);
+	public DataGrid dataGrid(Pbug bug, PageHelper ph);
 
 	/**
 	 * 添加BUG
 	 * 
 	 * @param bug
 	 */
-	public void add(Bug bug);
+	public void add(Pbug bug);
 
 	/**
 	 * 获得BUG对象
@@ -35,14 +35,14 @@ public interface BugServiceI {
 	 * @param id
 	 * @return
 	 */
-	public Bug get(String id);
+	public Pbug get(String id);
 
 	/**
 	 * 修改BUG
 	 * 
 	 * @param bug
 	 */
-	public void edit(Bug bug);
+	public void edit(Pbug bug);
 
 	/**
 	 * 删除BUG
