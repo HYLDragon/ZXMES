@@ -134,6 +134,12 @@
     <if test="name !=null and name !=''">
       and name like #{name,jdbcType=VARCHAR}
     </if>
+    <if test="pid !=null and pid !=''">
+      and pid =#{pid,jdbcType=VARCHAR}
+    </if>
+    <if test="id !=null and id !=''">
+      and id =#{id,jdbcType=VARCHAR}
+    </if>
   </select>
 
   <select id="getAllWithIds"  resultMap="BaseResultMap">
@@ -197,7 +203,7 @@
     JOIN tuser ON tuser_trole.TUSER_ID = tuser.ID
     where 1=1
     <if test="tresourcetypeId !=null and tresourcetypeId !=''">
-      and tresourcetype.ID =#{tresourcetypeId,VARCHAR}
+      and tresourcetype.ID =#{tresourcetypeId,jdbcType=VARCHAR}
     </if>
     <if test="userId !=null and userId !=''">
     and tuser.ID =#{userId,jdbcType=VARCHAR}

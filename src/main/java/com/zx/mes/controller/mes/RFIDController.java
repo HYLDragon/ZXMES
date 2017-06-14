@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Created by Administrator on 2017/6/8.
  */
-@Controller
-@RequestMapping("/rfidController")
+//@Controller
+//@RequestMapping("/rfidController")
 public class RFIDController {
 
     @Autowired

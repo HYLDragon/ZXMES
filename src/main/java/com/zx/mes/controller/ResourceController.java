@@ -7,7 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import com.zx.mes.pageModel.Json;
-import com.zx.mes.pageModel.Resource;
+import com.zx.mes.pageModel.Presource;
+
 import com.zx.mes.pageModel.SessionInfo;
 import com.zx.mes.pageModel.Tree;
 import com.zx.mes.service.admin.ResourceServiceI;
@@ -82,7 +83,7 @@ public class ResourceController extends BaseController {
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
 		request.setAttribute("resourceTypeList", resourceTypeService.getResourceTypeList());
-		Resource r = new Resource();
+		Presource r = new Presource();
 		r.setId(UUID.randomUUID().toString());
 		request.setAttribute("resource", r);
 		return "/admin/resourceAdd";
@@ -95,7 +96,7 @@ public class ResourceController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(Resource resource, HttpSession session) {
+	public Json add(Presource resource, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 		Json j = new Json();
 		resourceService.add(resource, sessionInfo);
@@ -112,7 +113,7 @@ public class ResourceController extends BaseController {
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, String id) {
 		request.setAttribute("resourceTypeList", resourceTypeService.getResourceTypeList());
-		Resource r = resourceService.get(id);
+		Presource r = resourceService.get(id);
 		request.setAttribute("resource", r);
 		return "/admin/resourceEdit";
 	}
@@ -125,7 +126,7 @@ public class ResourceController extends BaseController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(Resource resource) {
+	public Json edit(Presource resource) {
 		Json j = new Json();
 		resourceService.edit(resource);
 		j.setSuccess(true);
@@ -142,7 +143,7 @@ public class ResourceController extends BaseController {
 	 */
 	@RequestMapping("/treeGrid")
 	@ResponseBody
-	public List<Resource> treeGrid(HttpSession session) {
+	public List<Presource> treeGrid(HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 		return resourceService.treeGrid(sessionInfo);
 	}

@@ -6,7 +6,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.zx.mes.pageModel.Role;
+import com.zx.mes.pageModel.Prole;
+
 import com.zx.mes.pageModel.Tree;
 import com.zx.mes.service.admin.RoleServiceI;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		Role r = new Role();
+		Prole r = new Prole();
 		r.setId(UUID.randomUUID().toString());
 		request.setAttribute("role", r);
 		return "/admin/roleAdd";
@@ -61,7 +62,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(Role role, HttpSession session) {
+	public Json add(Prole role, HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 		Json j = new Json();
 		roleService.add(role, sessionInfo);
@@ -77,7 +78,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, String id) {
-		Role r = roleService.get(id);
+		Prole r = roleService.get(id);
 		request.setAttribute("role", r);
 		return "/admin/roleEdit";
 	}
@@ -90,7 +91,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(Role role) {
+	public Json edit(Prole role) {
 		Json j = new Json();
 		roleService.edit(role);
 		j.setSuccess(true);
@@ -105,7 +106,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/treeGrid")
 	@ResponseBody
-	public List<Role> treeGrid(HttpSession session) {
+	public List<Prole> treeGrid(HttpSession session) {
 		SessionInfo sessionInfo = (SessionInfo) session.getAttribute(ConfigUtil.getSessionInfoName());
 		return roleService.treeGrid(sessionInfo);
 	}
@@ -156,7 +157,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/grantPage")
 	public String grantPage(HttpServletRequest request, String id) {
-		Role r = roleService.get(id);
+		Prole r = roleService.get(id);
 		request.setAttribute("role", r);
 		return "/admin/roleGrant";
 	}
@@ -169,7 +170,7 @@ public class RoleController extends BaseController {
 	 */
 	@RequestMapping("/grant")
 	@ResponseBody
-	public Json grant(Role role) {
+	public Json grant(Prole role) {
 		Json j = new Json();
 		roleService.grant(role);
 		j.setMsg("授权成功！");

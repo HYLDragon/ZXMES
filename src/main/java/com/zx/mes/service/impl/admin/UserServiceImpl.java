@@ -14,6 +14,7 @@ import com.sun.org.apache.bcel.internal.generic.ARRAYLENGTH;
 import com.zx.mes.dao.admin.RoleMapper;
 import com.zx.mes.dao.admin.UserMapper;
 import com.zx.mes.dao.admin.UserRoleMapper;
+import com.zx.mes.model.admin.Resource;
 import com.zx.mes.model.admin.Role;
 import com.zx.mes.model.admin.User;
 import com.zx.mes.model.admin.UserRoleKey;
@@ -46,7 +47,7 @@ public class UserServiceImpl implements UserServiceI {
 	public Puser login(Puser user) {
 		User user2=new User();
 		user2.setName(user.getName());
-		user2.setPwd(user.getPwd());
+		user2.setPwd(MD5Util.md5(user.getPwd()));
 
 		User u=userDao.login(user2);
 		if (u != null) {
@@ -185,6 +186,11 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public void delete(String id) {
+		//先删除中间表
+		UserRoleKey userRoleKey=new UserRoleKey();
+		userRoleKey.setTuserId(id);
+		int key=userRoleMapper.deleteByPrimarySelect(userRoleKey);
+		//再删除user表记录
 		userDao.deleteByPrimaryKey(id);
 	}
 
@@ -220,8 +226,35 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	public List<String> resourceList(String id) {
+		List<String> resourceList=new ArrayList<>();
+		List<User> roleList=new ArrayList<>();
 
-		return null;
+		User user=new User();
+		user.setId(id);
+		roleList=userDao.getAllWithRole(user);
+
+		User user2=roleList.get(0);
+		List<String> ids=new ArrayList<>();
+		for (int i=0;i<user2.getUserRoleKeys().size();i++){
+			//将所有记录role表的id添加进list中
+			ids.add(user2.getUserRoleKeys().get(i).getRole().getId());
+		}
+		List<Role> list=roleMapper.getAllWithRourceByRoleIds(ids);
+		if(list !=null && list.size()>0){
+			for(int m=0;m<list.size();m++){
+				List<Resource> resources=list.get(m).getResources();
+
+				if(resources !=null && resources.size()>0){
+					for (int n=0;n<resources.size();n++){
+						if(resources.get(n) !=null && resources.get(n).getUrl() !=null ){
+							resourceList.add(resources.get(n).getUrl());
+						}
+					}
+				}
+			}
+		}
+
+		return resourceList;
 	}
 
 	@Override

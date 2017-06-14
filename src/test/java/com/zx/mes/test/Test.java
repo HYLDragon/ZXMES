@@ -32,6 +32,9 @@ public class Test {
     private static  final Logger logger=Logger.getLogger(Test.class);
 
     @Autowired
+    private ResourceMapper resourceDao;
+
+    @Autowired
     private UserMapper userMapper;
     @Autowired
     private BugMapper bugMapper;
@@ -47,6 +50,7 @@ public class Test {
         //Puser user=userMapper.selectByPrimaryKey("0");
         //System.out.print(user.getName());
         User user=new User();
+        user.setId("0");
         PageHelper.startPage(1,8);
         logger.info(JSON.toJSONStringWithDateFormat(userMapper.getAllWithRole(user),"yyyy-MM-dd HH:mm:ss"));
         //logger.info(JSON.toJSONStringWithDateFormat(userMapper.getAll(user),"yyyy-MM-dd HH:mm:ss"));
@@ -94,4 +98,25 @@ public class Test {
         resource.setUserId("2");
         logger.info(JSON.toJSONStringWithDateFormat(resourceMapper.getResourceWithTypeUser(resource),"yyyy-MM-dd HH:mm:ss"));
     }
+
+    @org.junit.Test
+    public void test8(){
+        List ids = new ArrayList();
+        ids.add("barAdmin");
+        ids.add("0");
+
+        logger.info(JSON.toJSONStringWithDateFormat(roleMapper.getAllWithRourceByRoleIds(ids),"yyyy-MM-dd HH:mm:ss"));
+
+    }
+
+
+    @org.junit.Test
+    public void test9(){
+        Resource resource=new Resource();
+        resource.setUserId("0");
+        //resource.setTresourcetypeId("0");
+        logger.info(JSON.toJSONStringWithDateFormat(resourceMapper.getResourceWithTypeUser(resource),"yyyy-MM-dd HH:mm:ss"));
+
+    }
+
 }

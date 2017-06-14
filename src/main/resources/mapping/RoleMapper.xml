@@ -108,6 +108,12 @@
     <if test="name !=null and name !=''">
       and name like #{name,jdbcType=VARCHAR}
     </if>
+   <if test="id !=null and id !=''">
+      and id =#{id,jdbcType=VARCHAR}
+   </if>
+   <if test="pid !=null and pid !=''">
+     and PID =#{pid,jdbcType=VARCHAR}
+   </if>
  </select>
 
   <resultMap id="roleResultMap" type="com.zx.mes.model.admin.Role" extends="BaseResultMap">
@@ -147,6 +153,29 @@
     </if>
   </select>
 
+  <select id="getAllWithRourceByRoleIds"  resultMap="roleResultMap">
+    SELECT trole.ID,
+    trole.NAME,
+    trole.REMARK,
+    trole.SEQ,
+    trole.PID,
+    tresource.ID resource_id,
+    tresource.ICON resource_icon,
+    tresource.NAME resource_name,
+    tresource.REMARK resource_remark,
+    tresource.SEQ resource_seq,
+    tresource.URL resource_url,
+    tresource.PID resource_pid,
+    tresource.TRESOURCETYPE_ID resourcetype_id
+    FROM trole  JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
+    JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
+    where trole.id  in
+    <foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+
+  </select>
 
 
   <select id="getAllWithUserId" parameterType="com.zx.mes.model.admin.Role" resultMap="BaseResultMap">

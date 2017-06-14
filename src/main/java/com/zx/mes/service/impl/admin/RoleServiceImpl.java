@@ -11,13 +11,16 @@ import com.zx.mes.pageModel.Tree;
 import com.zx.mes.service.admin.RoleServiceI;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/6/13.
  */
+@Service
 public class RoleServiceImpl implements RoleServiceI {
 
     @Autowired
@@ -139,17 +142,35 @@ public class RoleServiceImpl implements RoleServiceI {
 
     @Override
     public void delete(String id) {
+
+        Role role=roleDao.selectByPrimaryKey(id);
+
+        del(role);
+
+    }
+    //迭代
+    private void del(Role role) {
+        Role role2=new Role();
+        role2.setPid(role.getId());
+        List<Role> roleList=roleDao.getAll(role);
+        if (roleList !=null && roleList.size()>0){
+            for(int i=0;i<roleList.size();i++){
+                del(roleList.get(i));
+            }
+        }
         //删除中间表
         UserRoleKey userRoleKey=new UserRoleKey();
-        userRoleKey.setTroleId(id);
-        userRoleMapper.deleteByPrimaryRoleId(userRoleKey);
+        userRoleKey.setTroleId(role.getId());
+        userRoleMapper.deleteByPrimarySelect(userRoleKey);
 
         RoleResourceKey roleResourceKey=new RoleResourceKey();
-        roleResourceKey.setTroleId(id);
+        roleResourceKey.setTroleId(role.getId());
         roleResourceMapper.deleteByPrimaryRoleResourceKey(roleResourceKey);
+
         //再删除role
-        roleDao.deleteByPrimaryKey(id);
+        roleDao.deleteByPrimaryKey(role.getId());
     }
+
 
     @Override
     public List<Tree> tree(SessionInfo sessionInfo) {
@@ -185,14 +206,33 @@ public class RoleServiceImpl implements RoleServiceI {
 
     @Override
     public void grant(Prole role) {
-        Role r=roleDao.selectByPrimaryKey(role.getId());
+        Role r=new Role();
+        r.setId(role.getId());
+
+        List<Role> roleList=roleDao.getAllWithRource(r);
+
         List<String> ids=new ArrayList<>();
         if (role.getResourceIds() != null && !role.getResourceIds().equalsIgnoreCase("")) {
             for (String id : role.getResourceIds().split(",")) {
-               ids.add(id);
+                boolean b=false;
+               for(int i=0;i<roleList.size();i++){
+                    if(id.equals(roleList.get(i).getId())){
+                        b=true;
+                        break;
+                    }
+               }
+               if(!b){
+                   ids.add(id);
+               }
 
             }
-            resourceDao.getAllWithIds(ids);
+            RoleResourceKey roleResourceKey=new RoleResourceKey();
+            roleResourceKey.setTroleId(role.getId());
+            for(int m=0;m<ids.size();m++){
+                roleResourceKey.setTresourceId(ids.get(m));
+                roleResourceMapper.insert(roleResourceKey);
+            }
+
         }else {
 
         }

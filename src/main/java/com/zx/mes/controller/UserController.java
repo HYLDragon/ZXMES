@@ -6,17 +6,14 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.zx.mes.pageModel.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.zx.mes.pageModel.DataGrid;
-import com.zx.mes.pageModel.Json;
-import com.zx.mes.pageModel.PageHelper;
-import com.zx.mes.pageModel.SessionInfo;
-import com.zx.mes.pageModel.User;
+
 import com.zx.mes.service.admin.ResourceServiceI;
 import com.zx.mes.service.admin.RoleServiceI;
 import com.zx.mes.service.admin.UserServiceI;
@@ -55,9 +52,9 @@ public class UserController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/login")
-	public Json login(User user, HttpSession session, HttpServletRequest request) {
+	public Json login(Puser user, HttpSession session, HttpServletRequest request) {
 		Json j = new Json();
-		User u = userService.login(user);
+		Puser u = userService.login(user);
 		if (u != null) {
 			j.setSuccess(true); 
 			j.setMsg("登陆成功！");
@@ -84,7 +81,7 @@ public class UserController extends BaseController {
 	 */
 	@ResponseBody
 	@RequestMapping("/reg")
-	public Json reg(User user) {
+	public Json reg(Puser user) {
 		Json j = new Json();
 		try {
 			userService.reg(user);
@@ -134,7 +131,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public DataGrid dataGrid(User user, PageHelper ph) {
+	public DataGrid dataGrid(Puser user, PageHelper ph) {
 		return userService.dataGrid(user, ph);
 	}
 
@@ -146,7 +143,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		User u = new User();
+		Puser u = new Puser();
 		u.setId(UUID.randomUUID().toString());
 		request.setAttribute("user", u);
 		return "/admin/userAdd";
@@ -159,7 +156,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(User user) {
+	public Json add(Puser user) {
 		Json j = new Json();
 		try {
 			userService.add(user);
@@ -180,7 +177,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, String id) {
-		User u = userService.get(id);
+		Puser u = userService.get(id);
 		request.setAttribute("user", u);
 		return "/admin/userEdit";
 	}
@@ -193,7 +190,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(User user) {
+	public Json edit(Puser user) {
 		Json j = new Json();
 		try {
 			userService.edit(user);
@@ -258,7 +255,7 @@ public class UserController extends BaseController {
 	public String grantPage(String ids, HttpServletRequest request) {
 		request.setAttribute("ids", ids);
 		if (ids != null && !ids.equalsIgnoreCase("") && ids.indexOf(",") == -1) {
-			User u = userService.get(ids);
+			Puser u = userService.get(ids);
 			request.setAttribute("user", u);
 		}
 		return "/admin/userGrant";
@@ -272,7 +269,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/grant")
 	@ResponseBody
-	public Json grant(String ids, User user) {
+	public Json grant(String ids, Puser user) {
 		Json j = new Json();
 		userService.grant(ids, user);
 		j.setSuccess(true);
@@ -289,7 +286,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/editPwdPage")
 	public String editPwdPage(String id, HttpServletRequest request) {
-		User u = userService.get(id);
+		Puser u = userService.get(id);
 		request.setAttribute("user", u);
 		return "/admin/userEditPwd";
 	}
@@ -302,7 +299,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/editPwd")
 	@ResponseBody
-	public Json editPwd(User user) {
+	public Json editPwd(Puser user) {
 		Json j = new Json();
 		userService.editPwd(user);
 		j.setSuccess(true);
@@ -382,7 +379,7 @@ public class UserController extends BaseController {
 	 */
 	@RequestMapping("/loginCombobox")
 	@ResponseBody
-	public List<User> loginCombobox(String q) {
+	public List<Puser> loginCombobox(String q) {
 		return userService.loginCombobox(q);
 	}
 

@@ -14,8 +14,8 @@ import com.zx.mes.service.admin.InitServiceI;
  * @author 
  * 
  */
-@Controller
-@RequestMapping("/initController")
+//@Controller
+//@RequestMapping("/initController")
 public class InitController {
 
 	@Autowired

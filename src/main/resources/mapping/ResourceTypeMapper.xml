@@ -55,4 +55,13 @@
     set NAME = #{name,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=VARCHAR}
   </update>
+
+  <!--新写sql-->
+  <select id="getAll" resultMap="BaseResultMap">
+      SELECT
+          *
+      FROM
+          tresourcetype
+  </select>
+
 </mapper>

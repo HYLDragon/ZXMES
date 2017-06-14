@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.zx.mes.pageModel.Bug;
+import com.zx.mes.pageModel.Pbug;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +51,7 @@ public class BugController extends BaseController {
 	 */
 	@RequestMapping("/dataGrid")
 	@ResponseBody
-	public DataGrid dataGrid(Bug bug, PageHelper ph) {
+	public DataGrid dataGrid(Pbug bug, PageHelper ph) {
 		return bugService.dataGrid(bug, ph);
 	}
 
@@ -63,7 +63,7 @@ public class BugController extends BaseController {
 	 */
 	@RequestMapping("/addPage")
 	public String addPage(HttpServletRequest request) {
-		Bug b = new Bug();
+		Pbug b = new Pbug();
 		b.setId(UUID.randomUUID().toString());
 		request.setAttribute("bug", b);
 		request.setAttribute("bugTypeList", bugTypeService.getBugTypeList());
@@ -77,7 +77,7 @@ public class BugController extends BaseController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public Json add(Bug bug) {
+	public Json add(Pbug bug) {
 		Json j = new Json();
 		try {
 			bugService.add(bug);
@@ -97,7 +97,7 @@ public class BugController extends BaseController {
 	 */
 	@RequestMapping("/view")
 	public String view(HttpServletRequest request, String id) {
-		Bug b = bugService.get(id);
+		Pbug b = bugService.get(id);
 		request.setAttribute("bug", b);
 		return "/admin/bugView";
 	}
@@ -109,7 +109,7 @@ public class BugController extends BaseController {
 	 */
 	@RequestMapping("/editPage")
 	public String editPage(HttpServletRequest request, String id) {
-		Bug b = bugService.get(id);
+		Pbug b = bugService.get(id);
 		request.setAttribute("bug", b);
 		request.setAttribute("bugTypeList", bugTypeService.getBugTypeList());
 		return "/admin/bugEdit";
@@ -123,7 +123,7 @@ public class BugController extends BaseController {
 	 */
 	@RequestMapping("/edit")
 	@ResponseBody
-	public Json edit(Bug bug) {
+	public Json edit(Pbug bug) {
 		Json j = new Json();
 		try {
 			bugService.edit(bug);
