@@ -21,6 +21,8 @@ public interface UserMapper {
 
     long getCount(User user);
 
+    List<User> sum(User user);
+
     List<User> getAll(User user);
 
     List<User> getAllWithRole(User user);

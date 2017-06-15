@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserServiceI {
 		DataGrid dg = new DataGrid();
 		List<Puser> ul = new ArrayList<Puser>();
 		User u=new User();
+		BeanUtils.copyProperties(user,u);
 		com.github.pagehelper.PageHelper.startPage(ph.getPage(),ph.getRows());
 
 		List<User> userList=userDao.getAll(u);
@@ -87,7 +88,7 @@ public class UserServiceImpl implements UserServiceI {
 		if(userList !=null && userList.size()>0){
 			for(int i=0;i<userList.size();i++){
 				Puser puser=new Puser();
-				User user2=userlist2.get(i);
+				User user2=userList.get(i);
 				BeanUtils.copyProperties(user2,puser);
 				if(userlist2 !=null && userlist2.size()>0){
 					for(int n=0;n<userlist2.size();n++){
@@ -107,10 +108,10 @@ public class UserServiceImpl implements UserServiceI {
 								roleNames.append(roles.get(m).getRole().getName());
 
 							}
-
+							puser.setRoleIds(roleIds.toString());
+							puser.setRoleNames(roleNames.toString());
 						}
-						puser.setRoleIds(roleIds.toString());
-						puser.setRoleNames(roleNames.toString());
+
 					}
 				}
 				ul.add(puser);
@@ -118,8 +119,8 @@ public class UserServiceImpl implements UserServiceI {
 		}
 
 		dg.setRows(ul);
-		com.github.pagehelper.PageHelper.startPage(ph.getPage(),ph.getRows());
-		dg.setTotal(userDao.getCount(u));
+		//com.github.pagehelper.PageHelper.startPage(ph.getPage(),ph.getRows());
+		dg.setTotal((long)userDao.sum(u).size());
 		return dg;
 	}
 

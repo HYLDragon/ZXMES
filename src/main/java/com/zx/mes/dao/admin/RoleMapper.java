@@ -25,6 +25,8 @@ public interface RoleMapper {
 
     List<Role> getAllWithRource(Role role);
 
+    List<Role> getAllWithRource2(List<String> ids);
+
     List<Role> getAllWithRourceByRoleIds(List<String> ids);
 
     List<Role> getAllWithUserId(Role role);

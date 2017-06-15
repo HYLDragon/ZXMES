@@ -153,6 +153,36 @@
     </if>
   </select>
 
+  <select id="getAllWithRource2"  resultMap="roleResultMap">
+    SELECT trole.ID,
+    trole.NAME,
+    trole.REMARK,
+    trole.SEQ,
+    trole.PID,
+    tresource.ID resource_id,
+    tresource.ICON resource_icon,
+    tresource.NAME resource_name,
+    tresource.REMARK resource_remark,
+    tresource.SEQ resource_seq,
+    tresource.URL resource_url,
+    tresource.PID resource_pid,
+    tresource.TRESOURCETYPE_ID resourcetype_id
+    FROM trole  JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
+    JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
+    WHERE trole.ID in
+    <foreach item="item" index="index" collection="list"
+             open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </select>
+
+
+  <select id="getUser" parameterType="java.lang.String" resultType="int">
+    select
+    count(*)
+    from tuser
+    where name = #{name,jdbcType=VARCHAR}
+  </select>
   <select id="getAllWithRourceByRoleIds"  resultMap="roleResultMap">
     SELECT trole.ID,
     trole.NAME,

@@ -5,7 +5,9 @@ import com.zx.mes.dao.admin.ResourceTypeMapper;
 import com.zx.mes.dao.admin.RoleResourceMapper;
 import com.zx.mes.dao.admin.UserMapper;
 import com.zx.mes.model.admin.Resource;
+import com.zx.mes.model.admin.Role;
 import com.zx.mes.model.admin.RoleResourceKey;
+import com.zx.mes.model.admin.User;
 import com.zx.mes.pageModel.Presource;
 import com.zx.mes.pageModel.SessionInfo;
 import com.zx.mes.pageModel.Tree;
@@ -110,7 +112,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
                 BeanUtils.copyProperties(t, r);
                 if(t.getPid()!=null && t.getPid() !=""){
                     r.setPid(t.getPid());
-                    r.setName(resourceDao.selectByPrimaryKey(r.getPid()).getName());
+                    r.setPname(resourceDao.selectByPrimaryKey(r.getPid()).getName());
                 }
 
                 r.setTypeId(t.getTresourcetypeId());
@@ -127,8 +129,28 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
     public void add(Presource resource, SessionInfo sessionInfo) {
         Resource t = new Resource();
-        BeanUtils.copyProperties(resource, t);
+        BeanUtils.copyProperties(resource, t,new String[]{"pid"});
+        if( resource.getTypeId() != null && resource.getTypeId() !=""){
+            t.setTresourcetypeId(resource.getTypeId());
+        }
+        if(resource.getPid() !=null && ! resource.getPid().equalsIgnoreCase("")){
+            t.setPid(resource.getPid());
+        }
+        if(resource.getIconCls()!=null && ! resource.getIconCls().equalsIgnoreCase("")){
+            t.setIcon(resource.getIconCls());
+        }
         resourceDao.insertSelective(t);
+        //将权限添加到当前用户所含的所有角色上
+        User user=new User();
+        user.setId(sessionInfo.getId());
+        List<User> userList=userDao.getAllWithRole(user);
+        for(int i=0;i<userList.get(0).getUserRoleKeys().size();i++){
+            Role role=userList.get(0).getUserRoleKeys().get(i).getRole();
+            RoleResourceKey roleResourceKey=new RoleResourceKey();
+            roleResourceKey.setTresourceId(t.getId());
+            roleResourceKey.setTroleId(role.getId());
+            roleResourceMapper.insert(roleResourceKey);
+        }
     }
 
     public void delete(String id) {
@@ -138,7 +160,7 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
     private void del(Resource resource) {
         Resource resource2=new Resource();
-        resource2.setId(resource.getPid());
+        resource2.setPid(resource.getId());
         List<Resource> resourceList=resourceDao.getAll(resource2);
 
         if(resourceList !=null && resourceList.size()>0){
@@ -157,14 +179,20 @@ public class ResourceServiceImpl implements ResourceServiceI {
 
     public void edit(Presource resource) {
         Resource resource2=new Resource();
-        BeanUtils.copyProperties(resource,resource2);
+        //BeanUtils.copyProperties(resource,resource2);
+        BeanUtils.copyProperties(resource,resource2,new String[]{""});
         if(resource.getIconCls() !=null && !resource.getIconCls().equalsIgnoreCase("")){
             resource2.setIcon(resource.getIconCls());
         }
-        if (resource.getTypeId() != null && !resource.getTypeId().equalsIgnoreCase("")) {
-            resource2.setPid(resource.getTypeId());// 赋值资源类型
+        //if (resource.getTypeId() != null && !resource.getTypeId().equalsIgnoreCase("")) {
+        //    //resource2.setPid(resource.getTypeId());// 赋值资源类型
+        //
+        //}
+        if(resource.getPid() !=null && !resource.getPid().equalsIgnoreCase("")){
+            resource2.setPid(resource.getPid());
         }
-        resourceDao.insertSelective(resource2);
+
+        resourceDao.updateByPrimaryKeySelective(resource2);
     }
 
     public Presource get(String id) {
@@ -173,12 +201,14 @@ public class ResourceServiceImpl implements ResourceServiceI {
         Resource t = resourceDao.getResourceWithType(resource).get(0);
         Presource r = new Presource();
         BeanUtils.copyProperties(t, r);
+        if(t.getPid()!=null && t.getPid() !=""){
+            r.setPid(t.getPid());
+            r.setPname(resourceDao.selectByPrimaryKey(r.getPid()).getName());
+        }
 
-        r.setPid(t.getPid());
-        r.setPname(resourceDao.selectByPrimaryKey(r.getPid()).getName());
+        r.setTypeId(t.getResourcetype().getId());
+        r.setTypeName(t.getResourcetype().getName());
 
-        r.setTypeId(t.getTresourcetypeId());
-        r.setTypeName(resourceTypeDao.selectByPrimaryKey(r.getTypeId()).getName());
         if (t.getIcon() != null && !t.getIcon().equalsIgnoreCase("")) {
             r.setIconCls(t.getIcon());
         }

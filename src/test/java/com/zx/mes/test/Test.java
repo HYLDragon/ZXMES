@@ -50,16 +50,20 @@ public class Test {
         //Puser user=userMapper.selectByPrimaryKey("0");
         //System.out.print(user.getName());
         User user=new User();
-        user.setId("0");
-        PageHelper.startPage(1,8);
-        logger.info(JSON.toJSONStringWithDateFormat(userMapper.getAllWithRole(user),"yyyy-MM-dd HH:mm:ss"));
+        user.setName("%%");
+        //PageHelper.startPage(1,8);
+        //logger.info(JSON.toJSONStringWithDateFormat(userMapper.getAllWithRole(user),"yyyy-MM-dd HH:mm:ss"));
         //logger.info(JSON.toJSONStringWithDateFormat(userMapper.getAll(user),"yyyy-MM-dd HH:mm:ss"));
+        //logger.info(JSON.toJSONStringWithDateFormat(userMapper.getCount(user),"yyyy-MM-dd HH:mm:ss"));
+        logger.info(JSON.toJSONStringWithDateFormat(userMapper.sum(user),"yyyy-MM-dd HH:mm:ss"));
+        //logger.info(JSON.toJSONStringWithDateFormat(userMapper.,"yyyy-MM-dd HH:mm:ss"));
     }
     @org.junit.Test
     public void test2(){
         Bug bug=new Bug();
 
         logger.info(JSON.toJSONStringWithDateFormat(bugMapper.getAllWithBugType(bug),"yyyy-MM-dd HH:mm:ss"));
+        logger.info(JSON.toJSONStringWithDateFormat(bugMapper.getCount(bug),"yyyy-MM-dd HH:mm:ss"));
     }
     @org.junit.Test
     public void test3(){
@@ -89,6 +93,7 @@ public class Test {
     @org.junit.Test
     public void test6(){
         Resource resource=new Resource();
+        resource.setId("zyglTreeGrid");
         logger.info(JSON.toJSONStringWithDateFormat(resourceMapper.getResourceWithType(resource),"yyyy-MM-dd HH:mm:ss"));
     }
 

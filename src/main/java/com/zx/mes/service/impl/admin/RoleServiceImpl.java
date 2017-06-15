@@ -1,10 +1,7 @@
 package com.zx.mes.service.impl.admin;
 
 import com.zx.mes.dao.admin.*;
-import com.zx.mes.model.admin.Resource;
-import com.zx.mes.model.admin.Role;
-import com.zx.mes.model.admin.RoleResourceKey;
-import com.zx.mes.model.admin.UserRoleKey;
+import com.zx.mes.model.admin.*;
 import com.zx.mes.pageModel.Prole;
 import com.zx.mes.pageModel.SessionInfo;
 import com.zx.mes.pageModel.Tree;
@@ -60,12 +57,14 @@ public class RoleServiceImpl implements RoleServiceI {
         Prole r = new Prole();
         Role role=new Role();
         role.setId(id);
+
         List<Role> list = roleDao.getAllWithRource(role);
         if (list != null && list.size()>0){
             StringBuilder ids=new StringBuilder();
             StringBuilder names=new StringBuilder();
             boolean b = false;
             Role role1=list.get(0);
+            BeanUtils.copyProperties(role1,r);
             for(int i=0;i<role1.getResources().size();i++){
                 Resource resource=role1.getResources().get(i);
 
@@ -103,8 +102,17 @@ public class RoleServiceImpl implements RoleServiceI {
         Role role1=new Role();
         if (sessionInfo != null) {
             //params.put("userId", sessionInfo.getId());// 查自己有权限的角色
-            role1.setId(sessionInfo.getId());
-            tl = roleDao.getAllWithRource(role1);
+            //role1.setId(sessionInfo.getId());
+            List<String> ids=new ArrayList<>();
+
+            User user=new User();
+
+            user.setId(sessionInfo.getId());
+            User user2=userDao.getAllWithRole(user).get(0);
+            for(int j=0;j<user2.getUserRoleKeys().size();j++){
+                ids.add(user2.getUserRoleKeys().get(j).getRole().getId());
+            }
+            tl = roleDao.getAllWithRource2(ids);
         } else {
             tl = roleDao.getAllWithRource(role1);
         }
@@ -212,22 +220,25 @@ public class RoleServiceImpl implements RoleServiceI {
         List<Role> roleList=roleDao.getAllWithRource(r);
 
         List<String> ids=new ArrayList<>();
-        if (role.getResourceIds() != null && !role.getResourceIds().equalsIgnoreCase("")) {
+        if (role.getResourceIds() != null ) {
             for (String id : role.getResourceIds().split(",")) {
-                boolean b=false;
-               for(int i=0;i<roleList.size();i++){
-                    if(id.equals(roleList.get(i).getId())){
-                        b=true;
-                        break;
-                    }
-               }
-               if(!b){
-                   ids.add(id);
-               }
-
+               // boolean b=false;
+               //for(int i=0;i<roleList.get(0).getResources().size();i++){
+               //     if(id.equals(roleList.get(0).getResources().get(i).getId())){
+               //         b=true;
+               //         break;
+               //     }
+               //}
+               //if(!b){
+               //    ids.add(id);
+               //}
+                ids.add(id);
             }
             RoleResourceKey roleResourceKey=new RoleResourceKey();
             roleResourceKey.setTroleId(role.getId());
+
+            roleResourceMapper.deleteByPrimaryRoleResourceKey(roleResourceKey);
+
             for(int m=0;m<ids.size();m++){
                 roleResourceKey.setTresourceId(ids.get(m));
                 roleResourceMapper.insert(roleResourceKey);

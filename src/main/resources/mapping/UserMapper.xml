@@ -94,25 +94,15 @@
 
 
   <select id="getCount" parameterType="com.zx.mes.model.admin.User" resultType="long">
-    select count(*) from tuser
+    select count(*)
+    from tuser
     where 1=1
     <if test="name !=null and name !=''">
-      and name = #{name,jdbcType=VARCHAR}
-    </if>
-    <if test="createdatetime !=null">
-      and HOUR(CREATEDATETIME)>=#{value,jdbcType=int}
-    </if>
-    <if test="createdatetime2 !=null">
-      and HOUR(CREATEDATETIME)&lt;  #{value2,jdbcType=int}
+      and name like #{name,jdbcType=VARCHAR}
     </if>
   </select>
 
-  <select id="getUser" parameterType="java.lang.String" resultType="int">
-    select
-    <include refid="Base_Column_List" />
-    from tuser
-    where name = #{name,jdbcType=VARCHAR}
-  </select>
+
 
   <select id="login" parameterType="com.zx.mes.model.admin.User" resultMap="BaseResultMap">
     select
@@ -190,6 +180,17 @@
     </if>
     <if test="pwd != null">
       and tuser.PWD = #{pwd,jdbcType=VARCHAR}
+    </if>
+    <if test="id !=null and  id !=''">
+      and tuser.id=#{id,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="sum" parameterType="com.zx.mes.model.admin.User" resultMap="BaseResultMap">
+    SELECT  id from tuser
+    where 1=1
+    <if test="name !=null">
+      and name like #{name,jdbcType=VARCHAR}
     </if>
   </select>
 </mapper>
