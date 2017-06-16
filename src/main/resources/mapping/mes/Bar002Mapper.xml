@@ -327,4 +327,21 @@
       </if>
     </trim>
   </insert>
+
+
+
+
+  <select id="getAllByBar002" parameterType="com.zx.mes.model.mes.Bar002" resultMap="BaseResultMap">
+    SELECT  * from Bar002
+    WHERE 1=1
+    <if test="lot !=null and lot !=''">
+      and lot LIKE  #{lot,jdbcType=VARCHAR}
+    </if>
+    <if test="matname !=null and matname !=''">
+      and matname like #{matname,jdbcType=VARCHAR}
+    </if>
+    <if test="palletno !=null and palletno !=''">
+      and palletno like #{palletno,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

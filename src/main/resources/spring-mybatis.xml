@@ -55,7 +55,13 @@
 		<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
 		<!--<property name="mapperLocations" value="classpath:com/zx/mes/mapping" />-->
 		<!--<property name="mapperLocations" value="classpath*:com/zx/mes/mapping/**/*.xml" />-->
-		<property name="mapperLocations" value="classpath:mapping/*.xml" />
+		<!--<property name="mapperLocations" value="classpath:mapping/*.xml,classpath:mapping/mes/*.xml" />-->
+		<property name="mapperLocations">
+			<list>
+				<value>classpath:mapping/*.xml</value>
+				<value>classpath:mapping/mes/*.xml</value>
+			</list>
+		</property>
 
 
 	</bean>

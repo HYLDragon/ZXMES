@@ -90,4 +90,15 @@
       </if>
     </trim>
   </insert>
+
+  <select id="getAllByRFID" parameterType="com.zx.mes.model.mes.Rfidcard" resultMap="BaseResultMap">
+    SELECT * from  RFIDCard
+    where 1=1
+    <if test="dept !=null and dept !=''">
+      and dept like #{dept,jdbcType=VARCHAR}
+    </if>
+    <if test="palletno !=null and palletno !=''">
+      and palletno =#{palletno,jdbcType=VARCHAR}
+    </if>
+  </select>
 </mapper>

@@ -9,10 +9,12 @@ import com.zx.mes.dao.admin.BugMapper;
 import com.zx.mes.dao.admin.ResourceMapper;
 import com.zx.mes.dao.admin.RoleMapper;
 import com.zx.mes.dao.admin.UserMapper;
+import com.zx.mes.dao.mes.*;
 import com.zx.mes.model.admin.Bug;
 import com.zx.mes.model.admin.Resource;
 import com.zx.mes.model.admin.Role;
 import com.zx.mes.model.admin.User;
+import com.zx.mes.model.mes.*;
 import org.apache.log4j.Logger;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +44,19 @@ public class Test {
     private RoleMapper roleMapper;
     @Autowired
     private ResourceMapper resourceMapper;
+
+    @Autowired
+    private RfidcardMapper rfidcardMapper;
+
+    @Autowired
+    private Bar001Mapper bar001Mapper;
+    @Autowired
+    private Bar002Mapper bar002Mapper;
+    @Autowired
+    private Bar003Mapper bar003Mapper;
+    @Autowired
+    private Bar100Mapper bar100Mapper;
+
     public static void main(String[] args) {
 
     }
@@ -124,4 +139,43 @@ public class Test {
 
     }
 
+    @org.junit.Test
+    public  void test10(){
+        Rfidcard rfidcard=new Rfidcard();
+        rfidcard.setDept("混%");
+        PageHelper.startPage(1,10);
+        logger.info(JSON.toJSONStringWithDateFormat(rfidcardMapper.getAllByRFID(rfidcard),"yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @org.junit.Test
+    public  void test11(){
+        Bar001 bar001=new Bar001();
+        bar001.setLot("201706%");
+        PageHelper.startPage(1,10);
+        logger.info(JSON.toJSONStringWithDateFormat(bar001Mapper.getAllByBar001(bar001),"yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @org.junit.Test
+    public  void test12(){
+        Bar002 bar001=new Bar002();
+        bar001.setLot("201706%");
+        PageHelper.startPage(1,10);
+        logger.info(JSON.toJSONStringWithDateFormat(bar002Mapper.getAllByBar002(bar001),"yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @org.junit.Test
+    public  void test13(){
+        Bar003 bar001=new Bar003();
+        bar001.setLot("201706%");
+        PageHelper.startPage(1,10);
+        logger.info(JSON.toJSONStringWithDateFormat(bar003Mapper.getAllByBar003(bar001),"yyyy-MM-dd HH:mm:ss"));
+    }
+
+    @org.junit.Test
+    public  void test14(){
+        Bar100 bar001=new Bar100();
+        bar001.setLot("201706%");
+        PageHelper.startPage(1,10);
+        logger.info(JSON.toJSONStringWithDateFormat(bar100Mapper.getAllByBar100(bar001),"yyyy-MM-dd HH:mm:ss"));
+    }
 }
