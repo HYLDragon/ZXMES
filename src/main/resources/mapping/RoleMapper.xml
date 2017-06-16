@@ -76,9 +76,9 @@
       <if test="seq != null">
         SEQ = #{seq,jdbcType=INTEGER},
       </if>
-      <if test="pid != null">
+
         PID = #{pid,jdbcType=VARCHAR},
-      </if>
+
     </set>
     where ID = #{id,jdbcType=VARCHAR}
   </update>
@@ -142,8 +142,8 @@
     tresource.URL resource_url,
     tresource.PID resource_pid,
     tresource.TRESOURCETYPE_ID resourcetype_id
-    FROM trole  JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
-    JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
+    FROM trole  LEFT JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
+    LEFT JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
 	where 1=1
 	<if test="name !=null and name !=''">
       and trole.name like #{name,jdbcType=VARCHAR}
@@ -167,8 +167,8 @@
     tresource.URL resource_url,
     tresource.PID resource_pid,
     tresource.TRESOURCETYPE_ID resourcetype_id
-    FROM trole  JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
-    JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
+    FROM trole  LEFT JOIN trole_tresource ON trole.ID = trole_tresource.TROLE_ID
+    LEFT JOIN tresource ON trole_tresource.TRESOURCE_ID = tresource.ID
     WHERE trole.ID in
     <foreach item="item" index="index" collection="list"
              open="(" separator="," close=")">

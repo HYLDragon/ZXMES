@@ -29,6 +29,6 @@ public interface UserMapper {
 
     User  login(User user);
 
-    int getUser(String name);
+    List<User> getUser(User user);
 
 }

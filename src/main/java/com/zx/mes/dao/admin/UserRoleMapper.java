@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 public interface UserRoleMapper {
     int deleteByPrimaryKey(UserRoleKey key);
 
-    int deleteByPrimarySelect(UserRoleKey userRoleKey);
+    int deleteByPrimarySelectUserRole(UserRoleKey userRoleKey);
 
     int insert(UserRoleKey record);
 

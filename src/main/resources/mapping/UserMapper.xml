@@ -91,6 +91,15 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
+  <select id="getUser" parameterType="com.zx.mes.model.admin.User" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM  tuser
+    where 1=1
+    <if test="name !=null and name !=''">
+      and name =#{name,jdbcType=VARCHAR}
+    </if>
+  </select>
 
 
   <select id="getCount" parameterType="com.zx.mes.model.admin.User" resultType="long">
@@ -166,8 +175,8 @@
     trole.PID role_pid
     FROM
     tuser
-    JOIN tuser_trole ON tuser.ID = tuser_trole.TUSER_ID
-    JOIN trole ON tuser_trole.TROLE_ID = trole.ID
+     LEFT JOIN tuser_trole ON tuser.ID = tuser_trole.TUSER_ID
+     LEFT JOIN trole ON tuser_trole.TROLE_ID = trole.ID
 	where 1=1
     <if test="createdatetime != null">
       and tuser.CREATEDATETIME > #{createdatetime,jdbcType=TIMESTAMP}

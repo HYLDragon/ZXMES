@@ -60,7 +60,9 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	synchronized public void reg(Puser user) throws Exception {
-		if (userDao.getUser(user.getName())>0){
+		User user1=new User();
+		user1.setName(user.getName());
+		if (userDao.getUser(user1).size()>0){
 			throw new Exception("登录名已存在!");
 		}else{
 			User u=new User();
@@ -126,8 +128,10 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	synchronized public void add(Puser user) throws Exception {
+		User user2=new User();
+		user2.setName(user.getName());
 
-		if(userDao.getUser(user.getName())>0){
+		if(userDao.getUser(user2).size()>0){
 			throw new Exception("登录名已存在！");
 		}else{
 			User u = new User();
@@ -172,10 +176,9 @@ public class UserServiceImpl implements UserServiceI {
 
 	@Override
 	synchronized public void edit(Puser user) throws Exception {
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("id", user.getId());
-		params.put("name", user.getName());
-		if (userDao.getUser(user.getName()) > 1) {
+		User user1=new User();
+		user1.setName(user.getName());
+		if (userDao.getUser(user1).size() > 1) {
 			throw new Exception("登录名已存在！");
 		} else {
 			User u = userDao.selectByPrimaryKey(user.getId());
@@ -190,7 +193,7 @@ public class UserServiceImpl implements UserServiceI {
 		//先删除中间表
 		UserRoleKey userRoleKey=new UserRoleKey();
 		userRoleKey.setTuserId(id);
-		int key=userRoleMapper.deleteByPrimarySelect(userRoleKey);
+		int key=userRoleMapper.deleteByPrimarySelectUserRole(userRoleKey);
 		//再删除user表记录
 		userDao.deleteByPrimaryKey(id);
 	}

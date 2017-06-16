@@ -41,14 +41,14 @@
     and TUSER_ID = #{tuserId,jdbcType=VARCHAR}
   </select>
 
-  <delete id="deleteByPrimarySelect" parameterType="com.zx.mes.model.admin.UserRoleKey">
+  <delete id="deleteByPrimarySelectUserRole" parameterType="com.zx.mes.model.admin.UserRoleKey">
     delete from tuser_trole
     where  1=1
     <if test="troleId !=null and troleId !=''">
-      TROLE_ID = #{troleId,jdbcType=VARCHAR}
+      and  TROLE_ID = #{troleId,jdbcType=VARCHAR}
     </if>
-    <if test="troleId !=null and troleId !=''">
-      TUSER_ID = #{tuserId,jdbcType=VARCHAR}
+    <if test="tuserId !=null and tuserId !=''">
+      and  TUSER_ID = #{tuserId,jdbcType=VARCHAR}
     </if>
 
   </delete>

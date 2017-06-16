@@ -58,13 +58,14 @@ public class RoleServiceImpl implements RoleServiceI {
         Role role=new Role();
         role.setId(id);
 
-        List<Role> list = roleDao.getAllWithRource(role);
+        List<Role> list = roleDao.getAllWithRource(role);//有可能一个角色一个权限也没有，那么
+        Role role1=list.get(0);
+        BeanUtils.copyProperties(role1,r);
         if (list != null && list.size()>0){
             StringBuilder ids=new StringBuilder();
             StringBuilder names=new StringBuilder();
             boolean b = false;
-            Role role1=list.get(0);
-            BeanUtils.copyProperties(role1,r);
+
             for(int i=0;i<role1.getResources().size();i++){
                 Resource resource=role1.getResources().get(i);
 
@@ -86,9 +87,13 @@ public class RoleServiceImpl implements RoleServiceI {
     @Override
     public void edit(Prole role) {
         Role t = roleDao.selectByPrimaryKey(role.getId());
+        BeanUtils.copyProperties(role, t);
         if (t != null) {
-            BeanUtils.copyProperties(role, t);
+
             if (role.getPid() != null && !role.getPid().equalsIgnoreCase("")) {
+                roleDao.updateByPrimaryKeySelective(t);
+            }else{
+                t.setPid(null);
                 roleDao.updateByPrimaryKeySelective(t);
             }
 
@@ -123,7 +128,9 @@ public class RoleServiceImpl implements RoleServiceI {
 
             BeanUtils.copyProperties(role2,prole);
             prole.setIconCls("status_online");
-
+            if(role2.getPid()!=null && ! role2.getPid().equalsIgnoreCase("")){
+                prole.setPname(roleDao.selectByPrimaryKey(role2.getPid()).getName());
+            }
             List<Resource> resourceList=role2.getResources();
             StringBuilder ids=new StringBuilder();
             StringBuilder names=new StringBuilder();
@@ -160,7 +167,7 @@ public class RoleServiceImpl implements RoleServiceI {
     private void del(Role role) {
         Role role2=new Role();
         role2.setPid(role.getId());
-        List<Role> roleList=roleDao.getAll(role);
+        List<Role> roleList=roleDao.getAll(role2);
         if (roleList !=null && roleList.size()>0){
             for(int i=0;i<roleList.size();i++){
                 del(roleList.get(i));
@@ -169,7 +176,7 @@ public class RoleServiceImpl implements RoleServiceI {
         //删除中间表
         UserRoleKey userRoleKey=new UserRoleKey();
         userRoleKey.setTroleId(role.getId());
-        userRoleMapper.deleteByPrimarySelect(userRoleKey);
+        userRoleMapper.deleteByPrimarySelectUserRole(userRoleKey);
 
         RoleResourceKey roleResourceKey=new RoleResourceKey();
         roleResourceKey.setTroleId(role.getId());
@@ -220,7 +227,7 @@ public class RoleServiceImpl implements RoleServiceI {
         List<Role> roleList=roleDao.getAllWithRource(r);
 
         List<String> ids=new ArrayList<>();
-        if (role.getResourceIds() != null ) {
+        if (role.getResourceIds() != null && ! role.getResourceIds().equalsIgnoreCase("") ) {
             for (String id : role.getResourceIds().split(",")) {
                // boolean b=false;
                //for(int i=0;i<roleList.get(0).getResources().size();i++){
@@ -245,7 +252,10 @@ public class RoleServiceImpl implements RoleServiceI {
             }
 
         }else {
+            RoleResourceKey roleResourceKey=new RoleResourceKey();
+            roleResourceKey.setTroleId(role.getId());
 
+            roleResourceMapper.deleteByPrimaryRoleResourceKey(roleResourceKey);
         }
     }
 }
