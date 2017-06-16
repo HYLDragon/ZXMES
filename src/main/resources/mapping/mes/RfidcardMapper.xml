@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.mes.RfidcardMapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.mes.Rfidcard">
+    <result column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CreateTime" jdbcType="NUMERIC" property="createtime" />
+    <result column="RFID" jdbcType="VARCHAR" property="rfid" />
+    <result column="CardNo" jdbcType="VARCHAR" property="cardno" />
+    <result column="Bar" jdbcType="VARCHAR" property="bar" />
+    <result column="Dept" jdbcType="VARCHAR" property="dept" />
+    <result column="PalletType" jdbcType="VARCHAR" property="pallettype" />
+    <result column="PalletNo" jdbcType="VARCHAR" property="palletno" />
+    <result column="LastBindTime" jdbcType="NUMERIC" property="lastbindtime" />
+    <result column="Ver1" jdbcType="VARCHAR" property="ver1" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zx.mes.model.mes.Rfidcard">
+    insert into RFIDCard (ID, CreateTime, RFID, 
+      CardNo, Bar, Dept, 
+      PalletType, PalletNo, LastBindTime, 
+      Ver1)
+    values (#{id,jdbcType=INTEGER}, #{createtime,jdbcType=NUMERIC}, #{rfid,jdbcType=VARCHAR}, 
+      #{cardno,jdbcType=VARCHAR}, #{bar,jdbcType=VARCHAR}, #{dept,jdbcType=VARCHAR}, 
+      #{pallettype,jdbcType=VARCHAR}, #{palletno,jdbcType=VARCHAR}, #{lastbindtime,jdbcType=NUMERIC}, 
+      #{ver1,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.mes.Rfidcard">
+    insert into RFIDCard
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="rfid != null">
+        RFID,
+      </if>
+      <if test="cardno != null">
+        CardNo,
+      </if>
+      <if test="bar != null">
+        Bar,
+      </if>
+      <if test="dept != null">
+        Dept,
+      </if>
+      <if test="pallettype != null">
+        PalletType,
+      </if>
+      <if test="palletno != null">
+        PalletNo,
+      </if>
+      <if test="lastbindtime != null">
+        LastBindTime,
+      </if>
+      <if test="ver1 != null">
+        Ver1,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=NUMERIC},
+      </if>
+      <if test="rfid != null">
+        #{rfid,jdbcType=VARCHAR},
+      </if>
+      <if test="cardno != null">
+        #{cardno,jdbcType=VARCHAR},
+      </if>
+      <if test="bar != null">
+        #{bar,jdbcType=VARCHAR},
+      </if>
+      <if test="dept != null">
+        #{dept,jdbcType=VARCHAR},
+      </if>
+      <if test="pallettype != null">
+        #{pallettype,jdbcType=VARCHAR},
+      </if>
+      <if test="palletno != null">
+        #{palletno,jdbcType=VARCHAR},
+      </if>
+      <if test="lastbindtime != null">
+        #{lastbindtime,jdbcType=NUMERIC},
+      </if>
+      <if test="ver1 != null">
+        #{ver1,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>

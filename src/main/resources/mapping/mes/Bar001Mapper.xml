@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zx.mes.dao.mes.Bar001Mapper">
+  <resultMap id="BaseResultMap" type="com.zx.mes.model.mes.Bar001">
+    <result column="ID" jdbcType="INTEGER" property="id" />
+    <result column="CreateTime" jdbcType="NUMERIC" property="createtime" />
+    <result column="Bar" jdbcType="VARCHAR" property="bar" />
+    <result column="Lot" jdbcType="VARCHAR" property="lot" />
+    <result column="MatName" jdbcType="VARCHAR" property="matname" />
+    <result column="Pallet" jdbcType="NUMERIC" property="pallet" />
+    <result column="StBatch" jdbcType="NUMERIC" property="stbatch" />
+    <result column="EdBatch" jdbcType="NUMERIC" property="edbatch" />
+    <result column="Count" jdbcType="NUMERIC" property="count" />
+    <result column="Remain" jdbcType="NUMERIC" property="remain" />
+    <result column="State" jdbcType="VARCHAR" property="state" />
+    <result column="Ps" jdbcType="VARCHAR" property="ps" />
+    <result column="OldBar" jdbcType="VARCHAR" property="oldbar" />
+    <result column="MatDesc1" jdbcType="VARCHAR" property="matdesc1" />
+    <result column="MatDesc2" jdbcType="VARCHAR" property="matdesc2" />
+    <result column="CardRec" jdbcType="VARCHAR" property="cardrec" />
+    <result column="CheckTime" jdbcType="NUMERIC" property="checktime" />
+    <result column="CheckMan" jdbcType="VARCHAR" property="checkman" />
+    <result column="CheckResult" jdbcType="VARCHAR" property="checkresult" />
+    <result column="KuState" jdbcType="VARCHAR" property="kustate" />
+    <result column="KuWei" jdbcType="VARCHAR" property="kuwei" />
+    <result column="InTime" jdbcType="NUMERIC" property="intime" />
+    <result column="InMan" jdbcType="VARCHAR" property="inman" />
+    <result column="OutTime" jdbcType="NUMERIC" property="outtime" />
+    <result column="OutMan" jdbcType="VARCHAR" property="outman" />
+    <result column="PalletType" jdbcType="VARCHAR" property="pallettype" />
+    <result column="PalletNo" jdbcType="VARCHAR" property="palletno" />
+    <result column="RFIDBindTime" jdbcType="NUMERIC" property="rfidbindtime" />
+    <result column="PrintMan" jdbcType="VARCHAR" property="printman" />
+    <result column="PrintTime" jdbcType="NUMERIC" property="printtime" />
+    <result column="PrintMark" jdbcType="VARCHAR" property="printmark" />
+    <result column="Mark1" jdbcType="VARCHAR" property="mark1" />
+    <result column="Mark2" jdbcType="VARCHAR" property="mark2" />
+    <result column="Mark3" jdbcType="VARCHAR" property="mark3" />
+    <result column="Mark4" jdbcType="VARCHAR" property="mark4" />
+    <result column="Mark5" jdbcType="VARCHAR" property="mark5" />
+    <result column="Mark6" jdbcType="VARCHAR" property="mark6" />
+    <result column="Mark7" jdbcType="VARCHAR" property="mark7" />
+    <result column="Mark8" jdbcType="VARCHAR" property="mark8" />
+    <result column="Mark9" jdbcType="VARCHAR" property="mark9" />
+    <result column="Mark10" jdbcType="VARCHAR" property="mark10" />
+  </resultMap>
+  <insert id="insert" parameterType="com.zx.mes.model.mes.Bar001">
+    insert into Bar001 (ID, CreateTime, Bar, 
+      Lot, MatName, Pallet, 
+      StBatch, EdBatch, Count, 
+      Remain, State, Ps, 
+      OldBar, MatDesc1, MatDesc2, 
+      CardRec, CheckTime, CheckMan, 
+      CheckResult, KuState, KuWei, 
+      InTime, InMan, OutTime, 
+      OutMan, PalletType, PalletNo, 
+      RFIDBindTime, PrintMan, PrintTime, 
+      PrintMark, Mark1, Mark2, 
+      Mark3, Mark4, Mark5, 
+      Mark6, Mark7, Mark8, 
+      Mark9, Mark10)
+    values (#{id,jdbcType=INTEGER}, #{createtime,jdbcType=NUMERIC}, #{bar,jdbcType=VARCHAR}, 
+      #{lot,jdbcType=VARCHAR}, #{matname,jdbcType=VARCHAR}, #{pallet,jdbcType=NUMERIC}, 
+      #{stbatch,jdbcType=NUMERIC}, #{edbatch,jdbcType=NUMERIC}, #{count,jdbcType=NUMERIC}, 
+      #{remain,jdbcType=NUMERIC}, #{state,jdbcType=VARCHAR}, #{ps,jdbcType=VARCHAR}, 
+      #{oldbar,jdbcType=VARCHAR}, #{matdesc1,jdbcType=VARCHAR}, #{matdesc2,jdbcType=VARCHAR}, 
+      #{cardrec,jdbcType=VARCHAR}, #{checktime,jdbcType=NUMERIC}, #{checkman,jdbcType=VARCHAR}, 
+      #{checkresult,jdbcType=VARCHAR}, #{kustate,jdbcType=VARCHAR}, #{kuwei,jdbcType=VARCHAR}, 
+      #{intime,jdbcType=NUMERIC}, #{inman,jdbcType=VARCHAR}, #{outtime,jdbcType=NUMERIC}, 
+      #{outman,jdbcType=VARCHAR}, #{pallettype,jdbcType=VARCHAR}, #{palletno,jdbcType=VARCHAR}, 
+      #{rfidbindtime,jdbcType=NUMERIC}, #{printman,jdbcType=VARCHAR}, #{printtime,jdbcType=NUMERIC}, 
+      #{printmark,jdbcType=VARCHAR}, #{mark1,jdbcType=VARCHAR}, #{mark2,jdbcType=VARCHAR}, 
+      #{mark3,jdbcType=VARCHAR}, #{mark4,jdbcType=VARCHAR}, #{mark5,jdbcType=VARCHAR}, 
+      #{mark6,jdbcType=VARCHAR}, #{mark7,jdbcType=VARCHAR}, #{mark8,jdbcType=VARCHAR}, 
+      #{mark9,jdbcType=VARCHAR}, #{mark10,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zx.mes.model.mes.Bar001">
+    insert into Bar001
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="createtime != null">
+        CreateTime,
+      </if>
+      <if test="bar != null">
+        Bar,
+      </if>
+      <if test="lot != null">
+        Lot,
+      </if>
+      <if test="matname != null">
+        MatName,
+      </if>
+      <if test="pallet != null">
+        Pallet,
+      </if>
+      <if test="stbatch != null">
+        StBatch,
+      </if>
+      <if test="edbatch != null">
+        EdBatch,
+      </if>
+      <if test="count != null">
+        Count,
+      </if>
+      <if test="remain != null">
+        Remain,
+      </if>
+      <if test="state != null">
+        State,
+      </if>
+      <if test="ps != null">
+        Ps,
+      </if>
+      <if test="oldbar != null">
+        OldBar,
+      </if>
+      <if test="matdesc1 != null">
+        MatDesc1,
+      </if>
+      <if test="matdesc2 != null">
+        MatDesc2,
+      </if>
+      <if test="cardrec != null">
+        CardRec,
+      </if>
+      <if test="checktime != null">
+        CheckTime,
+      </if>
+      <if test="checkman != null">
+        CheckMan,
+      </if>
+      <if test="checkresult != null">
+        CheckResult,
+      </if>
+      <if test="kustate != null">
+        KuState,
+      </if>
+      <if test="kuwei != null">
+        KuWei,
+      </if>
+      <if test="intime != null">
+        InTime,
+      </if>
+      <if test="inman != null">
+        InMan,
+      </if>
+      <if test="outtime != null">
+        OutTime,
+      </if>
+      <if test="outman != null">
+        OutMan,
+      </if>
+      <if test="pallettype != null">
+        PalletType,
+      </if>
+      <if test="palletno != null">
+        PalletNo,
+      </if>
+      <if test="rfidbindtime != null">
+        RFIDBindTime,
+      </if>
+      <if test="printman != null">
+        PrintMan,
+      </if>
+      <if test="printtime != null">
+        PrintTime,
+      </if>
+      <if test="printmark != null">
+        PrintMark,
+      </if>
+      <if test="mark1 != null">
+        Mark1,
+      </if>
+      <if test="mark2 != null">
+        Mark2,
+      </if>
+      <if test="mark3 != null">
+        Mark3,
+      </if>
+      <if test="mark4 != null">
+        Mark4,
+      </if>
+      <if test="mark5 != null">
+        Mark5,
+      </if>
+      <if test="mark6 != null">
+        Mark6,
+      </if>
+      <if test="mark7 != null">
+        Mark7,
+      </if>
+      <if test="mark8 != null">
+        Mark8,
+      </if>
+      <if test="mark9 != null">
+        Mark9,
+      </if>
+      <if test="mark10 != null">
+        Mark10,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=NUMERIC},
+      </if>
+      <if test="bar != null">
+        #{bar,jdbcType=VARCHAR},
+      </if>
+      <if test="lot != null">
+        #{lot,jdbcType=VARCHAR},
+      </if>
+      <if test="matname != null">
+        #{matname,jdbcType=VARCHAR},
+      </if>
+      <if test="pallet != null">
+        #{pallet,jdbcType=NUMERIC},
+      </if>
+      <if test="stbatch != null">
+        #{stbatch,jdbcType=NUMERIC},
+      </if>
+      <if test="edbatch != null">
+        #{edbatch,jdbcType=NUMERIC},
+      </if>
+      <if test="count != null">
+        #{count,jdbcType=NUMERIC},
+      </if>
+      <if test="remain != null">
+        #{remain,jdbcType=NUMERIC},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=VARCHAR},
+      </if>
+      <if test="ps != null">
+        #{ps,jdbcType=VARCHAR},
+      </if>
+      <if test="oldbar != null">
+        #{oldbar,jdbcType=VARCHAR},
+      </if>
+      <if test="matdesc1 != null">
+        #{matdesc1,jdbcType=VARCHAR},
+      </if>
+      <if test="matdesc2 != null">
+        #{matdesc2,jdbcType=VARCHAR},
+      </if>
+      <if test="cardrec != null">
+        #{cardrec,jdbcType=VARCHAR},
+      </if>
+      <if test="checktime != null">
+        #{checktime,jdbcType=NUMERIC},
+      </if>
+      <if test="checkman != null">
+        #{checkman,jdbcType=VARCHAR},
+      </if>
+      <if test="checkresult != null">
+        #{checkresult,jdbcType=VARCHAR},
+      </if>
+      <if test="kustate != null">
+        #{kustate,jdbcType=VARCHAR},
+      </if>
+      <if test="kuwei != null">
+        #{kuwei,jdbcType=VARCHAR},
+      </if>
+      <if test="intime != null">
+        #{intime,jdbcType=NUMERIC},
+      </if>
+      <if test="inman != null">
+        #{inman,jdbcType=VARCHAR},
+      </if>
+      <if test="outtime != null">
+        #{outtime,jdbcType=NUMERIC},
+      </if>
+      <if test="outman != null">
+        #{outman,jdbcType=VARCHAR},
+      </if>
+      <if test="pallettype != null">
+        #{pallettype,jdbcType=VARCHAR},
+      </if>
+      <if test="palletno != null">
+        #{palletno,jdbcType=VARCHAR},
+      </if>
+      <if test="rfidbindtime != null">
+        #{rfidbindtime,jdbcType=NUMERIC},
+      </if>
+      <if test="printman != null">
+        #{printman,jdbcType=VARCHAR},
+      </if>
+      <if test="printtime != null">
+        #{printtime,jdbcType=NUMERIC},
+      </if>
+      <if test="printmark != null">
+        #{printmark,jdbcType=VARCHAR},
+      </if>
+      <if test="mark1 != null">
+        #{mark1,jdbcType=VARCHAR},
+      </if>
+      <if test="mark2 != null">
+        #{mark2,jdbcType=VARCHAR},
+      </if>
+      <if test="mark3 != null">
+        #{mark3,jdbcType=VARCHAR},
+      </if>
+      <if test="mark4 != null">
+        #{mark4,jdbcType=VARCHAR},
+      </if>
+      <if test="mark5 != null">
+        #{mark5,jdbcType=VARCHAR},
+      </if>
+      <if test="mark6 != null">
+        #{mark6,jdbcType=VARCHAR},
+      </if>
+      <if test="mark7 != null">
+        #{mark7,jdbcType=VARCHAR},
+      </if>
+      <if test="mark8 != null">
+        #{mark8,jdbcType=VARCHAR},
+      </if>
+      <if test="mark9 != null">
+        #{mark9,jdbcType=VARCHAR},
+      </if>
+      <if test="mark10 != null">
+        #{mark10,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
