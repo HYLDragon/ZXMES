@@ -178,4 +178,6 @@ public class Test {
         PageHelper.startPage(1,10);
         logger.info(JSON.toJSONStringWithDateFormat(bar100Mapper.getAllByBar100(bar001),"yyyy-MM-dd HH:mm:ss"));
     }
+
+
 }

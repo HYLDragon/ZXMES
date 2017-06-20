@@ -2,6 +2,7 @@ package com.zx.mes.dao.mes;
 
 import com.zx.mes.model.mes.Bar001;
 import com.zx.mes.model.mes.Bar002;
+import com.zx.mes.model.mes.Bar003;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,4 +14,6 @@ public interface Bar002Mapper {
     int insertSelective(Bar002 record);
 
     List<Bar002> getAllByBar002(Bar002 bar);
+
+    long count(Bar002 bar);
 }

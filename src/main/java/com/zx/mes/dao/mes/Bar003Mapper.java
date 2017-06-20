@@ -13,4 +13,6 @@ public interface Bar003Mapper {
     int insertSelective(Bar003 record);
 
     List<Bar003> getAllByBar003(Bar003 bar);
+
+    long count(Bar003 bar);
 }

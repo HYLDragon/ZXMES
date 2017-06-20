@@ -11,4 +11,6 @@ public interface RfidcardMapper {
     int insertSelective(Rfidcard record);
 
     List<Rfidcard> getAllByRFID(Rfidcard rfidcard);
+
+    long count(Rfidcard rfidcard);
 }

@@ -13,6 +13,11 @@
     <result column="LastBindTime" jdbcType="NUMERIC" property="lastbindtime" />
     <result column="Ver1" jdbcType="VARCHAR" property="ver1" />
   </resultMap>
+
+  <sql id="Base_Column_List">
+    ID, CAST(createtime-2 AS datetime), RFID, CardNo, Bar,Dept,PalletType,PalletNo,CAST(LastBindTime-2 AS datetime),Ver1
+  </sql>
+
   <insert id="insert" parameterType="com.zx.mes.model.mes.Rfidcard">
     insert into RFIDCard (ID, CreateTime, RFID, 
       CardNo, Bar, Dept, 
@@ -90,15 +95,28 @@
       </if>
     </trim>
   </insert>
-
+<!--新写的SQL-->
   <select id="getAllByRFID" parameterType="com.zx.mes.model.mes.Rfidcard" resultMap="BaseResultMap">
-    SELECT * from  RFIDCard
+    SELECT
+    *
+    from  RFIDCard
     where 1=1
     <if test="dept !=null and dept !=''">
       and dept like #{dept,jdbcType=VARCHAR}
     </if>
     <if test="palletno !=null and palletno !=''">
-      and palletno =#{palletno,jdbcType=VARCHAR}
+      and palletno like #{palletno,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+  <select id="count"  parameterType="com.zx.mes.model.mes.Rfidcard" resultType="java.lang.Long">
+    select COUNT(*) from rfidcard
+    WHERE 1=1
+    <if test="palletno !=null and palletno !=''">
+      and palletno LIKE  #{palletno,jdbcType=VARCHAR}
+    </if>
+    <if test="dept !=null and dept !=''">
+      and dept like #{dept,jdbcType=VARCHAR}
     </if>
   </select>
 </mapper>

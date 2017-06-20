@@ -327,7 +327,7 @@
       </if>
     </trim>
   </insert>
-
+<!--新写的SQL-->
   <select id="getAllByBar100" parameterType="com.zx.mes.model.mes.Bar100" resultMap="BaseResultMap">
     SELECT  * from Bar100
     WHERE 1=1
@@ -339,6 +339,15 @@
     </if>
     <if test="palletno !=null and palletno !=''">
       and palletno like #{palletno,jdbcType=VARCHAR}
+    </if>
+  </select>
+
+
+  <select id="count"  resultType="java.lang.Long">
+    select COUNT(*) from bar100
+    WHERE 1=1
+    <if test="matname !=null and matname !=''">
+      and matname like #{matname,jdbcType=VARCHAR}
     </if>
   </select>
 </mapper>

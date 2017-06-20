@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 /**
  * Created by Administrator on 2017/6/8.
  */
-public class RFIDCard implements Serializable{
+public class Prfidcard implements Serializable{
     private int id;
     private BigDecimal createTime;
     private String rfid;
