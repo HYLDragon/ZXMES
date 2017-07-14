@@ -1,11 +1,7 @@
 /**
  * Created by HYL on 2017/2/27.
  */
-/**
- * auther by GodSon
- *
- * date : 2010 - 11 -29
- */
+
 
 $.extend($.fn.validatebox.defaults.rules, {
     minLength : { // 判断最小长度

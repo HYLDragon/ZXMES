@@ -50,9 +50,10 @@
 	};
 
 	function logoutFun(b) {
+	    console.log(new Date().toString() );
 		$.getJSON('${pageContext.request.contextPath}/userController/logout', {
-			t : new Date()
-		}, function(result) {
+			t : new Date().toString()
+        }, function(result) {
 			if (b) {
 				location.replace('${pageContext.request.contextPath}/');
 			} else {

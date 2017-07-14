@@ -30,8 +30,13 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/flot-spline/js/jquery.flot.spline.js"></script>
 <!-- DateJS --> 
 <!-- <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/date-0.3.1/dist/date.js"></script> -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/build/date.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/build/date-zh-CN.js"></script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/build/date.js"></script>--%>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/src/globalization/en-US.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/src/core.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/src/sugarpak.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/src/parser.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/src/extras.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/Datejs/src/time.js"></script>
 
 <!-- JQVMap -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jqvmap-1.5.1/dist/jquery.vmap.js"></script>

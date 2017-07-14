@@ -11,6 +11,7 @@
 		$.canEdit = true;
 	</script>
 </c:if>
+
 <c:if test="${fn:contains(sessionInfo.resourceList, '/userController/delete')}">
 	<script type="text/javascript">
 		$.canDelete = true;
