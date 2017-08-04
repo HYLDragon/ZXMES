@@ -25,11 +25,11 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/pnotify-3.2.0/dist/pnotify.nonblock.css" type="text/css"></link>
 
 <!-- Datatables -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/media/css/dataTables.bootstrap.css" type="text/css"></link>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Scroller/css/scroller.bootstrap.css" type="text/css"></link>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Responsive/css/responsive.bootstrap.css" type="text/css"></link>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/FixedHeader/css/fixedHeader.bootstrap.css" type="text/css"></link>
-<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/css/buttons.bootstrap.css" type="text/css"></link>
+<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/media/css/dataTables.bootstrap.css" type="text/css"></link>--%>
+<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Scroller/css/scroller.bootstrap.css" type="text/css"></link>--%>
+<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Responsive/css/responsive.bootstrap.css" type="text/css"></link>--%>
+<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/FixedHeader/css/fixedHeader.bootstrap.css" type="text/css"></link>--%>
+<%--<link rel="stylesheet" href="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/css/buttons.bootstrap.css" type="text/css"></link>--%>
 
  
  

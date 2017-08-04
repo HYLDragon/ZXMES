@@ -202,29 +202,20 @@ public class UserServiceImpl implements UserServiceI {
 	@Override
 	public void grant(String ids, Puser user) {
 		if (ids != null && ids.length() > 0) {
-			List<Role> roles = new ArrayList<Role>();
-			//用户本来有的权限
-			if (user.getRoleIds() != null) {
-				UserRoleKey userRoleKey=new UserRoleKey();
-				for (String roleId : user.getRoleIds().split(",")) {
-					//roles.add(roleMapper.selectByPrimaryKey(roleId));
-					//获得roleId
-					userRoleKey.setTroleId(roleId);
-					String[] idArr=ids.split(",");
-					for(int i=0;i< idArr.length;i++){
-						if(idArr[i] !=null && ! idArr[i].equals("")){
-							userRoleKey.setTuserId(idArr[i]);
-							if (userRoleMapper.selectByPrimaryKey(userRoleKey)>0){
+			//List<Role> roles = new ArrayList<Role>();
 
-							}else{
-								userRoleMapper.insert(userRoleKey);
-							}
-						}
+			//不管原来有什么样的角色，先清除掉再添加权限
+			if (user.getRoleIds()!=null){
+				for(String id:ids.split(",")){
+					UserRoleKey userRoleKey=new UserRoleKey();
+					userRoleKey.setTuserId(id);
+					userRoleMapper.deleteByPrimarySelectUserRole(userRoleKey);
+					for (String roleId:user.getRoleIds().split(",")){
+						userRoleKey.setTroleId(roleId);
+						userRoleMapper.insert(userRoleKey);
 					}
 				}
 			}
-
-
 		}
 	}
 
@@ -267,6 +258,7 @@ public class UserServiceImpl implements UserServiceI {
 			User u = userDao.selectByPrimaryKey(user.getId());
 			u.setPwd(MD5Util.md5(user.getPwd()));
 			u.setModifydatetime(new Date());
+			userDao.updateByPrimaryKeySelective(u);
 		}
 	}
 
@@ -276,6 +268,7 @@ public class UserServiceImpl implements UserServiceI {
 		if (u.getPwd().equalsIgnoreCase(MD5Util.md5(oldPwd))) {// 说明原密码输入正确
 			u.setPwd(MD5Util.md5(pwd));
 			u.setModifydatetime(new Date());
+			userDao.updateByPrimaryKeySelective(u);
 			return true;
 		}
 		return false;

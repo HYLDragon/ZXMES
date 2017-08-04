@@ -16,8 +16,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <jsp:include page="../inc.jsp"></jsp:include>
     <jsp:include page="../inccss.jsp"></jsp:include>
-    <link type="text/css" rel="stylesheet" href="../style/tables.css"></link>
+    <%--<link type="text/css" rel="stylesheet" href="../style/tables.css"/>--%>
     <jsp:include page="../incjs.jsp"></jsp:include>
+    <link rel="stylesheet" href="../style/tables.css" type="text/css"></link>
     <script type="text/javascript">
         $(function(){
             // Panel toolbox

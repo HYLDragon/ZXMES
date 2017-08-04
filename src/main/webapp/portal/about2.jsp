@@ -1,5 +1,8 @@
 <%@ page language="java" pageEncoding="UTF-8"%>
 <ul>
+	<li>20170804对所改ORM遗留BUG进行修复,目前发现的已全部解决</li>
+	<li>20170710加入Mycat为后期做集群，读写分离，主从复制做前期准备</li>
+	<li>20170605将Hibernate框架改为Mybatis框架</li>
 	<li>20170417添加了文件上传的功能，并且优化了上传界面,做到美观</li>
 	<li>20170417将bootstrap更新到3.3.7版本，不再支持IE6，7，8，9，将针对全面支持HTML5的浏览器进行开发</li>
 	<li>20170302添加了ehcache功能，缓存了资源类型和BUG类型的数据</li>
