@@ -19,6 +19,7 @@
     <%--<link type="text/css" rel="stylesheet" href="../style/tables.css"/>--%>
     <jsp:include page="../incjs.jsp"></jsp:include>
     <link rel="stylesheet" href="../style/tables.css" type="text/css"></link>
+    <%--约定好的js--%>
     <script type="text/javascript">
         $(function(){
             // Panel toolbox
@@ -53,6 +54,42 @@
         //清除easyui的prossbar
         parent.$.messager.progress('close');
     </script>
+    <%--pageJS--%>
+    <script type="text/javascript">
+
+        $(function () {
+            var intervalTime=setInterval(function () {
+                $('.intervalTime').text("更新时间:"+(new Date()).format("yyyy/MM/dd/hh/mm/ss "));
+            },2000);
+
+            //定时从后台获取数据(可能有以下几种情况，访问超时，提示超时记录，异步操作)
+            
+            var waitData=function () {
+                var wait=function () {
+                    var dtd=$.Deferred();
+                    var tasks=function () {
+                        alert("执行完毕!");
+                        dtd.resolve();
+                    };
+                    setTimeout(tasks,5000);
+                    //setInterval(tasks,5000);
+                    //tasks();
+                    return dtd.promise();
+                }
+                $.when(wait()).done(function () {
+                    alert("success!");
+                }).fail(function () {
+                    alert("fail!");
+                });
+            };
+            
+
+
+            //每5秒向服务器获取一次资料
+            var p=setInterval(waitData,5000);
+
+        });
+    </script>
 </head>
 <body>
 <div id="main-col" class="container-fluid">
@@ -78,8 +115,8 @@
                     class="col-md-3 col-sm-3 col-xs-12 title-right form-group pull-right top-search">
                 <!-- 右标题位置布局 -->
                 <div class="input-group">
-                    <div style="margin-top: 30px;">
-                        更新时间:2015/9/01/11:00
+                    <div class="intervalTime" style="margin-top: 30px;">
+                        <%--此处显示日期--%>
                     </div>
 
                 </div>
