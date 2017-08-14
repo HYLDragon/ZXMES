@@ -19,6 +19,9 @@
     <%--<link type="text/css" rel="stylesheet" href="../style/tables.css"/>--%>
     <jsp:include page="../incjs.jsp"></jsp:include>
     <link rel="stylesheet" href="../style/tables.css" type="text/css"></link>
+    <style type="text/css">
+
+    </style>
     <%--约定好的js--%>
     <script type="text/javascript">
         $(function(){
@@ -161,6 +164,7 @@
                                     <div>风压</div>
                                     <div>幽幽</div>
                                 </div>
+                                <%--.x_X--%>
                                 <div class="x_X" style="margin-top: 20px;">
                                     <div class="row">
                                         <div class="col-md-4">
