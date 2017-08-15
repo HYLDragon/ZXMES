@@ -4,6 +4,10 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/extBrowser.js" charset="utf-8"></script>
+<%--easyui-1.5.X美化组件--%>
+<link href="${pageContext.request.contextPath}/jslib/reset.min.css" rel="stylesheet" type="text/css">
+<%--<link href="${pageContext.request.contextPath}/jslib/insdep/easyui_full.css" rel="stylesheet" type="text/css">--%>
+<%--easyui-1.5.X美化组件--%>
 
 <!-- 引入my97日期时间控件 -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/My97DatePicker4.8b3/My97DatePicker/WdatePicker.js" charset="utf-8"></script>
@@ -25,16 +29,13 @@
 <link href="${pageContext.request.contextPath}/jslib/bootstrap-fileinput/css/fileinput.min.css" media="all" rel="stylesheet" type="text/css" />
 
 <!-- 引入FileUpload -->
-<!-- canvas-to-blob.min.js is only needed if you wish to resize images before upload.
-     This must be loaded before fileinput.min.js -->
+
 <script src="${pageContext.request.contextPath}/jslib/bootstrap-fileinput/js/plugins/canvas-to-blob.min.js" type="text/javascript"></script>
-<!-- sortable.min.js is only needed if you wish to sort / rearrange files in initial preview.
-     This must be loaded before fileinput.min.js -->
+
 <script src="${pageContext.request.contextPath}/jslib/bootstrap-fileinput/js/plugins/sortable.min.js" type="text/javascript"></script>
-<!-- purify.min.js is only needed if you wish to purify HTML content in your preview for HTML files.
-     This must be loaded before fileinput.min.js -->
+
 <script src="${pageContext.request.contextPath}/jslib/bootstrap-fileinput/js/plugins/purify.min.js" type="text/javascript"></script>
-<!-- the main fileinput plugin file -->
+
 <script src="${pageContext.request.contextPath}/jslib/bootstrap-fileinput/js/fileinput.min.js"></script>
 
 

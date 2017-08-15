@@ -303,7 +303,7 @@ public class UserServiceImpl implements UserServiceI {
 		List<Puser> ul = new ArrayList<Puser>();
 		User user=new User();
 		user.setName("%" + q.trim()+"%");
-		com.github.pagehelper.PageHelper.startPage(1,10);
+		com.github.pagehelper.PageHelper.startPage(1,ph.getRows());
 		List<User> tl = userDao.getAll(user);
 		if (tl != null && tl.size() > 0) {
 			for (User t : tl) {

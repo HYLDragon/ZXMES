@@ -135,12 +135,22 @@
 			<form method="post">
 				<table class="table table-hover table-condensed">
 					<tr>
-						<th>登录名</th>
-						<td><input name="name" type="text" placeholder="请输入登录名" class="easyui-validatebox" data-options="required:true"></td>
+						<th style="vertical-align: middle"><div>登录名</div></th>
+						<td>
+							<div style="width: 80%">
+								<input name="name" type="text" placeholder="请输入登录名" class="easyui-validatebox form-control"
+										   data-options="required:true">
+							</div>
+						</td>
 					</tr>
 					<tr>
-						<th>密码</th>
-						<td><input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox" data-options="required:true"></td>
+						<th style="vertical-align: middle"><label>密码</label></th>
+						<td>
+							<div style="width: 80%">
+								<input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox form-control"
+									   data-options="required:true">
+							</div>
+						</td>
 					</tr>
 				</table>
 			</form>
@@ -149,12 +159,22 @@
 			<form method="post">
 				<table class="table table-hover table-condensed">
 					<tr>
-						<th>登录名</th>
-						<td><input id="userLoginCombobox" name="name" type="text" placeholder="请输入登录名" class="easyui-validatebox" data-options="required:true" style="height: 29px;"></td>
+						<th style="vertical-align: middle"><div>登录名</div></th>
+						<td>
+							<div style="width: 80%">
+								<input id="userLoginCombobox" name="name" type="text" placeholder="请输入登录名"
+									   class="easyui-validatebox " data-options="required:true" style="height: 29px;">
+							</div>
+						</td>
 					</tr>
 					<tr>
-						<th>密码</th>
-						<td><input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox" data-options="required:true" style="height:29px;"></td>
+						<th style="vertical-align: middle"><div>密码</div></th>
+						<td>
+							<div style="width: 68%">
+								<input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox form-control"
+									   data-options="required:true" style="height:29px;">
+							</div>
+						</td>
 					</tr>
 				</table>
 			</form>
@@ -163,12 +183,18 @@
 			<form method="post">
 				<table class="table table-hover table-condensed">
 					<tr>
-						<th>登录名</th>
-						<td><input id="userLoginCombogrid" name="name" type="text" placeholder="请输入登录名" class="easyui-validatebox" data-options="required:true" style="height: 29px;"></td>
+						<th style="vertical-align: middle"><div>登录名</div></th>
+						<td><input id="userLoginCombogrid" name="name" type="text" placeholder="请输入登录名"
+								   class="easyui-validatebox " data-options="required:true" style="height: 29px;"></td>
 					</tr>
 					<tr>
-						<th>密码</th>
-						<td><input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox" data-options="required:true" style="height:29px;"></td>
+						<th style="vertical-align: middle"><div>密码</div></th>
+						<td>
+							<div style="width: 68%">
+								<input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox form-control"
+									   data-options="required:true" style="height:29px;">
+							</div>
+						</td>
 					</tr>
 				</table>
 			</form>

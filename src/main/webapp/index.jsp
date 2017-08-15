@@ -5,7 +5,7 @@
 <head>
 <title>HYLDemo</title>
 <jsp:include page="inc.jsp"></jsp:include>
-<jsp:include page="inccss.jsp"></jsp:include>
+<%--<jsp:include page="inccss.jsp"></jsp:include>--%>
 <link rel="stylesheet" href="${pageContext.request.contextPath}/style/custom.css" type="text/css"></link>
 <script type="text/javascript">
 	var index_tabs;

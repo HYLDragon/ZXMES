@@ -40,16 +40,32 @@
 	<form id="regForm" method="post">
 		<table class="table table-hover table-condensed">
 			<tr>
-				<th>登录名</th>
-				<td><input name="name" type="text" placeholder="请输入登录名" class="easyui-validatebox" data-options="required:true"></td>
+				<th style="vertical-align: middle;"><div>登录名</div></th>
+				<td>
+					<div style="width: 80%">
+						<input name="name" type="text" placeholder="请输入登录名" class="easyui-validatebox form-control"
+							   data-options="required:true">
+					</div>
+				</td>
 			</tr>
 			<tr>
-				<th>密码</th>
-				<td><input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox" data-options="required:true"></td>
+				<th style="vertical-align: middle;"><div>密码</div></th>
+
+				<td>
+					<div style="width: 80%">
+						<input name="pwd" type="password" placeholder="请输入密码" class="easyui-validatebox form-control"
+							   data-options="required:true">
+					</div>
+				</td>
 			</tr>
 			<tr>
-				<th>重复</th>
-				<td><input name="rePwd" type="password" placeholder="请再次输入密码" class="easyui-validatebox" data-options="required:true,validType:'eqPwd[\'#regForm input[name=pwd]\']'"></td>
+				<th style="vertical-align: middle;"><div>重复</div></th>
+					<td>
+						<div style="width: 80%">
+							<input name="rePwd" type="password" placeholder="请再次输入密码" class="easyui-validatebox form-control"
+								   data-options="required:true,validType:'eqPwd[\'#regForm input[name=pwd]\']'">
+						</div>
+					</td>
 			</tr>
 		</table>
 	</form>
