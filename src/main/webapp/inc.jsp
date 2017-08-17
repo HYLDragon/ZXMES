@@ -5,7 +5,7 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/extBrowser.js" charset="utf-8"></script>
 <%--easyui-1.5.X美化组件--%>
-<link href="${pageContext.request.contextPath}/jslib/reset.min.css" rel="stylesheet" type="text/css">
+<%--<link href="${pageContext.request.contextPath}/jslib/reset.min.css" rel="stylesheet" type="text/css">--%>
 <%--<link href="${pageContext.request.contextPath}/jslib/insdep/easyui_full.css" rel="stylesheet" type="text/css">--%>
 <%--easyui-1.5.X美化组件--%>
 

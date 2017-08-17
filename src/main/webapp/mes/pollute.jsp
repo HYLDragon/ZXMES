@@ -89,9 +89,44 @@
 
 
             //每5秒向服务器获取一次资料
-            var p=setInterval(waitData,5000);
+//            var p=setInterval(waitData,5000);
 
         });
+    </script>
+
+    <script type="text/javascript">
+        var regNum= /[1-9][0-9]*/g;
+        $(function () {
+            $(".btn_click").each(function () {
+                var obj=$(this);
+                obj.click(function () {
+//                    alert(obj.text().match(regNum));
+//                    sy.dialog({
+//
+//                    });
+                    edit(obj.text().match(regNum));
+                });
+            });
+        });
+//'${pageContext.request.contextPath}/userController/editPwdPage?id=' + id
+        function edit(id) {
+//            parent.$.messager.progress('close');
+            parent.$.modalDialog({
+                title : '除臭明细',
+                width : 800,
+                height : 500,
+                href : '' ,
+                buttons : [ {
+                    text : '确定',
+                    handler : function() {
+//                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+//                        var f = parent.$.modalDialog.handler.find('#form');
+//                        f.submit();
+                        alert("点了确定;id:"+id);
+                    }
+                } ]
+            });
+        }
     </script>
 </head>
 <body>
@@ -111,7 +146,6 @@
                 <div style="position: relative;text-align: center;">
                     <h3>正新混除臭设备监控管理看板</h3>
                 </div>
-
             </div>
 
             <div
@@ -168,35 +202,13 @@
                                 <div class="x_X" style="margin-top: 20px;">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM13</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM5</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM14</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM14</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM15</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="x_chuchou">
-                                <div class="x_S">
-                                    <div>日用水量</div>
-                                    <div>风压</div>
-                                    <div>幽幽</div>
-                                </div>
-                                <div class="x_X" style="margin-top: 20px;">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM13</div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM14</div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM15</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM15</div>
                                         </div>
                                     </div>
                                 </div>
@@ -212,13 +224,35 @@
                                 <div class="x_X" style="margin-top: 20px;">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM13</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM13</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM14</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM14</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM15</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="x_chuchou">
+                                <div class="x_S">
+                                    <div>日用水量</div>
+                                    <div>风压</div>
+                                    <div>幽幽</div>
+                                </div>
+                                <div class="x_X" style="margin-top: 20px;">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM13</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM14</div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM15</div>
                                         </div>
                                     </div>
                                 </div>
@@ -260,13 +294,13 @@
                                 <div class="x_X" style="margin-top: 20px;">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM13</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM13</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM14</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM14</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM15</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM15</div>
                                         </div>
                                     </div>
                                 </div>
@@ -336,13 +370,13 @@
                                 <div class="x_X" style="margin-top: 20px;">
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM13</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM13</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM14</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM14</div>
                                         </div>
                                         <div class="col-md-4">
-                                            <div style="background-color:#4cae4c;">BM15</div>
+                                            <div class="btn_click" style="background-color:#4cae4c;">BM15</div>
                                         </div>
                                     </div>
                                 </div>
