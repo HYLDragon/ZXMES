@@ -52,21 +52,22 @@
 
 
 <!-- Datatables -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/media/js/jquery.dataTables.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/media/js/dataTables.bootstrap.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/dataTables.buttons.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.bootstrap.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.flash.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.html5.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.print.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/FixedHeader/js/dataTables.fixedHeader.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/KeyTable/js/dataTables.keyTable.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Responsive/js/dataTables.responsive.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Responsive/js/responsive.bootstrap.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Scroller/js/dataTables.scroller.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jszip-3.1.3/dist/jszip.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/pdfmake-0.1.28/build/pdfmake.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/pdfmake-0.1.28/build/vfs_fonts.js"></script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/media/js/jquery.dataTables.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/media/js/dataTables.bootstrap.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/dataTables.buttons.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.bootstrap.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.flash.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.html5.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Buttons/js/buttons.print.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/FixedHeader/js/dataTables.fixedHeader.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/KeyTable/js/dataTables.keyTable.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Responsive/js/dataTables.responsive.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Responsive/js/responsive.bootstrap.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/DataTables-1.10.15/extensions/Scroller/js/dataTables.scroller.js"></script>--%>
+
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/jszip-3.1.3/dist/jszip.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/pdfmake-0.1.28/build/pdfmake.js"></script>--%>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/pdfmake-0.1.28/build/vfs_fonts.js"></script>--%>
 
 
 

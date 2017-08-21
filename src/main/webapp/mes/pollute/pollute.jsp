@@ -14,11 +14,11 @@
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <jsp:include page="../inc.jsp"></jsp:include>
-    <jsp:include page="../inccss.jsp"></jsp:include>
+    <jsp:include page="../../inc.jsp"></jsp:include>
+    <jsp:include page="../../inccss.jsp"></jsp:include>
     <%--<link type="text/css" rel="stylesheet" href="../style/tables.css"/>--%>
-    <jsp:include page="../incjs.jsp"></jsp:include>
-    <link rel="stylesheet" href="../style/tables.css" type="text/css"></link>
+    <jsp:include page="../../incjs.jsp"></jsp:include>
+    <link rel="stylesheet" href="../../style/tables.css" type="text/css"></link>
     <style type="text/css">
 
     </style>
@@ -113,18 +113,18 @@
 //            parent.$.messager.progress('close');
             parent.$.modalDialog({
                 title : '除臭明细',
-                width : 800,
-                height : 500,
-                href : '' ,
-                buttons : [ {
-                    text : '确定',
-                    handler : function() {
-//                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-//                        var f = parent.$.modalDialog.handler.find('#form');
-//                        f.submit();
-                        alert("点了确定;id:"+id);
-                    }
-                } ]
+                width : 1000,
+                height : 600,
+                href : '${pageContext.request.contextPath}/polluteController/pollutePage?id=' + id ,
+//                buttons : [ {
+//                    text : '确定',
+//                    handler : function() {
+////                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+////                        var f = parent.$.modalDialog.handler.find('#form');
+////                        f.submit();
+//                        alert("点了确定;id:"+id);
+//                    }
+//                } ]
             });
         }
     </script>

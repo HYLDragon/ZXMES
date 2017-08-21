@@ -1,6 +1,6 @@
 var CURRENT_URL = window.location.href.split('#')[0].split('?')[0],
 	$SIDEBAR_MENU = $('#sidebar-menu'),
-    $BODY = $('#bodyMenu'),
+    $BODY = $('#bodyMenu');
     //$MENU_TOGGLE = $('#menu_toggle'),
     //$SIDEBAR_FOOTER = $('.sidebar-footer'),
     //$LEFT_COL = $('.left_col'),
