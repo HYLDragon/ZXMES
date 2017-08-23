@@ -56,13 +56,13 @@
 
 <div id="pollutePage_layout" class="easyui-layout" data-options="fit:true,border:false">
     <div data-options="region:'west',title:'除臭菜单',split:true" style="width:170px;">
-        <ul class="nav nav-pills  nav-stacked">
-            <%--<li role="presentation"><a _href="#1">首页</a></li>--%>
+        <ul class="nav nav-pills  nav-stacked"> <%--<li role="presentation"><a _href="#1">首页</a></li>--%>
             <li role="presentation"><a _href="/polluteController/polluteElectPage">电表记录</a></li>
             <li role="presentation"><a _href="/polluteController/polluteVpPage">VP香片更换记录</a></li>
             <li role="presentation"><a _href="/polluteController/polluteFanPage">风机机油添加记录</a></li>
             <li role="presentation"><a _href="/polluteController/polluteStrainerPage">除尘设备滤网更换记录</a></li>
             <li role="presentation"><a _href="/polluteController/polluteUvPage">UV前置滤网更换记录</a></li>
+
             <li role="presentation"><a _href="/polluteController/polluteCarePage">保养记录</a></li>
         </ul>
     </div>
