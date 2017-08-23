@@ -104,12 +104,25 @@
     where ID = #{id,jdbcType=VARCHAR}
   </update>
 
+
+  <!---->
+  <select id="getCount" parameterType="com.zx.mes.model.mes.Care" resultType="long">
+    select count(*) from care
+    where 1=1
+    <if test="name !=null">
+      and  name like #{name,jdbcType=VARCHAR}
+    </if>
+    <if test="createdatetime !=null">
+      and  createdatetime > #{createdatetime,jdbcType=TIMESTAMP}
+    </if>
+  </select>
+
   <!--getAllWithCareType-->
   <resultMap id="CareResultMap" type="com.zx.mes.model.mes.Care" extends="BaseResultMap">
     <association property="careType" javaType="com.zx.mes.model.mes.CareType">
-      <id column="CareType_ID" jdbcType="VARCHAR" property="id" />
-      <result column="CareType_NAME" jdbcType="VARCHAR" property="name" />
-      <result column="CareType_REMARK" jdbcType="VARCHAR" property="remark" />
+      <id column="CARETYPE_ID" jdbcType="VARCHAR" property="id" />
+      <result column="CARETYPE_NAME" jdbcType="VARCHAR" property="name" />
+      <result column="CARETYPE_REMARK" jdbcType="VARCHAR" property="remark" />
     </association>
   </resultMap>
   <select id="getAllWithCareType" parameterType="com.zx.mes.model.mes.Care" resultMap="CareResultMap">
@@ -119,9 +132,9 @@
     ,CARE.MODIFYDATETIME
     ,CARE.REMARK
     ,CARE.CARETYPE_ID
-    ,CARETYPE.ID
-    ,CARETYPE.NAME
-    ,CARETYPE.REMARK
+    ,CARETYPE.ID CARETYPE_ID
+    ,CARETYPE.NAME CARETYPE_NAME
+    ,CARETYPE.REMARK CARETYPE_REMARK
     FROM CARE
     LEFT JOIN CARETYPE ON CARETYPE.ID= CARE.CARETYPE_ID
     where 1=1

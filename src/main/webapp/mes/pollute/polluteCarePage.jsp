@@ -5,22 +5,25 @@
   Time: 9:48
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<!DOCTYPE html>
 <html>
 <head>
     <title>保养记录</title>
     <jsp:include page="../../inc.jsp"></jsp:include>
-    <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/editPage')}">
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/editPage')}">
         <script type="text/javascript">
             $.canEdit = true;
         </script>
     </c:if>
-    <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/delete')}">
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/delete')}">
         <script type="text/javascript">
             $.canDelete = true;
         </script>
     </c:if>
-    <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/view')}">
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/view')}">
         <script type="text/javascript">
             $.canView = true;
         </script>
@@ -29,7 +32,7 @@
         var dataGrid;
         $(function() {
             dataGrid = $('#dataGrid').datagrid({
-                url : '${pageContext.request.contextPath}/bugController/dataGrid',
+                url : '${pageContext.request.contextPath}/careController/datagrid',
                 fit : true,
                 fitColumns : true,
                 border : false,
@@ -67,12 +70,12 @@
                     width : 150,
                     sortable : true
                 }, {
-                    field : 'typeId',
+                    field : 'careTypeId',
                     title : '保养类型ID',
                     width : 150,
                     hidden : true
                 }, {
-                    field : 'typeName',
+                    field : 'careTypeName',
                     title : '保养类型名称',
                     width : 150
                 }, {
@@ -125,7 +128,7 @@
                         title : '提示',
                         text : '数据处理中，请稍后....'
                     });
-                    $.post('${pageContext.request.contextPath}/bugController/delete', {
+                    $.post('${pageContext.request.contextPath}/careController/delete', {
                         id : id
                     }, function(result) {
                         if (result.success) {
@@ -147,7 +150,7 @@
                 title : '编辑BUG',
                 width : 780,
                 height : 500,
-                href : '${pageContext.request.contextPath}/bugController/editPage?id=' + id,
+                href : '${pageContext.request.contextPath}/careController/editPage?id=' + id,
                 buttons : [ {
                     text : '编辑',
                     handler : function() {
@@ -168,7 +171,7 @@
                 title : '查看保养',
                 width : 780,
                 height : 500,
-                href : '${pageContext.request.contextPath}/bugController/view?id=' + id
+                href : '${pageContext.request.contextPath}/careController/view?id=' + id
             });
         }
 
@@ -177,7 +180,7 @@
                 title : '添加保养',
                 width : 780,
                 height : 500,
-                href : '${pageContext.request.contextPath}/bugController/addPage',
+                href : '${pageContext.request.contextPath}/careController/addPage',
                 buttons : [ {
                     text : '添加',
                     handler : function() {
@@ -207,10 +210,10 @@
                         <th>保养名称</th>
                         <td><input name="name" placeholder="可以模糊查询" class="span2" /></td>
                         <th>保养类型</th>
-                        <td><select name="typeId" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <td><select name="careTypeId" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
                             <option value=""></option>
-                            <c:forEach items="${bugTypeList}" var="bugType">
-                                <option value="${bugType.id}">${bugType.name}</option>
+                            <c:forEach items="${careTypeList}" var="careType">
+                                <option value="${careType.id}">${careType.name}</option>
                             </c:forEach>
                         </select></td>
                     </tr>
@@ -218,10 +221,10 @@
                         <th>创建时间</th>
                         <td colspan="3"><input class="span2" name="createdatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="createdatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
                     </tr>
-                    <tr>
-                        <th>最后修改时间</th>
-                        <td colspan="3"><input class="span2" name="modifydatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="modifydatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
-                    </tr>
+                    <%--<tr>--%>
+                        <%--<th>最后修改时间</th>--%>
+                        <%--<td colspan="3"><input class="span2" name="modifydatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="modifydatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>--%>
+                    <%--</tr>--%>
                 </table>
             </form>
         </div>
@@ -230,20 +233,20 @@
         </div>
     </div>
     <div id="toolbar" style="display: none;">
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/addPage')}">
+        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/addPage')}">
             <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'bug_add'">添加</a>
         </c:if>
         <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" onclick="searchFun();">过滤条件</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" onclick="cleanFun();">清空条件</a>
     </div>
 
     <div id="menu" class="easyui-menu" style="width: 120px; display: none;">
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/addPage')}">
+        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/addPage')}">
             <div onclick="addFun();" data-options="iconCls:'pencil_add'">增加</div>
         </c:if>
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/delete')}">
+        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/delete')}">
             <div onclick="deleteFun();" data-options="iconCls:'pencil_delete'">删除</div>
         </c:if>
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/bugController/editPage')}">
+        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/editPage')}">
             <div onclick="editFun();" data-options="iconCls:'pencil'">编辑</div>
         </c:if>
     </div>

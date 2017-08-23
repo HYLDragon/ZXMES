@@ -40,5 +40,10 @@ public class pollute {
         logger.info(JSON.toJSONStringWithDateFormat(careMapper.getAllWithCareType(care),"yyyy-MM-dd HH:mm:ss"));
     }
 
+    @Test
+    public void test3(){
+        Care care=new Care();
+        logger.info(JSON.toJSONStringWithDateFormat(careMapper.getCount(care),"yyyy-MM-dd HH:mm:ss"));
+    }
 
 }

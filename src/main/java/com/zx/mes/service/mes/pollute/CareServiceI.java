@@ -1,6 +1,7 @@
 package com.zx.mes.service.mes.pollute;
 
 import com.zx.mes.pageModel.DataGrid;
+import com.zx.mes.pageModel.PageHelper;
 import com.zx.mes.pageModel.mes.pollute.Pcare;
 
 /**
@@ -14,5 +15,5 @@ public interface CareServiceI {
 
     public void delete(Pcare pcare);
 
-    public DataGrid datagrid(Pcare pcare);
+    public DataGrid datagrid(Pcare pcare, PageHelper ph);
 }

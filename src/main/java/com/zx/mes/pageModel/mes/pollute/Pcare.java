@@ -20,6 +20,28 @@ public class Pcare {
 
     private String caretypeId;
 
+    private String careTypeId;
+    private String careTypeName;
+
+    public String getCareTypeName() {
+        return careTypeName;
+    }
+
+    public void setCareTypeName(String careTypeName) {
+        this.careTypeName = careTypeName;
+    }
+
+
+
+    public String getCareTypeId() {
+        return careTypeId;
+    }
+
+    public void setCareTypeId(String careTypeId) {
+        this.careTypeId = careTypeId;
+    }
+
+
     public CareType getCareType() {
         return careType;
     }

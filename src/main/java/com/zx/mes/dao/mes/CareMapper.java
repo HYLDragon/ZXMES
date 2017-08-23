@@ -20,4 +20,6 @@ public interface CareMapper {
     int updateByPrimaryKey(Care record);
 
     List<Care> getAllWithCareType(Care care);
+
+    long getCount(Care care);
 }

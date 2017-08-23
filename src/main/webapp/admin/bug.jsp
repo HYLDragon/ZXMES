@@ -205,7 +205,7 @@
 						<th>BUG类型</th>
 						<td><select name="typeId" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
 								<option value=""></option>
-								<c:forEach items="${bugTypeList}" var="bugType">
+									<c:forEach items="${bugTypeList}" var="bugType">
 									<option value="${bugType.id}">${bugType.name}</option>
 								</c:forEach>
 						</select></td>

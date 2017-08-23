@@ -1,4 +1,4 @@
-package com.zx.mes.controller.mes;
+package com.zx.mes.controller.mes.pollute;
 
 import com.zx.mes.controller.BaseController;
 import org.springframework.stereotype.Controller;
