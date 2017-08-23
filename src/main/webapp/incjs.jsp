@@ -24,6 +24,8 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/flot-0.8.3/jquery.flot.time.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/flot-0.8.3/jquery.flot.stack.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/flot-0.8.3/jquery.flot.resize.js"></script>
+<script type="text/javascript"
+        src="${pageContext.request.contextPath}/jslib/flot-0.8.3/jquery.flot.categories.js"></script>
 <!-- Flot plugins --> 
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/flot.orderbars/js/jquery.flot.orderBars.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/flot.curvedlines/curvedLines.js"></script>

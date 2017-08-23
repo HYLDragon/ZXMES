@@ -64,6 +64,8 @@
 
 <!-- 扩展EasyUI Icon -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/style/extEasyUIIcon.css?v=201305301906" type="text/css">
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/syUtil.js" charset="utf-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/jslib/hylUtil.js" charset="utf-8"></script>
 
 <!-- 扩展jQuery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/jslib/extJquery.js?v=201305301341" charset="utf-8"></script>

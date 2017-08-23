@@ -13,9 +13,31 @@
     <jsp:include page="../../inccss.jsp"></jsp:include>
     <jsp:include page="../../incjs.jsp"></jsp:include>
     <style type="text/css">
+        <%--flot--%>
         .demo-placeholder {
-            height: 280px
+            height: 220px
         }
+        .row{
+            margin-top: 10px;
+        }
+        /*iCheck样式*/
+        ul.to_do {
+            padding: 0
+        }
+        ul.to_do li {
+            background: #f3f3f3;
+            border-radius: 3px;
+            position: relative;
+            padding: 7px;
+            margin-bottom: 5px;
+            list-style: none
+        }
+        ul.to_do p {
+            margin: 0
+        }
+        /*iCheck样式*/
+
+
     </style>
     <title>电力记录</title>
     <script type="text/javascript">
@@ -42,7 +64,14 @@
                 [gd(2017, 1, 6), 85],
                 [gd(2017, 1, 7), 7],
                 [gd(2017, 1, 8), 19],
-                [gd(2017, 1, 9), 25]
+                [gd(2017, 1, 9), 25],
+                [gd(2017, 1, 10), 74],
+                [gd(2017, 1, 11), 6],
+                [gd(2017, 1, 12), 39],
+                [gd(2017, 1, 13), 20],
+                [gd(2017, 1, 14), 85],
+                [gd(2017, 1, 15), 25],
+                [gd(2017, 1, 16), 55],
             ];
 
             var arr_data2 = [
@@ -95,6 +124,7 @@
                     axisLabelFontFamily: 'Verdana, Arial',
                     axisLabelPadding: 10,
                     color:"rgba(169, 68, 66, 0.8)",
+                    timeformat: "%m/%d"
                 },
                 legend: {
                     color:"rgba(169, 68, 66, 0.8)",
@@ -105,26 +135,20 @@
                     tickColor: "rgba(51, 51, 51, 0.06)",
                 },
                 tooltip: true
-            }
+            };
 
             if ($("#chart_plot_01").length){
-                console.log('Plot1');
-
-//                $.plot( $("#chart_plot_01"), [ arr_data1, arr_data2 ],  chart_plot_01_settings );
-                $.plot( $("#chart_plot_01"), [ {data:arr_data1,label:"本月"}, {data:arr_data2,label:"上月"} ],
-                    chart_plot_01_settings );
+                $.plot( $("#chart_plot_01"), [ arr_data1 ],  chart_plot_01_settings );
+//                $.plot( $("#chart_plot_01"), [ {data:arr_data1,label:"本月"}, {data:arr_data2,label:"上月"} ],
+//                    chart_plot_01_settings );
+//                $.plot( $("#chart_plot_01"), [ {data:arr_data1,label:"本月"} ],
+//                    chart_plot_01_settings );
             }
-
-
+            
 //            https://github.com/flot/flot/blob/master/API.md
-
         }
-    </script>
-
-    <script>
+        
         $(function () {
-            init_flot_chart();
-
             $("<div id='tooltip'></div>").css({
                 position: "absolute",
                 display: "none",
@@ -137,7 +161,7 @@
             $("#chart_plot_01").bind("plothover", function (event, pos, item) {
                 if ($("#enablePosition:checked").length > 0) {
                     //将字符串转换成数字
-                    var str = "(" +  new Date(pos.x.toFixed(2)*1).format() + ", " + pos.y.toFixed(2) + ")";
+                    var str = "(" +  new Date(pos.x.toFixed(2)*1).format("yyyy-MM-dd") + ", " + pos.y.toFixed(2) + ")";
                     $("#hoverdata").text(str);
                 }
 
@@ -146,7 +170,7 @@
                         var x = item.datapoint[0].toFixed(2),
                             y = item.datapoint[1].toFixed(2);
 
-                        $("#tooltip").html(item.series.label + " " + new Date(x*1).format() + "  " + y)
+                        $("#tooltip").html(item.series.label + " " + new Date(x*1).format("yyyy-MM-dd") + "  " + y)
                             .css({top: item.pageY+5, left: item.pageX+5})
                             .fadeIn(200);
                     } else {
@@ -154,31 +178,123 @@
                     }
                 }
             });
+        });
+
+    </script>
+
+    <%--float 标准写法--%>
+    <script type="text/javascript">
+        var init_bar_flot=function () {
+            var data = [ ["1月", 10], ["2月", 8], ["3月", 40], ["4月", 13], ["5月", 17], ["6月", 9],["7月", 10], ["8月", 3],
+                ["9月",
+                    4], ["10月", 13], ["11月", 12], ["12月", 9] ];
+
+            $.plot("#bar_flot", [ data ], {
+                series: {
+                    bars: {
+                        show: true,
+                        barWidth: 0.6,
+                        align: "center"
+                    }
+                },
+                xaxis: {
+                    mode: "categories",
+                    tickLength: 0
+                }
+            });
+        };
+
+        $(function() {
+            init_bar_flot();
+
+        });
 
 
-//            alert(new Date(new Date().getTime()).format());
+    </script>
 
-//            $("#placeholder").bind("plotclick", function (event, pos, item) {
-//                if (item) {
-//                    $("#clickdata").text(" - click point " + item.dataIndex + " in " + item.series.label);
-//                    plot.highlight(item.series, item.datapoint);
-//                }
-//            });
+    <%--iCheck--%>
+    <script type="text/javascript">
+        $(function(){
+            if ($("input.flat")[0]) {
+                $(document).ready(function () {
+                    $('input.flat').iCheck({
+                        checkboxClass: 'icheckbox_flat-green',
+                        radioClass: 'iradio_flat-green'
+                    });
+                });
+            }
+        });
+    </script>
 
+    <script>
+        $(function () {
+            init_flot_chart();
+        });
+    </script>
+    <%--对easyui的一些控件添加一些事件--%>
+    <script type="text/javascript">
+        <%--
+        $(target).combo("setText","");
+        --%>
+        $(function () {
+            var buttons = $.extend([], $.fn.datebox.defaults.buttons);
+            buttons.splice(1, 0, {
+                text: '确定',
+                handler: function(target){
+                    //console.log(target);
+                    var calendar=$(target).datetimebox("calendar");
+                    var date=calendar.calendar("options").current;
+                    var spinner=$(target).datetimebox("spinner");
+
+                    var hour="0"+spinner.timespinner("getHours");
+                    var minute="0"+spinner.timespinner("getMinutes");
+                    var seconds="0"+spinner.timespinner("getSeconds");
+                    var hhmmss=hour.right(2)+":"+minute.right(2)+":"+seconds.right(2);
+//                    $(target).combo("setText",new Date(date).format("yyyy-MM-dd")+" "+hhmmss);
+                    $(target).combo("setText",new Date(date).format("yyyy-MM-dd"));
+                    $(target).combo("hidePanel");
+
+                    alert("一切正常再做一些事");
+
+                }
+            });
+            $('#dayFlot').datebox({
+                buttons: buttons
+            });
         });
     </script>
 </head>
 <body>
     <div id="main-col" class="container-fluid">
-        <div class="col-md-12">
-            <div id="chart_plot_01" class="demo-placeholder"></div>
+        <div class="row">
+            <div class="col-md-9 col-sm-9">
+                <div id="chart_plot_01" class="demo-placeholder"></div>
+            </div>
+            <div class="col-md-3 col-sm-3">
+                <ul class="to_do">
+                    <li>
+                        <p><input type="checkbox" id="enablePosition" checked="checked" class="flat"> 显示鼠标所在位置<span
+                                id="hoverdata">(时间,
+                            用电量)</span></p>
+                    </li>
+                    <li>
+                        <p><input type="checkbox" id="enableTooltip" checked="checked" class="flat"> 是否提示数值</p>
+                    </li>
+                    <li>
+                        <p><input id="dayFlot" class="easyui-datetimebox" style="width:100%"></p>
+                    </li>
+              </ul>
+            </div>
         </div>
-        <p>
-            <label><input id="enablePosition" type="checkbox" checked="checked">显示鼠标所在位置</label>
-            <span id="hoverdata">(时间, 用电量)</span>
-            <%--<span id="clickdata"> - click point 0 in cos(x)</span>--%>
-        </p>
-        <p><label><input id="enableTooltip" type="checkbox" checked="checked">是否提示数值</label></p>
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-9 col-sm-9">
+                <div id="bar_flot" class="demo-placeholder"></div>
+            </div>
+            <div class="col-md-3 col-sm-3"></div>
+        </div>
     </div>
 </body>
 </html>

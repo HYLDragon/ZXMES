@@ -630,6 +630,9 @@ Date.prototype.format = function(format) {
 	}
 	return format;
 };
+String.prototype.right = function (len) {
+	return this.substr(this.length-len,len);
+};
 
 /**
  * @author 
