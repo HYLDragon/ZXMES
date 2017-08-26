@@ -1,3 +1,4 @@
+
 <%--
   Created by IntelliJ IDEA.
   User: Administrator
@@ -79,6 +80,10 @@
                     title : '保养类型名称',
                     width : 150
                 }, {
+                    field : 'remark',
+                    title : '保养详细说明',
+                    width : 200
+                }, {
                     field : 'action',
                     title : '操作',
                     width : 100,
@@ -122,9 +127,9 @@
                 var rows = dataGrid.datagrid('getSelections');
                 id = rows[0].id;
             }
-            parent.$.messager.confirm('询问', '您是否要删除当前BUG？', function(b) {
+            parent.$.messager.confirm('询问', '您是否要删除当前保养记录？', function(b) {
                 if (b) {
-                    parent.$.messager.progress({
+                    $.messager.progress({
                         title : '提示',
                         text : '数据处理中，请稍后....'
                     });
@@ -135,7 +140,7 @@
                             parent.$.messager.alert('提示', result.msg, 'info');
                             dataGrid.datagrid('reload');
                         }
-                        parent.$.messager.progress('close');
+                        $.messager.progress('close');
                     }, 'JSON');
                 }
             });
@@ -146,16 +151,22 @@
                 var rows = dataGrid.datagrid('getSelections');
                 id = rows[0].id;
             }
-            parent.$.modalDialog({
-                title : '编辑BUG',
-                width : 780,
-                height : 500,
+            $.modalDialog({
+                title : '编辑保养',
+                width : 400,
+                height : 280,
                 href : '${pageContext.request.contextPath}/careController/editPage?id=' + id,
+                onOpen : function() {
+                    $.messager.progress({
+                        title : '提示',
+                        text : '数据处理中，请稍后....'
+                    });
+                },
                 buttons : [ {
                     text : '编辑',
                     handler : function() {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#form');
+                        $.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f =$.modalDialog.handler.find('#form');
                         f.submit();
                     }
                 } ]
@@ -176,16 +187,22 @@
         }
 
         function addFun() {
-            parent.$.modalDialog({
-                title : '添加保养',
-                width : 780,
-                height : 500,
+            $.modalDialog({
+                title : '添加保养记录',
+                width : 400,
+                height : 280,
                 href : '${pageContext.request.contextPath}/careController/addPage',
+                onOpen : function() {
+                    $.messager.progress({
+                        title : '提示',
+                        text : '数据处理中，请稍后....'
+                    });
+                },
                 buttons : [ {
                     text : '添加',
                     handler : function() {
-                        parent.$.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
-                        var f = parent.$.modalDialog.handler.find('#form');
+                        $.modalDialog.openner_dataGrid = dataGrid;//因为添加成功之后，需要刷新这个dataGrid，所以先预定义好
+                        var f = $.modalDialog.handler.find('#form');
                         f.submit();
                     }
                 } ]
@@ -200,55 +217,71 @@
             dataGrid.datagrid('load', {});
         }
     </script>
+
+    <script type="text/javascript">
+        $(function () {
+//            alert("xxxx");
+
+        });
+    </script>
 </head>
 <body>
-    <div class="easyui-layout" data-options="fit : true,border : false">
-        <div data-options="region:'north',title:'查询条件',border:false" style="height: 160px; overflow: hidden;">
-            <form id="searchForm">
-                <table class="table table-hover table-condensed" style="display: none;">
-                    <tr>
-                        <th>保养名称</th>
-                        <td><input name="name" placeholder="可以模糊查询" class="span2" /></td>
-                        <th>保养类型</th>
-                        <td><select name="careTypeId" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
-                            <option value=""></option>
-                            <c:forEach items="${careTypeList}" var="careType">
-                                <option value="${careType.id}">${careType.name}</option>
-                            </c:forEach>
-                        </select></td>
-                    </tr>
-                    <tr>
-                        <th>创建时间</th>
-                        <td colspan="3"><input class="span2" name="createdatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="createdatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
-                    </tr>
-                    <%--<tr>--%>
-                        <%--<th>最后修改时间</th>--%>
-                        <%--<td colspan="3"><input class="span2" name="modifydatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="modifydatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>--%>
-                    <%--</tr>--%>
-                </table>
-            </form>
-        </div>
-        <div data-options="region:'center',border:false">
-            <table id="dataGrid"></table>
-        </div>
+<div class="easyui-layout" data-options="fit : true,border : false">
+    <div data-options="region:'north',title:'查询条件',border:false" style="height: 100px; overflow: hidden;">
+        <form id="searchForm">
+            <table class="table table-hover table-condensed" style="display: none;">
+                <tr>
+                    <th>保养名称</th>
+                    <td><input name="name" placeholder="可以模糊查询" class="span2" /></td>
+                    <th>保养类型</th>
+                    <td><select name="careTypeId" class="easyui-combobox" data-options="width:140,height:29,editable:false,panelHeight:'auto'">
+                        <option value=""></option>
+                        <c:forEach items="${careTypeList}" var="careType">
+                            <option
+                                    value="${careType.id}">${careType.name}</option>
+                        </c:forEach>
+                    </select></td>
+                </tr>
+                <tr>
+                    <th>创建时间</th>
+                    <td colspan="3"><input class="span2" name="createdatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="createdatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>
+                </tr>
+                <%--<tr>--%>
+                <%--<th>最后修改时间</th>--%>
+                <%--<td colspan="3"><input class="span2" name="modifydatetimeStart" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" />至<input class="span2" name="modifydatetimeEnd" placeholder="点击选择时间" onclick="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss'})" /></td>--%>
+                <%--</tr>--%>
+            </table>
+        </form>
     </div>
-    <div id="toolbar" style="display: none;">
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/addPage')}">
-            <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'bug_add'">添加</a>
-        </c:if>
-        <a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true" onclick="searchFun();">过滤条件</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" onclick="cleanFun();">清空条件</a>
+    <div data-options="region:'center',border:false">
+        <table id="dataGrid"></table>
     </div>
+</div>
+<div id="toolbar" style="display: none;">
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/addPage')}">
+        <a onclick="addFun();" href="javascript:void(0);" class="easyui-linkbutton" data-options="plain:true,iconCls:'bug_add'">添加</a>
+    </c:if>
+    <a href="javascript:void(0)d;" class="easyui-linkbutton" data-options="iconCls:'brick_add',plain:true"
+       onclick="searchFun();">过滤条件</a><a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'brick_delete',plain:true" onclick="cleanFun();">清空条件</a>
+</div>
 
-    <div id="menu" class="easyui-menu" style="width: 120px; display: none;">
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/addPage')}">
-            <div onclick="addFun();" data-options="iconCls:'pencil_add'">增加</div>
-        </c:if>
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/delete')}">
-            <div onclick="deleteFun();" data-options="iconCls:'pencil_delete'">删除</div>
-        </c:if>
-        <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/editPage')}">
-            <div onclick="editFun();" data-options="iconCls:'pencil'">编辑</div>
-        </c:if>
-    </div>
+<div id="menu" class="easyui-menu" style="width: 120px; display: none;">
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/addPage')}">
+        <div onclick="addFun();" data-options="iconCls:'pencil_add'">增加</div>
+    </c:if>
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/delete')}">
+        <div onclick="deleteFun();" data-options="iconCls:'pencil_delete'">删除</div>
+    </c:if>
+    <c:if test="${fn:contains(sessionInfo.resourceList, '/careController/editPage')}">
+        <div onclick="editFun();" data-options="iconCls:'pencil'">编辑</div>
+    </c:if>
+</div>
 </body>
 </html>
+
+
+
+
+
+
+

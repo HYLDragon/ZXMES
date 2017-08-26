@@ -136,7 +136,7 @@
       and CREATEDATETIME > #{createdatetime,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydatetime != null">
-      and MODIFYDATETIME &lt;  #{modifydatetime,jdbcType=TIMESTAMP}
+      and CREATEDATETIME &lt;  #{modifydatetime,jdbcType=TIMESTAMP}
     </if>
     <if test="name != null">
       and NAME like #{name,jdbcType=VARCHAR}
@@ -182,7 +182,7 @@
       and tuser.CREATEDATETIME > #{createdatetime,jdbcType=TIMESTAMP}
     </if>
     <if test="modifydatetime != null">
-      and tuser.MODIFYDATETIME &lt;  #{modifydatetime,jdbcType=TIMESTAMP}
+      and tuser.CREATEDATETIME &lt;  #{modifydatetime,jdbcType=TIMESTAMP}
     </if>
     <if test="name != null">
       and tuser.NAME like #{name,jdbcType=VARCHAR}

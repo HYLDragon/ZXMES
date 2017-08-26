@@ -1,7 +1,7 @@
 /**
  * 包含easyui的扩展和常用的方法
  * 
- * @author 孙宇
+ * @author
  * 
  * @version 20120806
  */

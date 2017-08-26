@@ -1,8 +1,14 @@
 package com.zx.mes.controller.mes.pollute;
 
 import com.zx.mes.controller.BaseController;
+import com.zx.mes.model.mes.CareType;
+import com.zx.mes.service.mes.pollute.CareTypeServiceI;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/8/3.
@@ -10,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/polluteController")
 public class PolluteController extends BaseController {
+
+    @Autowired
+    private CareTypeServiceI careTypeService;
 
     @RequestMapping("/manager")
     public String manager(){
@@ -51,7 +60,9 @@ public class PolluteController extends BaseController {
 
     //保养记录  care(保养)
     @RequestMapping("/polluteCarePage")
-    public String managerCarePage(){
+    public String managerCarePage(HttpServletRequest request){
+        List<CareType> careTypeList=careTypeService.getCareTypeList();
+        request.setAttribute("careTypeList", careTypeList);
         return "/mes/pollute/polluteCarePage";
     }
 }

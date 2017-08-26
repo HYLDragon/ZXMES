@@ -23,6 +23,25 @@ public class Pcare {
     private String careTypeId;
     private String careTypeName;
 
+    private Date createdatetimeStart;
+    private Date createdatetimeEnd;
+
+    public Date getCreatedatetimeStart() {
+        return createdatetimeStart;
+    }
+
+    public void setCreatedatetimeStart(Date createdatetimeStart) {
+        this.createdatetimeStart = createdatetimeStart;
+    }
+
+    public Date getCreatedatetimeEnd() {
+        return createdatetimeEnd;
+    }
+
+    public void setCreatedatetimeEnd(Date createdatetimeEnd) {
+        this.createdatetimeEnd = createdatetimeEnd;
+    }
+
     public String getCareTypeName() {
         return careTypeName;
     }

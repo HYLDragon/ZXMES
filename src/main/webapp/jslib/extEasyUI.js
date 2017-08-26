@@ -1,7 +1,7 @@
 /**
  * 使panel和datagrid在加载时提示
  * 
- * @author 孙宇
+ * @author
  * 
  * @requires jQuery,EasyUI
  * 
@@ -10,7 +10,7 @@ $.fn.panel.defaults.loadingMessage = '加载中....';
 $.fn.datagrid.defaults.loadMsg = '加载中....';
 
 /**
- * @author 孙宇
+ * @author
  * 
  * @requires jQuery,EasyUI
  * 
