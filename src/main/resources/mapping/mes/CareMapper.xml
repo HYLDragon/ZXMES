@@ -88,7 +88,7 @@
       <if test="remark != null">
         REMARK = #{remark,jdbcType=VARCHAR},
       </if>
-      <if test="caretypeId != null">
+      <if test="caretypeId != null and  caretypeId !=''">
         CARETYPE_ID = #{caretypeId,jdbcType=VARCHAR},
       </if>
     </set>
@@ -121,7 +121,7 @@
     <if test="id !=null">
       and CARE.ID LIKE ={id,jdbcType=VARCHAR}
     </if>
-    <if test="caretypeId !=null">
+    <if test="caretypeId !=null and  caretypeId !=''">
       and CARE.CARETYPE_ID = #{caretypeId,jdbcType=VARCHAR}
     </if>
   </select>
@@ -159,7 +159,7 @@
     <if test="id !=null">
       and CARE.ID = #{id,jdbcType=VARCHAR}
     </if>
-    <if test="caretypeId !=null">
+    <if test="caretypeId !=null and  caretypeId !=''">
       and CARE.CARETYPE_ID = #{caretypeId,jdbcType=VARCHAR}
     </if>
   </select>
