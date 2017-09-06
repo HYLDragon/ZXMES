@@ -129,7 +129,7 @@
   <!--getAllWithCareType-->
   <resultMap id="CareResultMap" type="com.zx.mes.model.mes.Care" extends="BaseResultMap">
     <association property="careType" javaType="com.zx.mes.model.mes.CareType">
-      <id column="CARETYPE_ID" jdbcType="VARCHAR" property="id" />
+      <id column="CARETYPEID" jdbcType="VARCHAR" property="id" />
       <result column="CARETYPE_NAME" jdbcType="VARCHAR" property="name" />
       <result column="CARETYPE_REMARK" jdbcType="VARCHAR" property="remark" />
     </association>
@@ -141,7 +141,7 @@
     ,CARE.MODIFYDATETIME
     ,CARE.REMARK
     ,CARE.CARETYPE_ID
-    ,CARETYPE.ID CARETYPE_ID
+    ,CARETYPE.ID CARETYPEID
     ,CARETYPE.NAME CARETYPE_NAME
     ,CARETYPE.REMARK CARETYPE_REMARK
     FROM CARE
